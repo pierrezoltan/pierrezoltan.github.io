@@ -1,0 +1,4899 @@
+# Récapitulatif des matériels et logiciels
+
+## Logiciels
+
+<img src="./media/image1.png"
+style="width:6.27014in;height:2.69444in" />
+
+## Matériels
+
+<img src="./media/image2.png"
+style="width:6.27014in;height:1.32847in" />
+
+## Adressage IP
+
+<img src="./media/image3.png"
+style="width:6.27014in;height:2.94097in" />
+
+## Schéma du déploiement
+
+<img src="./media/image4.png"
+style="width:6.27083in;height:7.83333in" />
+
+# **Création Cluster Proxmox**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  Installation et configuration d’un cluster en haute disponibilité
+    sur serveurs Proxmox.
+
+### Environnement
+
+Matériels :
+
+- 3 x Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseau interne : 172.16.0.0/16
+
+- Réseau externe : 192.168.10.xx/26 (en DHCP fournie par le PEI)
+
+### Documentation :
+
+<https://www.youtube.com/watch?app=desktop&v=Y-n73ciSsZw>
+
+### Configuration préalable
+
+**Nous allons utiliser des disques formatté Ceph pour la haute
+disponibilité. Ces disques doivent être non RAID ou RAID0 à 1 disque,
+sinon Ceph ne pourra pas s’installer.**
+
+## Processus
+
+### Création d’un Cluster
+
+Nous avons créé un cluster sur le 1<sup>er</sup>
+serveur (172.28.1.250/16) :
+
+<img src="./media/image5.png" style="width:6.2092in;height:1.3231in" />
+
+Nommé le cluster puis create :
+
+<img src="./media/image6.png"
+style="width:5.24031in;height:1.77108in" />
+
+Le cluster a été correctement créé :
+
+<img src="./media/image7.png"
+style="width:6.27014in;height:1.73819in" />
+
+Une fois le cluster créé, nous avons copié join information (clé
+d’agrégation)
+
+<img src="./media/image8.png"
+style="width:6.27014in;height:1.96806in" />
+
+Sur le 2<sup>e</sup> serveur (pve2 : 172.28.1.251/16)
+
+Menu Cluster \> Joindre le cluster
+
+<img src="./media/image9.png"
+style="width:5.58148in;height:2.09313in" />
+
+Le serveur est bien arrivé sur le cluster. Nous avons fait la même
+manipulation pour le 3<sup>e</sup> serveur (172.28.1.252/16).
+
+<img src="./media/image10.png"
+style="width:6.27014in;height:1.23819in" />
+
+#### Installation Ceph
+
+Installation Ceph sur les serveurs
+
+Menu \> Ceph
+
+<img src="./media/image11.png"
+style="width:1.88568in;height:0.89596in" />
+
+<img src="./media/image12.png"
+style="width:3.22762in;height:2.28085in" />
+
+<img src="./media/image13.png"
+style="width:3.97535in;height:2.80066in" />
+
+Nous avons installé Ceph sur les deux autres serveurs également.
+
+<img src="./media/image14.png"
+style="width:3.95585in;height:2.79081in" />
+
+<img src="./media/image15.png"
+style="width:3.97031in;height:2.80635in" />
+
+#### Ajout des Monitors et Managers
+
+Cette fonctionnalité donne des droits pour afficher et manager les
+différents serveurs Proxmox.
+
+Menu \> Ceph \> Monitor
+
+<img src="./media/image16.png"
+style="width:6.27014in;height:0.95278in" />
+
+<img src="./media/image17.png"
+style="width:2.60453in;height:1.11474in" />
+
+<img src="./media/image18.png"
+style="width:5.71955in;height:1.56272in" />
+
+<img src="./media/image19.png"
+style="width:2.59411in;height:1.11474in" />
+
+<img src="./media/image20.png"
+style="width:5.56328in;height:1.57314in" />
+
+#### Création d’un pool de stockage
+
+Menu Ceph \> OSD \> Create OSD
+
+<img src="./media/image21.png"
+style="width:5.25073in;height:1.76066in" />
+
+<img src="./media/image22.png"
+style="width:6.27014in;height:0.97778in" />
+
+Nous avons effectué la même manipulation sur les deux autres serveurs.
+
+<img src="./media/image23.png"
+style="width:6.27014in;height:1.49722in" />
+
+#### Création d’un pool
+
+Menu \> Ceph \> Pools
+
+<img src="./media/image24.png"
+style="width:5.24031in;height:2.50035in" />
+
+<img src="./media/image25.png"
+style="width:5.82092in;height:2.34861in" />
+
+Ceph stockage a été créé.
+
+#### Mise en place de la haute disponibilité (HA)
+
+Menu \> HA \> Groups
+
+<img src="./media/image26.png"
+style="width:3.28802in;height:2.70624in" />
+
+<img src="./media/image27.png"
+style="width:3.23946in;height:2.64051in" />
+
+<img src="./media/image28.png"
+style="width:3.43048in;height:2.80738in" />
+
+#### Test de la migration d’une VM
+
+Nous avons créé un conteneur test sur le pve1
+
+<img src="./media/image29.png"
+style="width:5.24031in;height:1.29185in" />
+
+Nous avons ajouté le conteneur dans la haute disponibilité pve1-ha
+
+<img src="./media/image30.png"
+style="width:3.79412in;height:1.60029in" />
+
+<img src="./media/image31.png"
+style="width:6.27014in;height:1.82083in" />
+
+Puis nous avons arrêté le pve1.
+
+<img src="./media/image32.png"
+style="width:2.26268in;height:2.59265in" />
+
+Le conteneur est bien arrivé sur le pv3. Par la suite nous avons rallumé
+pve1.
+
+<img src="./media/image33.png"
+style="width:2.47951in;height:2.20864in" />
+
+Le conteneur est retourné automatiquement sur pve1(3 min après avoir
+démarré pv1).
+
+#### Test de la haute disponibilité lors d’une coupure d’un serveur
+
+Nous avons lancé une copie d’un fichier volumineux à partir de la
+partition D:\\ du l’AD sur le pve1 vers un dossier partage se trouvant
+sur le serveur SAMBA sur le pve3.
+
+<img src="./media/image34.png"
+style="width:3.76525in;height:1.29167in" /><img src="./media/image35.png"
+style="width:1.97291in;height:3.69502in" />
+
+<img src="./media/image36.png"
+style="width:5.50339in;height:2.41433in" />
+
+En paralelle, nous avons lancé un ping continue depuis CLI-DEB-01 sur
+pve3 vers [www.google.com](http://www.google.com). Le client accède à
+l’internet via FW-PROXY se trouvant sur le pve1.
+
+<img src="./media/image37.png"
+style="width:4.29037in;height:1.52445in" />
+
+**NB** : chaque VM possède un snapshot avec sa dernière bonne
+configuration. Lors d’une migration, la VM bascule avec son snapshot !
+
+Configuration des groupes HA
+
+<img src="./media/image38.png"
+style="width:5.20906in;height:1.22934in" />
+
+Ajout des ressources pour effectuer le test
+
+<img src="./media/image39.png"
+style="width:6.27014in;height:1.54375in" />
+
+<img src="./media/image40.png"
+style="width:6.27014in;height:1.40903in" />
+
+Etape1
+
+<img src="./media/image41.png"
+style="width:3.97972in;height:1.46895in" />
+
+<img src="./media/image42.png"
+style="width:4.81317in;height:0.64592in" />
+
+Les VM sont arrivées sur le pve3
+
+<img src="./media/image43.png"
+style="width:2.52119in;height:3.02126in" />
+
+<img src="./media/image44.png"
+style="width:4.82359in;height:0.90638in" />
+
+<img src="./media/image45.png"
+style="width:6.27014in;height:3.70486in" />
+
+Nous avons rejoué la séquence en rebranchent le pve1
+
+<img src="./media/image46.png"
+style="width:6.27014in;height:1.89514in" />
+
+**Etape2**
+
+Les VM AD et PROXY sont en état **migrate**
+
+<img src="./media/image47.png"
+style="width:6.27014in;height:1.94028in" />
+
+Pendant la copie la migration du l’AD n’a pas été effective.
+
+**Etape 3**
+
+Pf a basculé complètement sans aucune coupure
+
+<img src="./media/image48.png"
+style="width:6.27014in;height:1.61319in" />
+
+<img src="./media/image49.png"
+style="width:6.27014in;height:1.63472in" />
+
+**Etape 4**
+
+Fin de la copie du fichier depuis l’AD vers le partage SAMBA.
+
+<img src="./media/image50.png"
+style="width:6.27014in;height:1.14444in" />
+
+Pendant la migration l’AD continue fournir des services, notamment la
+résolution DNS. L’AD est toujours 100% fonctionnel.
+
+<img src="./media/image51.png"
+style="width:5.53202in;height:0.76052in" />
+
+**Etape 5**
+
+La migration du l’AD est effective
+
+<img src="./media/image52.png"
+style="width:2.30416in;height:3.04821in" />
+
+### Suppression d’un cluster
+
+``` bash
+systemclt stop corosync pve-cluster  
+pmxcfs -l  
+rm -rf /etc/corosync/\*  
+rm -rf /etc/pve/corosync.conf  
+killall pmxcfs  
+systemctl start pve-cluster
+```
+
+## Conclusion
+
+La mise en place d’un cluster est terminée. Les images concernées par la
+haute disponibilité doivent être crées sur la partition répliquée prévue
+à cette effet(ceph-stockage).
+
+Sur Proxmox il y a une différence notable entre migration voulu ou
+depuis et vers un serveur actif et migration automatique suite d’une
+panne. Dans le premier cas (reprise d’activités), nous n’avons pas
+constaté de coupure de service. La migration est plus lente. Lors de la
+simulation d’une panne la migration est automatique avec des coupures de
+service, néanmoins la migration est plus rapide.
+
+**Configuration VLAN sur**
+
+**Switch 3COM**
+
+Par *Zoltan et Pierre***  
+  
+TSSR-2201**
+
+# **Configuration VLAN sur switch 3COM**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  Configurer un VLAN sur switch 3COM.
+
+### Environnement
+
+Matériels :
+
+- 2 x Switch 3COM SuperStack 3 4500 26-port
+
+Adressage des VM’s :
+
+- Réseaux VLAN 200 switch1 : 172.28.1.253/16
+
+- Réseaux VLAN 200 switch2 : 172.28.1.249/16
+
+### Documentation 
+
+- <https://www.youtube.com/watch?v=DR5Ov2XgkAc>
+
+- <https://www.manualslib.com/manual/232384/3com-5500g-Ei.html?page=19#manual>
+
+- 
+
+## Processus
+
+Nous sommes connectés sur le port série d’un ordinateur d’un côté et sur
+le port Console du switch de l’autre.
+
+Nous avons configuré PuTTY comme suite dans Connection / Serial :
+
+<img src="./media/image53.png"
+style="width:3.18045in;height:3.10962in" />
+
+Ensuite Session \> Open
+
+<img src="./media/image54.png"
+style="width:3.20636in;height:3.1491in" />
+
+Nous avons accédé à la console du switch
+
+<img src="./media/image55.png"
+style="width:6.27014in;height:0.98264in" />
+
+### Administration VLAN en CLI
+
+### Création d’un VLAN
+
+*\# Passage en mode system*  
+system-view ou sys  
+  
+*\# Création du VLAN 200*  
+vlan 200  
+  
+*\# Définition l’adresse IP/Sous-masque pour le VLAN 200*  
+*\# Choix VLAN*  
+interface vlan 200 ou int vlan 200  
+*\# Renseigner l’adresse IP ainsi que le sous-masque*  
+ip address 172.28.1.253 255.255.0.0  
+  
+*\# Ajout d’un port dans le VLAN, ici du 7 à 10*  
+port Eth1/0/7  
+port Eth1/0/8  
+port Eth1/0/9  
+port Eth1/0/10
+
+Afficher la configuration de VLAN’s
+
+display vlan all
+
+<img src="./media/image56.png"
+style="width:6.27014in;height:4.52778in" />
+
+Une autre méthode pour afficher la configuration de ports en utilisant
+la commande display brief interface
+
+<img src="./media/image57.png"
+style="width:5.59453in;height:5.01112in" />
+
+### Supprimer un VLAN
+
+*\# Mode system*  
+system-view ou sys  
+*\# Supprimer le VLAN 200*  
+undo VLAN 200
+
+### Administration VLAN par interface Web
+
+J’accède à l’interface web sur l’adresse 172.28.1.253/16
+
+<img src="./media/image58.png"
+style="width:4.15449in;height:2.22242in" />
+
+Menu \> Device \> VLAN \> Setup
+
+<img src="./media/image59.png"
+style="width:4.17758in;height:1.76882in" />
+
+Création d’un VLAN
+
+Modify VLAN
+
+VLAN 200 avec ses ports actifs
+
+<img src="./media/image60.png"
+style="width:4.4318in;height:2.86356in" />
+
+### Configurer d’une adresse IP en GUI
+
+Administration \> IP setup
+
+<img src="./media/image61.png"
+style="width:2.92554in;height:2.35592in" />
+
+VLAN1
+
+Nous avons laissé en mode DHCP
+
+<img src="./media/image62.png"
+style="width:3.31232in;height:2.68427in" />
+
+VLAN 200
+
+<img src="./media/image63.png"
+style="width:3.50511in;height:2.83507in" />
+
+### Créer un Trunk sur un port
+
+Cela permet d’accéder deux vlan sur le même port
+
+Switch 1
+
+*\# Choix de l’interface*  
+Interface GigabitEthernet1/0/28  
+*\# Changer le type de link*  
+port link-type trunk  
+*\# Ajouter dans les VLAN souhaités*  
+port trunk permit vlan 1 200
+
+Configuration des ports actuel
+
+<img src="./media/image64.png"
+style="width:5.61537in;height:5.33408in" />
+
+### Tagger un port 
+
+Pour interconnecter les deux switches, nous avons tagué les ports 28 sur
+chacun
+
+interface GigabitEthernet1/0/28
+
+port link-type hybrid  
+port hybrid vlan 1 200 tagged
+
+### Cisco Packet Tracer
+
+### Schéma du réseau
+
+<img src="./media/image65.png"
+style="width:3.74555in;height:4.00044in" />
+
+### Configuration du Switch1 (T2SR)
+
+Nous avons exécuté les commandes suivantes pour créer le VLAN 200
+
+*\# Entrer dans mode Privileged EXEC*  
+enable  
+*\# Entrer dans le mode configuration*  
+config  
+*\# Choix terminal*  
+terminal  
+*\# Configuration du VLAN*  
+vlan 200  
+*\# Ajouter le port 0/7 dans le VLAN 200*  
+interface FastEthernet0/7  
+*\# Mettre en mode accesible*  
+switchport mode access  
+*\# Donner accès au port pour le VLAN 200*  
+switchport access vlan 200  
+*\# Quitter la configuration*  
+end
+
+<img src="./media/image66.png"
+style="width:5.93833in;height:1.77108in" />
+
+Nous avons effectué les mêmes commandes pour les ports 8 à 10, puis nous
+avons vérifié la configuration des ports avec la commande
+
+sh run
+
+<img src="./media/image67.png"
+style="width:2.13572in;height:1.6669in" />
+
+Nous avons créé un trunk entre vlan 1 et 200 sur le port
+GigabitEthernet2
+
+enable
+
+config (choisir terminal)
+
+interface GigabitEthernet0/2  
+switchport access vlan 200  
+switchport mode trunk
+
+sh run
+
+<img src="./media/image68.png"
+style="width:2.42742in;height:0.59383in" />
+
+Nous pouvons obtenir les mêmes résultats en mode GUI
+
+Menu Config
+
+<img src="./media/image69.png"
+style="width:5.68192in;height:1.77714in" />
+
+### Configuration du Switch2 (T2SR2)
+
+Nous avons exécuté les commandes suivantes pour créer le VLAN 200
+
+*\# Entrer dans mode Privileged EXEC*  
+enable  
+*\# Entrer dans le mode configuration*  
+config  
+*\# Choix terminal*  
+terminal  
+*\# Configuration du VLAN*  
+vlan 200
+
+Nous avons créé un trunk entre vlan 1 et 200 sur le port FastEthernet1
+et 2
+
+enable
+
+config (choisir terminal)
+
+interface FastEthernet0/1  
+switchport access vlan 200  
+switchport mode trunk
+
+interface FastEthernet0/2  
+switchport access vlan 200  
+switchport mode trunk
+
+sh run
+
+<img src="./media/image70.png"
+style="width:2.19822in;height:0.88554in" />
+
+Nous avons créé un trunk entre vlan 1 et 200 sur le port
+GigabitEthernet2
+
+enable
+
+config (choisir terminal)
+
+interface GigabitEthernet0/2  
+switchport access vlan 200  
+switchport mode trunk
+
+sh run
+
+<img src="./media/image68.png"
+style="width:2.42742in;height:0.59383in" />
+
+##  Conclusion
+
+La configuration des switches est correctement déroulée. Nombreuses
+tâches sont plus aisées à faire en GUI, d’autres en CLI. La
+configuration en CLI est privilégiée.
+
+**TP Création Active Directory**
+
+Par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **Création Active Directory**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation d’un Active Directory sur Windows Server 2019.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.28.0.0/16
+
+- Active Directory sur Windows serveur 2019 : 172.28.1.200/16
+
+## Processus
+
+### Fixer l’adresse IP
+
+Avant d’installer Active Directory, j’ai fixé l’adresse IP du serveur
+somme suite
+
+<img src="./media/image71.png"
+style="width:2.25601in;height:2.54437in" />
+
+### L’installation Active Directory
+
+Dans la Gestion de serveur / Tableau de bord / Gérer / Ajouter des rôles
+et fonctionnalités
+
+<img src="./media/image72.png"
+style="width:3.12544in;height:1.57314in" />
+
+J’ai choisi installation basée sur un rôle
+
+<img src="./media/image73.png"
+style="width:4.20966in;height:2.99791in" />
+
+Choix du serveur
+
+<img src="./media/image74.png"
+style="width:3.79691in;height:2.71238in" />
+
+Choix rôle AD DS (Active Directory Domain Service)
+
+<img src="./media/image75.png"
+style="width:2.71241in;height:2.87531in" />
+
+J’ai validé l’ajout du rôle
+
+<img src="./media/image76.png"
+style="width:2.39197in;height:2.50669in" />
+
+<img src="./media/image77.png"
+style="width:2.88996in;height:3.10824in" />
+
+J’ai laissé par défaut le choix des fonctionnalités
+
+<img src="./media/image78.png"
+style="width:2.1726in;height:2.32966in" />
+
+Début de l’installation
+
+<img src="./media/image79.png"
+style="width:3.63562in;height:1.79156in" />
+
+### Promouvoir le serveur en contrôleur de domaine
+
+Une fois installé, j’ai promu le serveur en contrôleur de domaine
+
+<img src="./media/image80.png"
+style="width:2.68551in;height:2.46042in" />
+
+Le nom du domaine racine est **t2sr.io**
+
+<img src="./media/image81.png"
+style="width:3.78873in;height:2.79675in" />
+
+J’ai décoché serveur DNS (n’est pas encore configuré) et renseigné le
+mot de passe DSRM.
+
+<img src="./media/image82.png"
+style="width:4.0016in;height:2.95256in" />
+
+Le nom de domaine NetBIOS renseigné automatiquement
+
+<img src="./media/image83.png"
+style="width:4.76108in;height:0.72927in" />
+
+J’ai laissé par défaut l’emplacement de la base de données AD DS
+
+<img src="./media/image84.png"
+style="width:5.58411in;height:1.17725in" />
+
+Après vérification, j’ai lancé l’installation
+
+<img src="./media/image85.png"
+style="width:3.68788in;height:2.70924in" />
+
+A la fin de l’installation le serveur redémarre.
+
+### Joindre un client linux dans Active Directory
+
+#### Installation des package nécessaires sur des distributions basées sur Debian
+
+apt install realmd sssd sssd-tools libnss-sss libpam-sss adcli
+samba-common-bin oddjob oddjob-mkhomedir packagekit -y
+
+#### Installation des package nécessaires sur des distributions basées sur CentOS (FreePBX)
+
+yum install realmd sssd sssd-tools libnss-sss libpam-sss adcli
+samba-common-bin samba-common-tools oddjob oddjob-mkhomedir packagekit
+-y
+
+Vérifier que le domaine est joignable
+
+realm discover t2sr.io
+
+<img src="./media/image86.png"
+style="width:3.01832in;height:2.0418in" />
+
+#### Joindre le serveur AD
+
+realm join --user=Administrateur t2sr.io
+
+Vérification sur l’AD l’ensemble des ordinateurs du domaine
+
+<img src="./media/image87.png"
+style="width:6.37808in;height:4.48422in" />
+
+J’ai séparé dans deux UO les serveurs et les clients.
+
+Serveurs
+
+<img src="./media/image88.png"
+style="width:4.13475in;height:2.58704in" />
+
+Clients
+
+<img src="./media/image89.png"
+style="width:3.46606in;height:2.01869in" />
+
+Groupes et utilisateurs
+
+<img src="./media/image90.png"
+style="width:3.83871in;height:1.84858in" />
+
+## Conclusion
+
+L’installation s’est correctement déroulée. La mise en place de l’Active
+Directory doit être le premier serveur à configurer.
+
+**TP Installation et configuration**
+
+**NAGIOS**
+
+Par *Zoltan et Pierre***  
+  
+TSSR-2201**
+
+# **TP Installation et configuration NAGIOS**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  Installation NAGIOS sur un conteneur LXC de Proxmox.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.28.0.0/16
+
+- NAGIOS une VM Debian 11 : 172.28.1.207/16
+
+### Documentation
+
+- <https://assets.nagios.com/downloads/nagiosxi/docs/Installing-Nagios-XI-Manually-on-Linux.pdf>
+
+## Processus
+
+### Installation
+
+J’ai téléchargé Nagios sur le dépôt officielle, décompressé et lancé le
+script installation 
+
+cd /tmp
+
+wget https://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
+
+tar xzf xi-latest.tar.gz
+
+cd nagiosxi
+
+./fullinstall
+
+### Finalisation du l’installation
+
+Je me suis connecté sur le site <http://172.28.1.207/nagiosxi>
+
+<img src="./media/image91.png"
+style="width:3.91477in;height:2.98085in" />
+
+<img src="./media/image92.png"
+style="width:4.96035in;height:2.52495in" />
+
+<img src="./media/image93.png"
+style="width:4.68367in;height:1.64803in" />
+
+J’ai accepté le contrat de licence
+
+<img src="./media/image94.png"
+style="width:5.3613in;height:2.98022in" />
+
+Une fois la configuration terminée, je peux entrer sur la page
+principale avec le compte précédemment crée.
+
+<img src="./media/image95.png"
+style="width:4.47568in;height:2.98412in" />
+
+La page d’accueil de NAGIOS
+
+<img src="./media/image96.png"
+style="width:6.27014in;height:2.59722in" />
+
+Visualisation des services sur le localhost (Détails \> Statut
+d’accueil)
+
+<img src="./media/image97.png"
+style="width:6.27014in;height:1.89028in" />
+
+<img src="./media/image98.png"
+style="width:6.27014in;height:3.05139in" />
+
+### Intégrer Active Directory dans NAGIOS
+
+Utilisateurs \> ldap / ad intégration
+
+<img src="./media/image99.png"
+style="width:1.95861in;height:1.11474in" />
+
+<img src="./media/image100.png"
+style="width:6.27014in;height:1.85625in" />
+
+J’ai ajouté un serveur d’authentification
+
+<img src="./media/image101.png"
+style="width:6.27014in;height:4.25347in" />
+
+Ajouter des utilisateurs
+
+Utilisateurs \> Gérer les utilisateurs
+
+<img src="./media/image102.png"
+style="width:1.57549in;height:0.87527in" />
+
+Choix ajouter des utilisateurs à partir de LDAP/AD
+
+<img src="./media/image103.png"
+style="width:6.27014in;height:1.34514in" />
+
+<img src="./media/image104.png"
+style="width:3.53926in;height:1.88497in" />
+
+J’ai sélectionné et ajouté les utilisateurs
+
+<img src="./media/image105.png"
+style="width:3.22343in;height:3.5608in" />
+
+<img src="./media/image106.png"
+style="width:6.27014in;height:1.80764in" />
+
+Dans le menu éditer, on peut renseigner les paramètres de sécurité pour
+les utilisateurs
+
+Utilisateur simple :
+
+<img src="./media/image107.png"
+style="width:3.4131in;height:2.26471in" />
+
+Administrateur :
+
+<img src="./media/image108.png"
+style="width:3.48461in;height:1.18779in" />
+
+Préférences pour tous les utilisateurs
+
+<img src="./media/image109.png"
+style="width:3.53408in;height:1.84705in" />
+
+Une fois finalisé j’ai importé les utilisateurs
+
+La liste des utilisateurs
+
+<img src="./media/image110.png"
+style="width:6.27014in;height:2.09583in" />
+
+### Installation OpenSSH sur Windows Serveur 2019
+
+Paramètres \> Applications et fonctionnalités \> Gérer les
+fonctionnalités facultatives
+
+Si manquant, ajouter Client OpenSSH et Serveur OpenSSH
+
+<img src="./media/image111.png"
+style="width:4.78192in;height:0.6876in" />
+
+<img src="./media/image112.png"
+style="width:4.93819in;height:0.55216in" />
+
+J’ai démarré le service avec une commande PowerShell et rendu démarrage
+automatique au lieu de manuel.
+
+Start-Service -Name "sshd"
+
+Set-Service -Name "sshd" -StartupType Automatic
+
+J’ai vérifié à ce que ça soit bien démarré
+
+<img src="./media/image113.png"
+style="width:3.92763in;height:1.2085in" />
+
+### Déployer l’agent Nagios sur Windows Server
+
+Menu Configurer \> Déployer l’agent
+
+<img src="./media/image114.png"
+style="width:6.27014in;height:3.36181in" />
+
+<img src="./media/image115.png"
+style="width:3.98324in;height:1.37377in" />
+
+<img src="./media/image116.png"
+style="width:3.34459in;height:1.57214in" />
+
+### Ajouter un Windows serveur 2019 (ADDS) à surveiller
+
+Configurer \> Assistants de configuration \> Active directory
+
+<img src="./media/image117.png"
+style="width:6.27014in;height:1.40556in" />
+
+J’ai renseigné l’adresse IP du serveur AD
+
+<img src="./media/image118.png"
+style="width:3.76029in;height:1.23483in" />
+
+J’ai renseigné les données nécessaires à la connexion de l’AD
+
+<img src="./media/image119.png"
+style="width:4.54563in;height:4.39258in" />
+
+Les paramètres suivants j’ai laissé par défaut
+
+<img src="./media/image120.png"
+style="width:4.73872in;height:2.36227in" />
+
+Configuration des paramètres de notification
+
+<img src="./media/image121.png"
+style="width:3.47933in;height:1.76188in" />
+
+<img src="./media/image122.png"
+style="width:3.43488in;height:1.09537in" />
+
+### Déployer l’agent Nagios sur Serveur Ubuntu (SAMBA)
+
+Configurer \> Déployer l’agent
+
+<img src="./media/image123.png"
+style="width:3.95744in;height:3.53491in" />
+
+<img src="./media/image124.png"
+style="width:4.00416in;height:1.68348in" />
+
+J’ai choisi assistant de configuration
+
+Limites d’utilisation du processeur à surveiller
+
+<img src="./media/image125.png"
+style="width:6.13627in;height:2.61495in" />
+
+Limites d’utilisation de la mémoire à surveiller
+
+<img src="./media/image126.png"
+style="width:6.27014in;height:2.61736in" />
+
+Choix des disques que je souhaite surveiller
+
+<img src="./media/image127.png"
+style="width:4.1682in;height:4.69141in" />
+
+Délais interrogation du client, puis terminer.
+
+<img src="./media/image128.png"
+style="width:5.48219in;height:2.91566in" />
+
+<img src="./media/image129.png"
+style="width:4.27771in;height:2.2225in" />
+
+## Conclusion
+
+Il est aisé d’ajouter des nouveaux hôtes à surveiller avec l’assistant
+de configuration à condition d’avoir un lien SSH. Les services de
+surveillance de base proposés sont ; CPU, mémoire, stockage, trafics
+réseaux. 
+
+**Installation et configuration pfSense**
+
+Par *Zoltan***  
+  
+TSSR-2201**
+
+# **Installation et configuration pfSense**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  Installer et configurer pfSense CE 2.6.0
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.2-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.28.0.0/16
+
+- pfSense: FW-PROXY 172.28.1.254
+
+- client Windows 10 : CLI-WIN-01, DHCP
+
+- client Linux Debian : CLI-DEB-01, DHCP
+
+### Documentation :
+
+- <https://www.youtube.com/watch?v=wv1qTYR3faQ&t=1670s>
+
+- <https://www.youtube.com/watch?v=tKrRAy6Rnss>
+
+- <https://www.it-connect.fr/proxy-transparent-mise-en-place-de-squid-sur-pfsense/#:~:text=Connectez%2Dvous%20sur%20l'interface,'onglet%20%22Available%20Packages%22.&text=Recherchez%20%22squid%22%20et%20cliquez%20sur,niveau%20de%20la%20ligne%20correspondante>.
+
+- <https://www.it-connect.fr/les-serveurs-proxy-et-reverse-proxy-pour-les-debutants/>
+
+- 
+
+## Processus
+
+### Installation
+
+Nous avons téléchargé l’ISO d’installation sur le site officiel :
+
+<https://www.pfsense.org/download/>
+
+Nous avons booté sur l’ISO :
+
+<img src="./media/image130.png"
+style="width:4.20892in;height:2.51077in" />
+
+<img src="./media/image131.png"
+style="width:4.22976in;height:1.76066in" />
+
+<img src="./media/image132.png"
+style="width:4.1985in;height:1.27101in" />
+
+Choix de la langue
+
+<img src="./media/image133.png"
+style="width:3.53174in;height:1.83359in" />
+
+<img src="./media/image134.png"
+style="width:3.62551in;height:1.45854in" />
+
+<img src="./media/image135.png"
+style="width:3.39631in;height:1.48979in" />
+
+<img src="./media/image136.png"
+style="width:2.77122in;height:1.35436in" />
+
+#### Configuration les adresse IP du pfSense
+
+Choix 2
+
+<img src="./media/image137.png"
+style="width:6.27014in;height:1.46597in" />
+
+Choix 2
+
+<img src="./media/image138.png"
+style="width:6.27014in;height:1.52431in" />
+
+<img src="./media/image139.png"
+style="width:6.27014in;height:0.38611in" />
+
+<img src="./media/image140.png"
+style="width:6.27014in;height:1.07917in" />
+
+J’ai choisi entrée deux fois puis **n** pour le serveur dhcp.
+
+<img src="./media/image141.png"
+style="width:6.27014in;height:1.51528in" />
+
+Les adresses IP sont configurées
+
+<img src="./media/image142.png"
+style="width:6.27014in;height:0.42569in" />
+
+### Configuration du pfSense
+
+La VM pfSense est accessible sur l’adresse 172.28.1.254/16
+
+Login par défaut : admin
+
+Password par défaut : pfsense
+
+<img src="./media/image143.png"
+style="width:3.09418in;height:1.76066in" />
+
+#### Configuration générale
+
+System / General Setup
+
+<img src="./media/image144.png"
+style="width:6.27014in;height:1.37778in" />
+
+<img src="./media/image145.png"
+style="width:6.27014in;height:1.55556in" />
+
+<img src="./media/image146.png"
+style="width:6.27014in;height:1.96319in" />
+
+#### Configurations accès au serveur
+
+Système \> Advanced \> Admin Access
+
+J’ai choisi l’accès via HTTPS
+
+<img src="./media/image147.png"
+style="width:6.27014in;height:1.73611in" />
+
+J’ai activé connexion via SSH
+
+<img src="./media/image148.png"
+style="width:6.27014in;height:1.39931in" />
+
+Test de la connexion SSH
+
+<img src="./media/image149.png"
+style="width:3.82031in;height:2.29752in" />
+
+La connexion fonctionne.
+
+#### Configuration serveur DHCP
+
+Services / DHCP Server / LAN
+
+<img src="./media/image150.png"
+style="width:6.27014in;height:0.43472in" />
+
+<img src="./media/image151.png"
+style="width:6.27014in;height:1.20347in" />
+
+<img src="./media/image152.png"
+style="width:6.27014in;height:1.50417in" />
+
+<img src="./media/image153.png"
+style="width:6.27014in;height:1.37708in" />
+
+Vérification sur un client
+
+<img src="./media/image154.png"
+style="width:6.27014in;height:2.64514in" />
+
+<img src="./media/image155.png"
+style="width:6.27014in;height:0.62431in" />
+
+La carte réseau est configuré dans le réseau 172.16.0.0/16 mais il a
+accès à l’internet. La passerelle par pfSense est fonctionnelle.
+
+#### Connexion et authentification par Active Directory
+
+System \> User Manager \> Authentification Servers \> Add
+
+<img src="./media/image156.png" style="width:6.27014in;height:0.85in" />
+
+<img src="./media/image157.png"
+style="width:5.86351in;height:3.30354in" />
+
+<img src="./media/image158.png"
+style="width:5.83036in;height:2.79992in" />
+
+Création d’un groupe **adminpfsense** sur l’AD avec deux utilisateurs
+
+<img src="./media/image159.png"
+style="width:6.27014in;height:2.37569in" />
+
+Sur la VM pfSense
+
+System \> User Manager \> Groups \> Add
+
+Ajout la groupe **adminpfsense** que nous avons créé sur l’AD
+
+<img src="./media/image160.png"
+style="width:6.27014in;height:2.81111in" />
+
+Nous avons donné accès à ce groupe pour consulter toutes les pages
+
+<img src="./media/image161.png"
+style="width:6.27014in;height:1.41736in" />
+
+Test d’authentification
+
+Diagnostics \> Authentification
+
+Je vais tester la connexion avec un utilisateur qui fait partie du
+groupe **adminpfsense.**
+
+<img src="./media/image162.png"
+style="width:6.27014in;height:2.95556in" />
+
+Maintenant, les utilisateurs appartenant au groupe **adminpfsense**
+peuvent administrer pfSense.
+
+<img src="./media/image163.png"
+style="width:2.20436in;height:1.77869in" />
+
+### Mise en place serveur Proxy
+
+Installation des packages Squid et Squidgard
+
+System \> Package Manager \> Available Packages
+
+<img src="./media/image164.png"
+style="width:6.27014in;height:1.50347in" />
+
+<img src="./media/image165.png"
+style="width:6.27014in;height:2.49583in" />
+
+Création d’un certificat de sécurité autosigné
+
+System \> Certificate Manager \> Add
+
+<img src="./media/image166.png"
+style="width:5.77676in;height:1.7345in" />
+
+<img src="./media/image167.png"
+style="width:5.78553in;height:4.01316in" />
+
+<img src="./media/image168.png"
+style="width:6.27014in;height:1.11597in" />
+
+#### Activation Squid Proxy
+
+Services \> Squid Proxy Server
+
+Configuration Local Cache
+
+<img src="./media/image169.png"
+style="width:6.27014in;height:1.17639in" />
+
+<img src="./media/image170.png"
+style="width:6.27014in;height:1.44861in" />
+
+General
+
+<img src="./media/image171.png"
+style="width:6.27014in;height:2.85556in" />
+
+<img src="./media/image172.png"
+style="width:6.27014in;height:2.00069in" />
+
+<img src="./media/image173.png"
+style="width:6.27014in;height:3.85278in" />
+
+<img src="./media/image174.png"
+style="width:6.27014in;height:0.51389in" />
+
+<img src="./media/image175.png"
+style="width:6.27014in;height:1.22986in" />
+
+Spécifier les réseaux qui ont accès au proxy
+
+ACLs
+
+<img src="./media/image176.png"
+style="width:6.27014in;height:1.06181in" />
+
+J’ai exporté le certificat et j’ai installé sur mes clients
+
+<img src="./media/image177.png"
+style="width:6.27014in;height:3.00208in" />
+
+Test avec un client Windows
+
+Installer certificat
+
+Double clic sur le certificat puis installer
+
+<img src="./media/image178.png"
+style="width:2.55575in;height:3.2419in" />
+
+<img src="./media/image179.png"
+style="width:6.27014in;height:0.90903in" />
+
+<img src="./media/image180.png"
+style="width:5.68829in;height:1.25017in" />
+
+<img src="./media/image181.png"
+style="width:6.27014in;height:3.38264in" />
+
+Test avec le client Linux
+
+J’ai créé un dossier pour accueillir notre certificat
+
+mkdir /usr/local/share/ce-certificates/t2sr
+
+cp t2sr_ssl_cert.crt /usr/local/share/ce-certificates/t2sr
+
+J’ai installé le certificat
+
+update-ca-certificates
+
+<img src="./media/image182.png"
+style="width:6.27014in;height:0.80764in" />
+
+Je test avec la page d’accueil Facebook
+
+Avant l’application du blacklist
+
+<img src="./media/image183.png"
+style="width:6.27014in;height:3.27153in" />
+
+Apres l’application du blacklist
+
+<img src="./media/image184.png"
+style="width:6.27014in;height:3.36042in" />
+
+#### Configuration SquidGard 
+
+Une autre manière de créer de site blacklisté est d’utiliser SquidGard
+
+Services \> SquidGard Proxy Filter
+
+Target Catégories
+
+J’ai créé un target nommé test avec un nom domaine à refuser
+
+<img src="./media/image185.png"
+style="width:6.27014in;height:2.74236in" />
+
+Le résultat
+
+<img src="./media/image186.png"
+style="width:6.27014in;height:2.73681in" />
+
+Blacklist sous SquidGard
+
+Nous pouvons uploader une blacklist archive. Il s’agit d’une collection
+des sites non désirables. J’ai utilisé celui créé par l’université de
+Toulouse :
+
+<http://dsi.ut-capitole.fr/blacklists/download/blacklists_for_pfsense.tar.gz>
+
+Une fois renseigné j’ai cliqué sur download
+
+<img src="./media/image187.png"
+style="width:6.27014in;height:2.69861in" />
+
+Common ACL
+
+Nous retrouvons le target catégorie test que nous avons créé et
+également la liste importée que nous pouvons peaufiner par la suite.
+
+<img src="./media/image188.png"
+style="width:6.27014in;height:4.10208in" />
+
+Nous pouvons visualiser la liste de ses sites si besoin
+
+<img src="./media/image189.png"
+style="width:3.29146in;height:3.44026in" /><img src="./media/image190.png"
+style="width:2.1289in;height:3.48599in" />
+
+#### Configuration du firewall
+
+Firewall \> Roules \> LAN
+
+<img src="./media/image191.png"
+style="width:6.27014in;height:2.85347in" />
+
+J’ai désactivé l’accès en IPv6 (nous utilisons que des adresses en IPv4)
+
+<img src="./media/image192.png"
+style="width:6.27014in;height:1.65069in" />
+
+#### Créer Firewall Aliases
+
+Firewall \> Rules \> LAN
+
+L’état actuel du Firewall
+
+<img src="./media/image193.png"
+style="width:6.27014in;height:2.53472in" />
+
+Tous les ports sont ouverts pour une communication vers l’extérieur (LAN
+vers WAN).
+
+Nous allons autoriser uniquement les ports suivants :
+
+- 80 : http
+
+- 443 : https
+
+- 22 : ssh
+
+- 53 : dns (tcp/udp)
+
+- 123 : ntp
+
+Ajout des ports TCP
+
+Firewall \> Aliases \> Ports \> Add
+
+<img src="./media/image194.png"
+style="width:6.27014in;height:3.67986in" />
+
+Ajout des ports UDP
+
+<img src="./media/image195.png"
+style="width:6.27014in;height:3.00486in" />
+
+J’ai choisi **Apply changes**
+
+<img src="./media/image196.png"
+style="width:6.27014in;height:2.66111in" />
+
+Firewall \> Rules \> LAN \> Add
+
+<img src="./media/image197.png"
+style="width:6.27014in;height:2.74514in" />
+
+J’ai choisi comme destination la TCP_standard_Sortie précédemment crée.
+
+<img src="./media/image198.png"
+style="width:6.27014in;height:1.09722in" />
+
+J’ai ajouté un commentaire, puis j’ai sauvegardé
+
+<img src="./media/image199.png"
+style="width:6.27014in;height:2.10556in" />
+
+La règle a été crée
+
+<img src="./media/image200.png"
+style="width:6.27014in;height:2.05903in" />
+
+J’ai ajouté une deuxième règle pour DNS(UDP) et NTP
+
+<img src="./media/image201.png"
+style="width:5.2674in;height:2.69525in" />
+
+<img src="./media/image202.png"
+style="width:5.66033in;height:0.99615in" />
+
+<img src="./media/image203.png"
+style="width:5.66809in;height:1.8833in" />
+
+Création d’une troisième règle qui refusera tous les autres ports :
+
+Firewall \> Rules \> LAN
+
+<img src="./media/image204.png"
+style="width:5.66204in;height:2.90658in" />
+
+<img src="./media/image205.png"
+style="width:5.72041in;height:0.43716in" />
+
+J’ai ajouté un commentaire, puis cliqué sur Save.
+
+<img src="./media/image206.png"
+style="width:5.30116in;height:1.75551in" />
+
+#### Mise en Place Portail Captif
+
+Services \> Captive Portal \> Add
+
+<img src="./media/image207.png"
+style="width:6.27014in;height:1.56597in" />
+
+<img src="./media/image208.png"
+style="width:6.27014in;height:2.27708in" />
+
+<img src="./media/image209.png"
+style="width:6.27014in;height:1.94792in" />
+
+<img src="./media/image210.png"
+style="width:6.27014in;height:2.46736in" />
+
+Pour valider la configuration j’ai cliqué sur Save.
+
+Adresse du portail captif : <http://172.28.1.254:8002>
+
+<img src="./media/image211.png"
+style="width:1.85073in;height:2.53315in" />
+
+<img src="./media/image212.png"
+style="width:3.22933in;height:1.50892in" />
+
+<img src="./media/image213.png"
+style="width:1.811in;height:2.24194in" />
+
+## Conclusion
+
+La configuration du PfSense s’est bien déroulée. L’utilisation du
+portail captif nécessite d’avoir une carte réseaux supplémentaire afin
+de ne pas interférer avec les VM sur le réseau de production.
+
+**TP Veeam Backup**
+
+Par *Zoltan***  
+  
+TSSR-2201**
+
+# **VEEAM Backup**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  Installation Veeam backup sur une VM Windows Serveur 2019
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur Windows 2019 : VEEAM 172.28.1.204/16
+
+- Serveur AD – Windows serveur 2019 : 172.28.1.200/16
+
+- Client Linux Debian 11 : DHCP
+
+- Client Windows Win 10 Pro : DHCP
+
+- Helper Host (pour la restauration) Ubuntu serveur 22.04 :
+  172.28.1.202/16
+
+### Documentation
+
+- <https://www.youtube.com/c/veeam>
+
+## Processus
+
+### Installation
+
+J’ai téléchargé l’image sur le site officielle :
+
+<https://www.veeam.com/>
+
+Choix Veeam Backup & Replication
+
+<img src="./media/image214.png"
+style="width:6.27014in;height:4.37431in" />
+
+<img src="./media/image215.png"
+style="width:4.26101in;height:1.60439in" />
+
+J’ai cliqué sur OK pour l’installer le paquet manquant
+
+<img src="./media/image216.png"
+style="width:4.02943in;height:2.8456in" />
+
+<img src="./media/image217.png"
+style="width:4.04618in;height:2.82497in" />
+
+J’ai choisi Install pour installer les prérequis manquants
+
+<img src="./media/image218.png"
+style="width:3.999in;height:2.80222in" />
+
+<img src="./media/image219.png"
+style="width:3.97211in;height:2.76383in" />
+
+<img src="./media/image220.png"
+style="width:4.00986in;height:2.82963in" />
+
+<img src="./media/image221.png"
+style="width:4.26605in;height:2.99168in" />
+
+#### Connexion au serveur
+
+J’ai lancé l’application
+
+<img src="./media/image222.png"
+style="width:0.8647in;height:1.00014in" />
+
+<img src="./media/image223.png"
+style="width:3.16241in;height:2.54447in" />
+
+Choix Apply
+
+<img src="./media/image224.png"
+style="width:4.7104in;height:3.33625in" />
+
+<img src="./media/image225.png"
+style="width:4.71123in;height:3.3645in" />
+
+#### Ajout d’un dossier de sauvegarde
+
+Backup Infrastructure / Backup Repositories / Add Repository
+
+<img src="./media/image226.png"
+style="width:5.33972in;height:1.35903in" />
+
+<img src="./media/image227.png"
+style="width:5.67557in;height:1.47091in" />
+
+<img src="./media/image228.png"
+style="width:4.38008in;height:2.04717in" />
+
+J’ai cliqué sur **Browse** pour sélectionner la nouvelle partition de
+partage
+
+<img src="./media/image229.png"
+style="width:6.27014in;height:1.78403in" />
+
+Choix partition **F:\\** précédemment préparé (Partition REFS/64ko).
+
+<img src="./media/image230.png"
+style="width:4.06307in;height:1.67732in" />
+
+En cliquant sur **Populate**, nous pouvons voir la capacité du disque et
+l’espace libre restant.
+
+<img src="./media/image231.png"
+style="width:5.80289in;height:1.12516in" />
+
+<img src="./media/image232.png"
+style="width:6.27014in;height:2.77014in" />
+
+A la fin de configuration j’ai cliqué sur **Apply**
+
+<img src="./media/image233.png"
+style="width:4.75346in;height:3.33621in" />
+
+<img src="./media/image234.png"
+style="width:4.77395in;height:2.77797in" />
+
+Choix Oui
+
+<img src="./media/image235.png"
+style="width:4.7715in;height:1.27101in" />
+
+Sauvegarder des VM
+
+#### Création d’un Backup Job 
+
+#### Sauvegarder le Serveur AD
+
+<img src="./media/image236.png"
+style="width:6.27014in;height:3.14861in" />
+
+Ajouter ordinateurs pour sauvegarder
+
+<img src="./media/image237.png"
+style="width:6.27014in;height:1.56389in" />
+
+<img src="./media/image238.png"
+style="width:2.77534in;height:1.68965in" />
+
+<img src="./media/image239.png"
+style="width:5.02153in;height:2.86498in" />
+
+<img src="./media/image240.png"
+style="width:6.27014in;height:2.63403in" />
+
+<img src="./media/image241.png"
+style="width:6.27014in;height:2.62847in" />
+
+<img src="./media/image242.png"
+style="width:6.19878in;height:0.9793in" />
+
+<img src="./media/image243.png"
+style="width:6.18836in;height:4.97986in" />
+
+Laissé par défaut
+
+<img src="./media/image244.png"
+style="width:6.17795in;height:1.95861in" />
+
+Possibilité de programmer l’exécution du **Job**
+
+<img src="./media/image245.png"
+style="width:4.13596in;height:2.21469in" />
+
+Une fois le Job est lancé, nous pouvons suivre son évolution
+
+<img src="./media/image246.png"
+style="width:6.27014in;height:1.37986in" />
+
+<img src="./media/image247.png"
+style="width:6.27014in;height:1.01944in" />
+
+<img src="./media/image248.png"
+style="width:5.84283in;height:3.88141in" />
+
+#### Sauvegarder d’une VM Linux
+
+Créer un nouveau job \> Linux Computer
+
+<img src="./media/image249.png"
+style="width:1.4093in;height:1.89656in" />
+
+Choix **Server \> Managed by backup server**
+
+<img src="./media/image250.png"
+style="width:4.72519in;height:2.17498in" />
+
+<img src="./media/image251.png"
+style="width:4.73338in;height:2.08544in" />
+
+J’ai ajouté la VM en question
+
+<img src="./media/image252.png"
+style="width:3.2192in;height:1.40645in" />
+
+N’ayant pas déclaré dans le DNS, j’ai utilisé son adresse IP.
+Credentials (droits) \> Add \> Linux Account
+
+<img src="./media/image253.png"
+style="width:3.38542in;height:1.72189in" />
+
+<img src="./media/image254.png"
+style="width:3.06217in;height:2.90139in" />
+
+<img src="./media/image255.png"
+style="width:4.01042in;height:2.4375in" />
+
+J’ai choisi sauvegarder la VM en entier
+
+<img src="./media/image256.png"
+style="width:4.65524in;height:1.53594in" />
+
+J’ai choisi de garder les deux derniers points de restauration
+
+<img src="./media/image257.png"
+style="width:4.51878in;height:1.72664in" />
+
+J’ai laissé ses options désélectionné (par défaut)
+
+<img src="./media/image258.png"
+style="width:6.27014in;height:2.17917in" />
+
+J’ai choisi une sauvegarde mensuelle
+
+<img src="./media/image259.png"
+style="width:6.27014in;height:1.69097in" />
+
+Le récapitulatif du job et lancement de la sauvegarde
+
+<img src="./media/image260.png"
+style="width:1.89974in;height:1.49476in" />
+
+<img src="./media/image261.png"
+style="width:2.06279in;height:0.30213in" />
+
+Lancement du job, début de la sauvegarde
+
+<img src="./media/image262.png"
+style="width:6.27014in;height:1.25833in" />
+
+Le serveur va lancer un scan et automatiquement installer
+automatiquement un client VEEAM sur la VM Debian si manquant (ici c’est
+le cas)
+
+<img src="./media/image263.png"
+style="width:5.19682in;height:1.94197in" />
+
+Une fois l’agent est installé nous avons une réponse succès
+
+<img src="./media/image264.png"
+style="width:5.36244in;height:1.70216in" />
+
+J’ai installé les paquets nécessaires pour linux (Debian)
+
+sudo apt install dkms gcc make perl openssh-server
+linux-headers-\$(uname -r) libudev-dev libacl1 libattr1 lvm2 libfuse-dev
+libfuse2 libncurses5 dmidecode default-libmysqlclient-dev libpq5 python3
+isolinux btrfs-progs squashfs-tools wget xorriso
+
+Ensuite j’ai téléchargé et installé VEEAM
+
+<http://repository.veeam.com/.private/deb/veeam/>
+
+sudo dpkg -i veeam_5.0.2.4567_amd64.deb
+
+Début de la sauvegarde
+
+<img src="./media/image265.png"
+style="width:5.04692in;height:2.26606in" />
+
+Fin de la sauvegarde
+
+<img src="./media/image266.png"
+style="width:4.81935in;height:3.20151in" />
+
+#### Sauvegarder d’une VM Windows
+
+Création d’un nouveau job \> Windows computer
+
+<img src="./media/image267.png"
+style="width:1.8064in;height:2.18669in" />
+
+Server \> Managed by agent
+
+<img src="./media/image268.png"
+style="width:6.27014in;height:2.30069in" />
+
+Add \> Individual computer
+
+<img src="./media/image269.png"
+style="width:6.27014in;height:1.41319in" />
+
+J’ai renseigné l’host et les droits d’accès
+
+<img src="./media/image270.png"
+style="width:2.88438in;height:1.76518in" />
+
+Nous avons la possibilité de renseigner directement l’utilisateur et son
+mot de passe ou passer par **browse** et chercher sur l’AD.
+
+<img src="./media/image271.png"
+style="width:3.19601in;height:1.81019in" />
+
+J’ai choisi **browse**
+
+<img src="./media/image272.png"
+style="width:2.83571in;height:1.61872in" />
+
+<img src="./media/image273.png"
+style="width:3.22817in;height:1.49836in" />
+
+Puis avancé et renseigner l’accès à l’AD
+
+<img src="./media/image274.png"
+style="width:2.46737in;height:2.0978in" />
+
+Puis trouver l’utilisateur qu’on souhaite
+
+<img src="./media/image275.png"
+style="width:3.10315in;height:2.64008in" />
+
+<img src="./media/image276.png"
+style="width:3.64516in;height:1.72629in" />
+
+<img src="./media/image277.png"
+style="width:3.68436in;height:2.10644in" />
+
+<img src="./media/image278.png"
+style="width:3.70349in;height:2.26271in" />
+
+Choix Volume level backup
+
+<img src="./media/image279.png"
+style="width:6.27014in;height:2.03958in" />
+
+Choix de objets avec Add \> OS volume (je veux sauvegarder uniquement le
+volume contenant l’OS)
+
+<img src="./media/image280.png"
+style="width:6.27014in;height:0.93681in" />
+
+J’ai choisi Veeam backup repository (crée au début du TP)
+
+<img src="./media/image281.png"
+style="width:6.27014in;height:2.56458in" />
+
+Le nom DNS est automatiquement rempli
+
+<img src="./media/image282.png"
+style="width:1.90652in;height:0.59383in" />
+
+Choix de 2 points de restauration
+
+<img src="./media/image283.png"
+style="width:6.27014in;height:1.67639in" />
+
+Je ne choisis pas de créer une cache
+
+<img src="./media/image284.png"
+style="width:6.25087in;height:0.93763in" />
+
+J’ai laissé par défaut application-aware processing (traitement sensible
+aux applications)
+
+<img src="./media/image285.png"
+style="width:6.16753in;height:1.02098in" />
+
+J’ai choisi une sauvegarde par mois
+
+<img src="./media/image286.png"
+style="width:6.27014in;height:3.02014in" />
+
+Le récapitulatif
+
+<img src="./media/image287.png"
+style="width:2.46909in;height:2.21906in" />
+
+VEEAM lance son scan vers le client et installe l’agent si nécessaire
+
+<img src="./media/image288.png"
+style="width:3.62725in;height:3.01943in" />
+
+Début de la sauvegarde
+
+<img src="./media/image289.png"
+style="width:4.29355in;height:2.22547in" />
+
+Fin de la sauvegarde
+
+<img src="./media/image290.png"
+style="width:4.52421in;height:3.00394in" />
+
+### Restaurer d’un fichier
+
+#### Restaurer d’un fichier d’un VM Linux
+
+Pour tester la restauration d’un fichier, j’ai créé un fichier test.odt
+puis j’ai effectué une sauvegarde. Par la suite j’ai supprimé le fichier
+pour pouvoir restaurer à partir de la sauvegarde.
+
+<img src="./media/image291.png"
+style="width:3.7922in;height:0.96889in" />
+
+Choix restore
+
+<img src="./media/image292.png"
+style="width:3.80008in;height:1.17934in" />
+
+Choix guest files restore
+
+<img src="./media/image293.png"
+style="width:2.74506in;height:2.19248in" />
+
+<img src="./media/image294.png"
+style="width:6.27014in;height:0.67569in" />
+
+Choix de la machine virtuelle sur laquelle je veux restaurer le fichier
+supprimé.
+
+<img src="./media/image295.png"
+style="width:6.27014in;height:1.64653in" />
+
+Choix du point de restauration
+
+<img src="./media/image296.png"
+style="width:6.27014in;height:2.27083in" />
+
+Choix du linux serveur sur lequel on va « monter » notre VM debcli2
+
+Linux server \> Add
+
+<img src="./media/image297.png"
+style="width:6.27014in;height:2.17917in" />
+
+J’ai choisi comme helper host un Ubuntu serveur 22.04
+
+<img src="./media/image298.png"
+style="width:6.27014in;height:2.16736in" />
+
+Credentials \> Add \> Linux Account
+
+<img src="./media/image299.png"
+style="width:6.27014in;height:1.49583in" />
+
+<img src="./media/image300.png"
+style="width:2.57979in;height:2.45635in" />
+
+Choix **Oui**
+
+<img src="./media/image301.png"
+style="width:3.794in;height:0.86356in" />
+
+Les composants manquants seront automatiquement installés sur le Helper
+host
+
+<img src="./media/image302.png"
+style="width:6.27014in;height:2.33125in" />
+
+<img src="./media/image303.png"
+style="width:4.98367in;height:3.5436in" />
+
+Récapitulatif
+
+<img src="./media/image304.png"
+style="width:3.15669in;height:2.22948in" />
+
+On peut renseigner une raison pour laquelle on effectue une
+restauration.
+
+<img src="./media/image305.png"
+style="width:4.58987in;height:1.54182in" />
+
+Choix Browse
+
+<img src="./media/image306.png"
+style="width:3.92132in;height:2.62145in" />
+
+La sauvegarde linux a été correctement monté, on peut rechercher le
+fichier supprimé
+
+<img src="./media/image307.png"
+style="width:6.27014in;height:2.39444in" />
+
+J’ai effectué un clic droit sur le fichier à restaurer :
+
+<img src="./media/image308.png"
+style="width:6.27014in;height:0.59514in" />
+
+Restauration en cours
+
+<img src="./media/image309.png"
+style="width:5.90707in;height:1.93777in" />
+
+Restauration effectuée
+
+<img src="./media/image310.png"
+style="width:3.70112in;height:3.06054in" />
+
+Je me suis reconnecté sur le client **debcli01** pour vérifier si la
+restauration a bien été effectué.
+
+<img src="./media/image311.png"
+style="width:5.19864in;height:0.59383in" />
+
+Le fichier a été correctement restauré. Une fois la fenêtre fermée, le
+client est automatiquement démonté du serveur.
+
+<img src="./media/image312.png"
+style="width:6.27014in;height:2.03125in" />
+
+#### Restaurer d’un fichier d’un VM Windows
+
+Je supprime un fichier du dossier téléchargement
+
+<img src="./media/image313.png"
+style="width:5.31462in;height:1.19136in" />
+
+Choix Restore
+
+<img src="./media/image314.png"
+style="width:3.47201in;height:1.10004in" />
+
+Choix Guest files restore
+
+<img src="./media/image315.png"
+style="width:4.18808in;height:0.70843in" />
+
+Choix Microsoft Windows
+
+<img src="./media/image316.png"
+style="width:5.83415in;height:0.83345in" />
+
+J’ai choisi la machine WINCLI01
+
+<img src="./media/image317.png"
+style="width:5.95443in;height:1.60055in" />
+
+<img src="./media/image318.png"
+style="width:5.94452in;height:1.69928in" />
+
+<img src="./media/image319.png"
+style="width:5.96849in;height:1.8152in" />
+
+Récapitulatif. J’ai cliqué sur **Browse**.
+
+<img src="./media/image320.png"
+style="width:4.86255in;height:3.42678in" />
+
+J’ai recherché le fichier manquant
+
+<img src="./media/image321.png"
+style="width:5.3309in;height:2.52877in" />
+
+J’ai choisi le fichier à restaurer
+
+<img src="./media/image322.png"
+style="width:6.27014in;height:1.03403in" />
+
+Le fichier a été correctement restauré
+
+<img src="./media/image323.png"
+style="width:4.28133in;height:3.54524in" />
+
+J’ai vérifié sur la VM si le fichier a bien été récupéré. Le fichier a
+été correctement restauré.
+
+<img src="./media/image324.png"
+style="width:6.27014in;height:1.28611in" />
+
+## Conclusion 
+
+VEEAM est un outil complet proposant une multitude de possibilité de
+sauvegarde. Il est très performant même dans sa version Community
+Edition. La restauration d’une VM entier actuellement n’est compatible
+qu’avec VMWare et HYPER-V mais pas des VM Proxmox.
+
+**TP Serveur Exchange t2sr.io**
+
+Par *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur Exchange**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration LDAP
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur Samba et impression : SRVU22SMBIMP 172.30.1.202/16
+
+- Client Debian 1 : clideb1 172.16.2.1/16
+
+### Documentation
+
+- <https://rdr-it.com/exchange2019-installation/2/>
+
+- 
+
+## Processus
+
+### Configuration deuxième contrôleur de domaine
+
+#### Fixer l’adresse IP
+
+<img src="./media/image325.png"
+style="width:2.80115in;height:3.21089in" />
+
+#### L’installation AD DNS
+
+Gérer / Installation rôles
+
+<img src="./media/image326.png"
+style="width:2.21494in;height:1.50979in" />
+
+<img src="./media/image327.png"
+style="width:3.75299in;height:2.41582in" />
+
+#### Entrer le serveur dans le domaine
+
+<img src="./media/image328.png"
+style="width:2.53014in;height:3.07652in" />
+
+<img src="./media/image329.png"
+style="width:3.13116in;height:2.23863in" />
+
+<img src="./media/image330.png"
+style="width:3.16711in;height:1.44812in" />
+
+#### Configuration contrôleur de domaine
+
+<img src="./media/image331.png"
+style="width:2.9292in;height:1.84095in" />
+
+<img src="./media/image332.png"
+style="width:3.91069in;height:2.87725in" />
+
+<img src="./media/image333.png"
+style="width:3.94032in;height:2.92786in" />
+
+<img src="./media/image334.png"
+style="width:4.7449in;height:3.49732in" />
+
+<img src="./media/image335.png"
+style="width:4.74283in;height:3.47584in" />
+
+### Installation Microsoft Exchange
+
+#### Prérequis
+
+Installation Microsoft Visual C++ 2013
+
+<img src="./media/image336.png"
+style="width:3.79825in;height:2.35811in" />
+
+Installation des fonctionnalités sur Windows serveur
+
+Exécuter la commande suivante en Powershell
+
+Install-WindowsFeature Server-Media-Foundation,
+NET-Framework-45-Features, RPC-over-HTTP-proxy, RSAT-Clustering,
+RSAT-Clustering-CmdInterface, RSAT-Clustering-Mgmt,
+RSAT-Clustering-PowerShell, WAS-Process-Model, Web-Asp-Net45,
+Web-Basic-Auth, Web-Client-Auth, Web-Digest-Auth, Web-Dir-Browsing,
+Web-Dyn-Compression, Web-Http-Errors, Web-Http-Logging,
+Web-Http-Redirect, Web-Http-Tracing, Web-ISAPI-Ext, Web-ISAPI-Filter,
+Web-Lgcy-Mgmt-Console, Web-Metabase, Web-Mgmt-Console, Web-Mgmt-Service,
+Web-Net-Ext45, Web-Request-Monitor, Web-Server, Web-Stat-Compression,
+Web-Static-Content, Web-Windows-Auth, Web-WMI,
+Windows-Identity-Foundation, RSAT-ADDS
+
+<img src="./media/image337.png"
+style="width:6.26129in;height:1.0939in" />
+
+#### Installation Microsoft Exchange ISO
+
+Exécution Setup an tant Administrateur
+
+<img src="./media/image338.png"
+style="width:6.27014in;height:4.80417in" />
+
+<img src="./media/image339.png"
+style="width:6.27014in;height:2.85486in" />
+
+<img src="./media/image340.png"
+style="width:4.38941in;height:3.29363in" />
+
+<img src="./media/image341.png" style="width:5.98in;height:2.42742in" />
+
+<img src="./media/image342.png"
+style="width:5.30282in;height:2.1253in" />
+
+<img src="./media/image343.png"
+style="width:5.48794in;height:2.13889in" />
+
+<img src="./media/image344.png"
+style="width:5.51204in;height:2.34181in" />
+
+<img src="./media/image345.png"
+style="width:5.48094in;height:4.6669in" />
+
+Installation complémentaire des prérequis nécessaires :
+
+- .Net Framework 4.8
+
+- Microsoft Unified Communications Managed API 4.0, Core Runtime 64-Bit
+
+- URL Rewrite (module de réécriture d’URL IIS)
+
+<img src="./media/image346.png"
+style="width:6.27014in;height:5.36875in" />
+
+<img src="./media/image347.png"
+style="width:6.27014in;height:2.34167in" />
+
+<img src="./media/image348.png"
+style="width:4.25415in;height:3.81925in" />
+
+#### Configuration du serveur
+
+Configuration langue et l’heure
+
+<img src="./media/image349.png"
+style="width:6.27014in;height:4.45764in" />
+
+<img src="./media/image350.png"
+style="width:6.27014in;height:3.64931in" />
+
+Créer une boite à lettre
+
+<img src="./media/image351.png"
+style="width:5.57769in;height:1.96569in" />
+
+Parcourir
+
+<img src="./media/image352.png"
+style="width:2.42506in;height:3.0256in" />
+
+<img src="./media/image353.png"
+style="width:2.57456in;height:3.46258in" />
+
+<img src="./media/image354.png"
+style="width:2.56659in;height:2.76541in" />
+
+<img src="./media/image355.png"
+style="width:6.27014in;height:2.20139in" />
+
+#### Configurer Outlook
+
+Ouvrir application Outlook
+
+<img src="./media/image356.png"
+style="width:2.52224in;height:2.85428in" />
+
+Choix exchange
+
+<img src="./media/image357.png"
+style="width:2.49078in;height:2.80528in" />
+
+<img src="./media/image358.png"
+style="width:3.75972in;height:2.52874in" />
+
+J’ai installé les certificats
+
+<img src="./media/image359.png"
+style="width:2.74425in;height:3.5195in" />
+
+J’ai envoyé un message test entre deux compte Outlook
+
+<img src="./media/image360.png" style="width:6.27014in;height:2.45in" />
+
+L’échange de mail fonctionne correctement.
+
+#### Accès à Webmail
+
+Je me suis rendu avec le client linux sur l’adresse
+<https://srv-w19-exc/owa/>
+
+<img src="./media/image361.png"
+style="width:3.68508in;height:1.615in" />
+
+Un fois les accès renseignés, j’accède aux mails
+
+<img src="./media/image362.png"
+style="width:3.66552in;height:2.58442in" />
+
+#### Configuration la messagerie avec Thunderbird
+
+Tout d’abords il faut démarrer et laisser en mode automatique le service
+IMAP4 sur le serveur exchange
+
+<img src="./media/image363.png"
+style="width:3.52132in;height:4.44854in" />
+
+Les paramètres de ma configuration
+
+<img src="./media/image364.png"
+style="width:1.74204in;height:1.01717in" />
+
+Puis configuration manuelle
+
+<img src="./media/image365.png"
+style="width:3.11458in;height:4.22407in" />
+
+Puis cliqué sur terminer
+
+J’ai confirmé l’exception de sécurité
+
+<img src="./media/image366.png"
+style="width:4.70363in;height:2.80455in" />
+
+<img src="./media/image367.png"
+style="width:2.62384in;height:2.98735in" />
+
+<img src="./media/image368.png"
+style="width:6.27014in;height:2.05556in" />
+
+Thunderbird est ainsi configuré.
+
+## Conclusion
+
+Le serveur de messagerie est fonctionnel, néanmoins Thunderbird ne
+récupère pas automatiquement le carnet d’adresse. Cela nécessiterait un
+abonnement 365 office.
+
+**Serveur d’impression t2sr.io**
+
+Par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur d’impression**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation d’un serveur d’impression sur linux (SAMBA).
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.28.0.0/16
+
+- Serveur SRV-UBU-SMB(SAMBA) : 172.28.1.202
+
+### Documentation
+
+- <http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d%27impression#:~:text=sur%20le%20serveur-,Principe,connect%C3%A9es%20en%20direct%20au%20serveur>).
+
+- 
+
+## Processus
+
+Pour l’installation nous avons utilisé le VM serveur de fichier ou SAMBA
+est déjà installé.
+
+### Configuration CUPS
+
+apt install cups cups-client
+
+Sauvegarder le fichier de configuration CUPS avant de le modifier :
+
+cp /etc.cups/cupsd.conf /etc.cups/cupsd.conf.bkp
+
+Le fichier cupsd.conf
+
+<img src="./media/image369.png"
+style="width:4.47979in;height:1.17725in" />
+
+<img src="./media/image370.png"
+style="width:3.84429in;height:4.44854in" />
+
+Ajout du serveur d’impression dans SAMBA
+
+nano /etc/samba.smb.conf
+
+<img src="./media/image371.png"
+style="width:5.92791in;height:2.95875in" />
+
+Redémarrer les services
+
+systemctl restart cups smbd nmdb
+
+L’administration du CUPS est accessible sur le port 631.
+
+<img src="./media/image372.png"
+style="width:6.27014in;height:2.79861in" />
+
+### Ajouter une imprimante
+
+<img src="./media/image373.png"
+style="width:4.79569in;height:2.89473in" />
+
+<img src="./media/image374.png"
+style="width:6.27014in;height:3.38611in" />
+
+<img src="./media/image375.png"
+style="width:3.78209in;height:2.31165in" />\*
+
+J’ai choisi une pilote générique, puis continuer
+
+<img src="./media/image376.png"
+style="width:2.61659in;height:2.71746in" />
+
+Choix PCL laser printer, puis ajouter une imprimante
+
+<img src="./media/image377.png"
+style="width:2.98717in;height:3.03604in" />
+
+<img src="./media/image378.png"
+style="width:2.49958in;height:0.68432in" />
+
+Pour tester, il suffit d’imprimer une page de test
+
+<img src="./media/image379.png"
+style="width:4.2366in;height:1.61365in" />
+
+### Ajouter une imprimante aux clients
+
+L’imprimante partagée est automatiquement reconnue sur le réseau :
+
+Linux
+
+<img src="./media/image380.png"
+style="width:3.9842in;height:1.36983in" />
+
+Windows
+
+<img src="./media/image381.png"
+style="width:2.70417in;height:1.70062in" />
+
+## Conclusion
+
+CUPS est un outil léger pour ajouter une imprimante en réseaux,
+néanmoins l’ajout de pilotes propriétaires peut être fastidieux.
+
+**Serveur GLPI t2sr.io**
+
+Par Pierre et *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur GLPI**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation d’un serveur GLPI sur un conteneur Debian 11.3.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.28.0.0/16
+
+- Serveur GLPI : 172.28.1.205
+
+### Documentation
+
+- <https://rdr-it.com/glpi-liaison-avec-un-active-directory/>
+
+- <https://www.youtube.com/watch?v=5cThhFcGwc0&t=4s>
+
+## Processus
+
+### Configuration du conteneur
+
+Ressources
+
+<img src="./media/image382.png"
+style="width:4.24017in;height:1.07307in" />
+
+Network
+
+<img src="./media/image383.png"
+style="width:6.27014in;height:0.23819in" />
+
+DNS
+
+<img src="./media/image384.png"
+style="width:2.96916in;height:0.80219in" />
+
+### Mise à jour et installation des paquets nécessaires
+
+*\# Mise à jour*  
+apt update && apt upgrade -y  
+  
+*\# Installation Apache2 Php et Mariadb*  
+apt install apache2 perl php mariadb-server -y
+
+Autoriser le serveur apache et mariadb pour se lancer au démarrage du
+l’ordinateur
+
+systemctl enable apache2 mariadb
+
+Installation des paquets nécessaires pour glpi
+
+apt install
+php-{ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2}
+-y
+
+\# Redémarrer le serveur apache
+
+systemctl restart apache2
+
+### Téléchargement du paquet GLPI 9.5.6
+
+wget github.com/glpi-project/glpi/releases/download/9.5.6/glpi-9.5.6.tgz
+
+Décompression du fichier dans l’emplacement prévu
+
+tar -xvf glpi-9.5.6.tgz -C /var/www/html/
+
+J’ai ensuite changé le propriétaire du dossier téléchargé et ajouter des
+droits
+
+chown -R www-data:www-data /var/www/html/glpi  
+chmod -R 775 /var/www/html/glpi
+
+### Création de la base de données
+
+mysql  
+create database glpi ;  
+create user glpi@localhost identified by ‘Azerty123+’ ;  
+grant all privileges on glpi.\* to glpi@localhost;
+
+flush privileges ;
+
+exit ;
+
+Je suis allé sur la page internet <http://172.28.1.212/glpi>
+
+<img src="./media/image385.png"
+style="width:6.27014in;height:1.86944in" />
+
+<img src="./media/image386.png"
+style="width:6.27014in;height:3.99861in" />
+
+<img src="./media/image387.png"
+style="width:6.27014in;height:2.49514in" />
+
+<img src="./media/image388.png"
+style="width:4.67107in;height:5.7518in" />
+
+Serveur SQL : localhost
+
+Utilisateur SQL : glpi
+
+Mot de passe SQL : glpi
+
+<img src="./media/image389.png"
+style="width:6.27014in;height:3.31875in" />
+
+<img src="./media/image390.png"
+style="width:6.27014in;height:3.04653in" />
+
+<img src="./media/image391.png"
+style="width:6.27014in;height:1.50556in" />
+
+<img src="./media/image392.png"
+style="width:6.27014in;height:2.11389in" />
+
+<img src="./media/image393.png"
+style="width:6.27014in;height:3.88125in" />
+
+<img src="./media/image394.png"
+style="width:6.27014in;height:3.02986in" />
+
+<img src="./media/image395.png"
+style="width:6.27014in;height:2.68681in" />
+
+<img src="./media/image396.png"
+style="width:3.70885in;height:3.7922in" />
+
+### Installation du version GLPI 10.0.2
+
+wget
+github.com/glpi-project/glpi/releases/download/9.5.6/glpi-10.0.2.tgz
+
+Les étapes restantes sont identiques à l’étape précédente.
+
+Je suis allé sur la page internet <http://127.0.0.1/glpi>
+
+<img src="./media/image397.png"
+style="width:4.74418in;height:1.54059in" />
+
+<img src="./media/image398.png"
+style="width:4.77564in;height:3.10424in" />
+
+<img src="./media/image399.png"
+style="width:4.82015in;height:1.93521in" />
+
+<img src="./media/image400.png"
+style="width:6.27014in;height:5.81736in" />
+
+Une extension est absente
+
+<img src="./media/image401.png"
+style="width:6.27014in;height:0.53472in" />
+
+J’ai installé extension
+
+apt install php7.4-gd
+
+systemctl restart apache2
+
+J’ai réessayé la configuration
+
+<img src="./media/image402.png"
+style="width:6.27014in;height:0.92778in" />
+
+La configuration est correcte 
+
+<img src="./media/image403.png"
+style="width:6.27014in;height:0.55833in" />
+
+C’est avertissement n’est pas bloquante
+
+<img src="./media/image404.png"
+style="width:6.27014in;height:0.73472in" />
+
+<img src="./media/image405.png"
+style="width:5.54408in;height:3.31024in" />
+
+<img src="./media/image406.png"
+style="width:5.08718in;height:3.44479in" />
+
+<img src="./media/image407.png"
+style="width:6.27014in;height:2.21875in" />
+
+<img src="./media/image408.png"
+style="width:4.37904in;height:3.99832in" />
+
+<img src="./media/image409.png"
+style="width:3.67727in;height:2.23104in" />
+
+<img src="./media/image410.png"
+style="width:4.31776in;height:2.20073in" />
+
+<img src="./media/image411.png"
+style="width:4.31847in;height:3.02326in" />
+
+<img src="./media/image412.png"
+style="width:6.27014in;height:3.47708in" />
+
+### Connecter le serveur GLPI avec une Active Directory
+
+Menu Configuration \> Authentification
+
+<img src="./media/image413.png"
+style="width:1.5137in;height:2.97476in" />
+
+Annuaire LDAP, puis ajouter
+
+<img src="./media/image414.png"
+style="width:2.79947in;height:2.05887in" />
+
+<img src="./media/image415.png"
+style="width:6.27014in;height:0.36181in" />
+
+Nous avons utilisé cette configuration :
+
+<img src="./media/image416.png"
+style="width:6.2407in;height:4.78645in" />
+
+OU administrateurs contient l’ensemble des utilisateurs qu’on souhaite
+importer. Un fois la configuration faite, nous pouvons la tester :
+
+<img src="./media/image417.png"
+style="width:6.27014in;height:1.19444in" />
+
+<img src="./media/image418.png"
+style="width:6.27014in;height:1.03889in" />
+
+Importer les utilisateurs
+
+Administration \> Utilisateurs \> Liaison annuaire LDAP
+
+<img src="./media/image419.png"
+style="width:6.27014in;height:0.85972in" />
+
+Puis importation de nouveaux utilisateurs \> Rechercher
+
+<img src="./media/image420.png"
+style="width:6.27014in;height:1.13681in" />
+
+J’ai sélectionné les utilisateurs, puis importer.
+
+<img src="./media/image421.png"
+style="width:5.50518in;height:2.15354in" />
+
+#### Installation plugin fusioninventory sur GLPI 9.5.6
+
+Pour pallier le problème du lien entre OCS inventory et GLPI, j’ai
+installé le plugin fusioninventory sur GLPI 9.5.6. Au moment de la
+rédaction du document, fusioninventory n’est pas compatible avec GLPI
+10.0.2.
+
+Installation du plugin
+
+wget
+https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.5%2B4.2
+
+J’ai décompressé le fichier dans /var/www/html/plugins
+
+Puis installé avec la commande suivante :
+
+php bin/console glpi:plugin:install --username=glpi fusioninventory  
+php bin/console glpi:plugin:activate fusioninventory
+
+Accueil \> Configuration \> Plugins
+
+<img src="./media/image422.png"
+style="width:6.27014in;height:1.67639in" />
+
+Accueil \> Administration \> Entités \> Entité racine \> Fusioninventory
+
+<img src="./media/image423.png"
+style="width:6.27014in;height:3.06944in" />
+
+### Installation fusioninventory agent sur linux
+
+apt install -y fusioninventory-agent
+
+J’ai modifié le fichier **/etc/fusioninventory/agent.cfg**
+
+<img src="./media/image424.png"
+style="width:5.43826in;height:0.38547in" />
+
+systemctl restart fusioninventory-agent.service
+
+#### Forcer la synchronisation du l’agent
+
+Pour vérifier que le plugin fonctionne correctement, on peut se rendre
+sur sa page d’accueil dans un navigateur.
+
+[http://localhost :62354](http://localhost :62354)
+
+<img src="./media/image425.png"
+style="width:6.27014in;height:3.59653in" />
+
+Pour forcer la synchronistation je suis allé sur le site
+
+<http://localhost:62354/now>
+
+Ce message d’erreur apparut
+
+<img src="./media/image426.png"
+style="width:5.19864in;height:0.94805in" />
+
+J’ai modifié le fichier **/etc/fusioninventory/agent.cfg**
+
+<img src="./media/image427.png"
+style="width:4.25059in;height:0.41672in" />
+
+systemctl restart fusioninventory-agent.service
+
+<img src="./media/image428.png"
+style="width:4.45252in;height:0.90166in" />
+
+<img src="./media/image429.png"
+style="width:6.27014in;height:0.99375in" />
+
+### Installation fusioninventory agent sur Windows
+
+J’ai téléchargé l’installateur sur le site de GitHub
+
+<https://github.com/fusioninventory/fusioninventory-agent/releases/tag/2.6>
+
+<img src="./media/image430.png"
+style="width:2.96916in;height:1.58355in" /><img src="./media/image431.png"
+style="width:3.01798in;height:2.33318in" />
+
+<img src="./media/image432.png"
+style="width:2.97044in;height:2.29643in" /><img src="./media/image433.png"
+style="width:2.99842in;height:2.32605in" />
+
+<img src="./media/image434.png"
+style="width:3.08173in;height:2.37964in" /><img src="./media/image435.png"
+style="width:3.10219in;height:2.39062in" />
+
+<img src="./media/image436.png"
+style="width:3.05119in;height:2.36973in" /><img src="./media/image437.png"
+style="width:3.15734in;height:2.46068in" />
+
+<img src="./media/image438.png"
+style="width:2.93893in;height:2.29046in" /><img src="./media/image439.png"
+style="width:2.92579in;height:2.26513in" />
+
+<img src="./media/image440.png"
+style="width:3.06827in;height:2.40234in" /><img src="./media/image441.png"
+style="width:2.99915in;height:2.32734in" />
+
+<img src="./media/image442.png"
+style="width:2.98284in;height:2.31799in" />
+<img src="./media/image443.png"
+style="width:3.01747in;height:2.34083in" />
+
+<img src="./media/image444.png"
+style="width:6.27014in;height:0.85903in" />
+
+<img src="./media/image445.png"
+style="width:6.27014in;height:1.87708in" />
+
+<img src="./media/image446.png"
+style="width:6.27014in;height:1.91111in" />
+
+## Conclusion
+
+L’installation du serveur GLPI est correctement déroulée sur un
+conteneur Debian 11.3 ainsi que l’intégration du l’agent fusion
+inventory.
+
+**Serveur partage de fichier SAMBA**
+
+Par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur partage de fichier SAMBA**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration LDAP
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s :
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur Samba et impression : SRV-UBU-SMB 172.28.1.202/16
+
+- Client Debian 1 : clideb1 172.28.2.1/16
+
+### Documentation :
+
+- <https://linuxfr.org/news/creation-d-un-serveur-de-fichiers-sous-ubuntu#toc-introduction>
+
+- 
+
+## Processus
+
+### Installation
+
+J’ai créé une sauvegarde en faisant :
+
+sudo cp /etc/netplan/00-installer-config.yaml
+/etc/netplan//00-installer-config.yaml.bkp
+
+Dans le fichier /etc/netplan/00-installer-config.yaml
+
+<img src="./media/image447.png"
+style="width:3.69843in;height:1.88568in" />
+
+\$ sudo netplan apply
+
+#### Installation des logiciels d’authentification sur le domaine
+
+sudo apt install acl realmd libnss-winbind winbind
+
+#### Créer l’espace de stockage des partages
+
+<img src="./media/image448.png"
+style="width:6.27083in;height:1.89583in" />
+
+Création nouvelle partition
+
+<img src="./media/image449.png"
+style="width:6.27014in;height:2.99306in" />
+
+Créer le groupe de volumes LVM
+
+vgcreate samba /dev/sdb1
+
+<img src="./media/image450.png"
+style="width:6.27014in;height:0.98681in" />
+
+### Joindre la machine virtuelle au domaine
+
+#### Installer Kerberos
+
+sudo apt install krb5-user
+
+<img src="./media/image451.png"
+style="width:6.27014in;height:1.82569in" />
+
+<img src="./media/image452.png"
+style="width:6.27014in;height:1.42986in" />
+
+<img src="./media/image453.png"
+style="width:6.27014in;height:1.475in" />
+
+On a édité le fichier /etc/krb5.conf
+
+<img src="./media/image454.png"
+style="width:3.17434in;height:0.44991in" />
+
+<img src="./media/image455.png"
+style="width:3.58383in;height:0.91679in" />
+
+<img src="./media/image456.png"
+style="width:2.74731in;height:2.27296in" />
+
+#### Installation SAMBA
+
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y samba
+
+Modifier le fichier /etc/samba/smb.conf
+
+<img src="./media/image457.png"
+style="width:5.42019in;height:3.73692in" />
+
+<img src="./media/image458.png"
+style="width:3.6776in;height:2.11488in" />
+
+sudo apt install -y ntp
+
+On a modifié le fichier /etc/ntp.conf comme suite :
+
+Redémarrer ntp et smbd
+
+service ntp restart  
+service smbd restart
+
+Nous avons rentré notre serveur samba dans le domaine
+
+<img src="./media/image459.png"
+style="width:6.27014in;height:0.30694in" />
+
+service winbind restart
+
+#### Configurer NSS
+
+Nous avons modifié le fichier /etc/nsswitch.conf
+
+<img src="./media/image460.png"
+style="width:2.63926in;height:0.43341in" />
+
+Pour vérifier si tout est fonctionnel jusqu’au présent
+
+<img src="./media/image461.png"
+style="width:3.81182in;height:2.66828in" />
+
+#### Préparation PAM
+
+<img src="./media/image462.png"
+style="width:5.90707in;height:0.73969in" />
+
+pam-auth-update
+
+<img src="./media/image463.png"
+style="width:6.27014in;height:1.62083in" />
+
+Nous avons sélectionné **Non**.
+
+Nous avons modifié le fichier /etc/pam.d/common-auth
+
+<img src="./media/image464.png"
+style="width:6.27014in;height:0.57292in" />
+
+Nous avons modifié le fichier /etc/pam.d/common-password
+
+<img src="./media/image465.png"
+style="width:6.27014in;height:0.43889in" />
+
+Nous avons modifié le fichier /etc/pam.d/common-session
+
+<img src="./media/image466.png"
+style="width:6.27014in;height:1.17708in" />
+
+Configuration du fuseau horaire (choix France/Paris)
+
+sudo dpkg-reconfigure tzdata
+
+sudo reboot
+
+Vérification espace de partage disponible
+
+sudo vgdisplay \> vgdisplay.txt  
+vim vgdisplay.txt
+
+<img src="./media/image467.png"
+style="width:4.13081in;height:2.74686in" />
+
+Création du partage
+
+<img src="./media/image468.png"
+style="width:4.06307in;height:0.89596in" />
+
+Création du volume logique
+
+<img src="./media/image469.png"
+style="width:6.27014in;height:0.59167in" />
+
+Formatage de la partition
+
+<img src="./media/image470.png"
+style="width:6.27014in;height:2.05139in" />
+
+#### Montage du volume logique
+
+Récupération ID du disque
+
+<img src="./media/image471.png"
+style="width:6.27014in;height:1.49583in" />
+
+Nous avons ajouté le fichier /etc/fstab pour un montage automatique
+
+<img src="./media/image472.png"
+style="width:6.27014in;height:0.26389in" />
+
+Montage de toutes les partitions et vérifier le montage
+
+<img src="./media/image473.png"
+style="width:6.27014in;height:1.57083in" />
+
+Retirer l’espace réservé pour root (inutile)
+
+<img src="./media/image474.png"
+style="width:6.27014in;height:0.72431in" />
+
+#### Définition des droits d’accès avec les ACL
+
+<img src="./media/image475.png"
+style="width:6.27014in;height:1.39514in" />
+
+Création d’un groupe sur l’Active Directory
+
+En prévision des définitions ACL j’ai créé un groupe nommé **partage**
+sur l’AD
+
+<img src="./media/image476.png"
+style="width:6.27014in;height:4.41944in" />
+
+Puis j’ai ajouté deux membres
+
+<img src="./media/image477.png"
+style="width:3.8311in;height:1.88428in" />
+
+Définition ACL sur la racine du partage
+
+Attention ! T2SR\\**partage** – partage correspond au nom groupe
+précédemment créé
+
+<img src="./media/image478.png"
+style="width:6.27014in;height:0.30139in" />
+
+Définition ACL par défaut du partage
+
+<img src="./media/image479.png"
+style="width:6.27014in;height:0.22222in" />
+
+#### Modification du Samba
+
+<img src="./media/image480.png"
+style="width:3.01084in;height:1.60439in" />
+
+Redémarrage le service Samba
+
+sudo systemctl restart smbd
+
+#### Test partage avec un client Debian
+
+\+ Autre emplacements
+
+<img src="./media/image481.png"
+style="width:2.82963in;height:2.96936in" />
+
+Nous avons renseigné le dossier partage
+
+<img src="./media/image482.png"
+style="width:6.27014in;height:0.33056in" />
+
+Si le fichier /etc/hosts est bien renseigné, on peut se connecter par le
+nom aussi
+
+<img src="./media/image483.png"
+style="width:6.27014in;height:0.23958in" />
+
+<img src="./media/image484.png"
+style="width:3.30857in;height:2.40569in" />
+
+<img src="./media/image485.png"
+style="width:2.70052in;height:1.25457in" />
+
+<img src="./media/image486.png"
+style="width:4.84663in;height:2.37386in" />
+
+<img src="./media/image487.png"
+style="width:6.27014in;height:1.00208in" />
+
+## Conclusion
+
+La mise en place d’un serveur de partage est complexe si on souhaite
+synchroniser les accès et droits avec un Active Directory.
+
+**Serveur Zabbix**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur Zabbix**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un serveur Zabbix
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur FreepBX : SRV-UBU-ZBX 172.28.1.210/16
+
+### Documentation :
+
+\- <https://www.zabbix.com/>
+
+\- <https://repo.zabbix.com/zabbix/6.0/>
+
+## Processus
+
+### Installation de Zabbix
+
+Nous avons créé une VM avec l’ISO de Zabbix 6.0 LTS puis lancé
+l’installation
+
+<img src="./media/image488.png"
+style="width:4.89652in;height:3.35463in" />
+
+L’installation se déroule automatiquement
+
+<img src="./media/image489.png"
+style="width:4.75463in;height:1.66825in" />
+
+Une fois l’installation est terminée, nous pouvons accéder à Zabbix via
+le navigateur web :
+
+<http://172.28.1.210/zabbix>
+
+Utilisateur par défaut : Admin
+
+Mot de passe par défaut : zabbix
+
+<img src="./media/image490.png"
+style="width:1.93335in;height:1.97538in" />
+
+### Ajouter un Host
+
+Dans la barre latérale Configuration \> Hôtes
+
+<img src="./media/image491.png"
+style="width:1.29947in;height:3.55807in" />
+
+Créer un hôte
+
+<img src="./media/image492.png"
+style="width:4.47811in;height:2.78636in" />
+
+L’installation de l’agent Zabbix sous Linux
+
+J’ai téléchargé la package zabbix correspondant à la VM depuis le site
+officiel :
+
+<img src="./media/image493.png"
+style="width:6.27014in;height:0.17361in" />
+
+Installation du package et démarrage du service
+
+<img src="./media/image494.png"
+style="width:4.34436in;height:1.06265in" />
+
+Modification du fichier de configuration :
+
+nano /etc/zabbix/zabbix_agentd.conf
+
+Server doit correspond à l’adresse ip du serveur zabbix.
+
+<img src="./media/image495.png"
+style="width:2.00028in;height:0.58341in" />
+
+Puis j’ai redémarré le service
+
+systemctl restart zabbix-agent
+
+Le serveur GLPI a correctement monté :
+
+<img src="./media/image496.png"
+style="width:6.27014in;height:0.36875in" />
+
+J’ai effectué les mêmes manipulations pour tous les serveurs de type
+linux.
+
+<img src="./media/image497.png"
+style="width:6.27014in;height:0.73889in" />
+
+### L’installation de l’agent Zabbix sous Windows
+
+J’ai téléchargé l’agent sur le site officiel correspondant à Windows:
+
+<https://www.zabbix.com/download_agents?version=6.0+LTS&release=6.0.7&os=Windows&os_version=Any&hardware=amd64&encryption=OpenSSL&packaging=MSI&show_legacy=0>
+
+<img src="./media/image498.png"
+style="width:3.69632in;height:2.88971in" />
+
+<img src="./media/image499.png"
+style="width:3.67987in;height:3.06947in" />
+
+<img src="./media/image500.png"
+style="width:3.73568in;height:2.91046in" />
+
+Menu Configuration \> Hôte \> Ajouter
+
+<img src="./media/image501.png"
+style="width:6.27014in;height:3.69028in" />
+
+Environ 60s plus tard le serveur ajouté devient disponible
+
+<img src="./media/image502.png"
+style="width:6.27014in;height:0.18542in" />
+
+### Le tableau de bord
+
+<img src="./media/image503.png"
+style="width:5.03392in;height:3.42099in" />
+
+Les serveurs surveillés
+
+<img src="./media/image504.png"
+style="width:6.27014in;height:1.80903in" />
+
+## Conclusion
+
+La configuration du serveur Zabbix avec le déploiement des agents est
+terminée.
+
+**  
+**
+
+**TrueNAS**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **TrueNAS**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un serveur TrueNAS
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur SRV-NAS : SRV-PBX-VOIP 172.28.1.209/16
+
+### Documentation :
+
+- <https://www.truenas.com/>
+
+## Processus
+
+### Installation de trueNAS
+
+<img src="./media/image505.png" style="width:6.3in;height:3.8375in" />
+
+Je choisis la première option
+
+<img src="./media/image506.png" style="width:6.3in;height:1.98125in" />
+
+Je choisis la première option
+
+<img src="./media/image507.png"
+style="width:5.8654in;height:1.96902in" />
+
+Je sélectionne le disque sur lequel l’os va s’installé
+
+<img src="./media/image508.png" style="width:6.3in;height:2.13056in" />
+
+Je choisie « yes »
+
+<img src="./media/image509.png"
+style="width:4.83401in;height:1.88568in" />
+
+Je met un mot de passe au compte root
+
+<img src="./media/image510.png" style="width:6.3in;height:1.3875in" />
+
+Je choisie de boot en BIOS, puis j’attends la fin de l’installation
+
+<img src="./media/image511.png" style="width:6.3in;height:1.06042in" />
+
+Je redémarre le serveur NAS
+
+<img src="./media/image512.png"
+style="width:3.30254in;height:3.04209in" />
+
+Je configure l’adresse IP du NAS en sélectionnant l’option 1, puis je
+suis les instructions.
+
+J’ai aussi configuré les routes statiques et l’adresse de DNS.
+
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p><img src="./media/image513.png"
+style="width:2.025in;height:2.49653in" />Je tape l’adresse IP du serveur
+NAS pour accéder à sa page web de gestion et je me connecte avec
+l’utilisateur root.</p>
+<p>Ci-dessous l’interface web.</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="./media/image514.png"
+style="width:4.3748in;height:3.36405in" /></td>
+</tr>
+</tbody>
+</table>
+
+### Création d’un volume de stockage + dataset
+
+Dans le menu à gauche dans **Stockage** \> **Volumes**.
+
+<img src="./media/image515.png"
+style="width:2.13623in;height:0.8886in" />
+
+Je créer un nouveau volume.
+
+<img src="./media/image516.png"
+style="width:4.64094in;height:0.98374in" />
+
+<img src="./media/image517.png"
+style="width:4.63745in;height:2.27579in" />
+
+Je nome le nouveau volume et je sélectionne les disques disponibles qui
+y seront rattaché.
+
+<img src="./media/image518.png"
+style="width:4.63996in;height:3.17105in" />
+
+Pour le TP nous avons ajouté un troisième disque a notre serveur qui est
+externe en USB.
+
+<img src="./media/image519.png"
+style="width:6.44872in;height:4.7747in" />
+
+Je sélectionne un seconde fois le disque et je force la création du
+VDevs du volume.
+
+| <img src="./media/image520.png"             
+ style="width:2.65542in;height:1.23069in" />  | <img src="./media/image521.png"             
+                                               style="width:3.27299in;height:1.23524in" />  |
+|---------------------------------------------|---------------------------------------------|
+
+A deux reprises j’ai un message me demandant si je suis sûr d’effectuer
+la manipulation, chose que je confirme.
+
+<img src="./media/image522.png"
+style="width:2.68788in;height:1.92735in" />
+
+Le volume est en cours de création, cela peut prendre plusieurs minutes.
+
+Une fois le volume créer, je créer mes dataset.
+
+<img src="./media/image523.png"
+style="width:5.4049in;height:2.40039in" />
+
+J’ai créé deux dataset, ISO et BACKUP avec la même configuration.
+
+<img src="./media/image524.png"
+style="width:4.32793in;height:3.36664in" />
+
+**!** Il faut changer le type de partage en SMB **!**
+
+<img src="./media/image525.png" style="width:6.3in;height:1.70139in" />
+
+Mes deux dataset son créer.
+
+### Mise en place du partage Windows (SMB)
+
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="./media/image526.png"
+style="width:2.20278in;height:2.70972in" />Dans le menu à gauche,<br />
+<strong>Partage</strong> &gt; <strong>SMB</strong>.</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+Je créer un partage pour chaque dataset que j’ai créé dans le volume
+t2sr_storage.
+
+<img src="./media/image527.png"
+style="width:6.31228in;height:2.77206in" />
+
+<img src="./media/image528.png" style="width:6.3in;height:1.14861in" />
+
+Mes deux partages sont créés et activé.
+
+### NAS et AD
+
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="./media/image529.png"
+style="width:0.82986in;height:1.18819in" />Dans le menu à gauche,<br />
+<strong>Services d’annuaire</strong> &gt; <strong>Active
+Directory</strong>.</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+Je renseigne les informations pour joindre le domaine.
+
+| <img src="./media/image530.png"             
+ style="width:3.19355in;height:1.78924in" />  | Cela permet au NAS de connaitre les utilisateurs de l’AD et leur permet de se connecter à lui sans devoir passer par un compte local propre au NAS. |
+|---------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+
+### TEST + Conclusion
+
+Je me connecte au partage :
+
+| <img src="./media/image531.png"             
+ style="width:2.63458in;height:1.94254in" />  | <img src="./media/image532.png"             
+                                               style="width:2.63096in;height:1.94393in" />  |
+|---------------------------------------------|---------------------------------------------|
+| <img src="./media/image533.png"             
+ style="width:2.7608in;height:0.94805in" />   |                                             |
+| <img src="./media/image534.png"             
+ style="width:5.19621in;height:1.5427in" />   |                                             |
+
+Connection au partage réussi.
+
+**Serveur LAMP**
+
+**Linux – Apache – MariaDB - PHP**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur LAMP**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un serveur LAMP.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur CT-DEB-WEB : 172.28.1.208/16
+
+### Documentation :
+
+Un serveur LAMP c’est quoi ?
+
+<img src="./media/image535.png"
+style="width:1.632in;height:0.86203in" />
+
+Fonctionnement de l’arborescence d’apache
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="./media/image536.png"
+style="width:2.02609in;height:2.50827in" /></th>
+<th><p>Il y a deux arborescences à prendre en compte :</p>
+<ul>
+<li><p>/var/www/</p></li>
+</ul>
+<blockquote>
+<p>De préférence, il est recommandé de placer les sites internet à cet
+endroit. Celui par défaut d’apache est le dossier html, c’est le fichier
+index.html qui est visé et afficher lorsque je tape l’adresse du
+serveur.</p>
+<p>Pour le TP j’ai rajouté un second dossier avec les fichiers
+nécessaire pour un site internet.</p>
+</blockquote>
+<ul>
+<li><p>/etc/apache2 :</p></li>
+</ul>
+<blockquote>
+<p>C’est là que ce trouve les fichiers conf qui constitue le service
+web.</p>
+<p>Le fichier chuck-norris.conf est représenté car il est utilisé dans
+le cadre du TP pour montrer la mise en place d’un site (<a
+href="#rendre-disponible-une-page-web">cf.</a>).</p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<img src="./media/image537.png" style="width:6.3in;height:2.46458in" />
+
+Illustration des éléments prendre en compte dans /etc/apache2
+
+Il y a dans apache une notion de fichier « **disponible** » et
+« **actif** », les fichiers conf dit *disponible* doivent être activé
+pour être consultable sur le navigateur internet (sans avoir a tapé
+l’URL).
+
+Par exemple dans le cas du fichier 000-default.conf qui est disponible
+et activé, tout changement édité sur le fichier dans un des deux
+dossiers sera effectué sur son homologue.
+
+## Processus
+
+### Installation d’Apache 2
+
+J’installe apache avec un module qui permet de gérer PHP.
+
+apt **install** apache2 libapache2-mod-php
+
+Je vérifier le bon fonctionnement du serveur web qui normalement renvoie
+la page d’accueil de apache2 (version Debian).
+
+<img src="./media/image538.png"
+style="width:5.08479in;height:3.50868in" />
+
+Je configure le service apache2 pour qu’il démarre automatiquement au
+démarrage du centenaire.
+
+systemctl enable apache2
+
+J’active des modules apaches :
+
+a2enmod rewrite  
+a2enmod deflate  
+a2enmod headers
+
+Puis je recharge la configuration avec la commande suivante :
+
+systemctl reload apache2
+
+Cette commande permet de recharger la configuration d’apache sans pour
+autant avoir besoin de relancer entièrement le service.
+
+Pour voir la liste des modules activé je vais dans /etc/apache2/modes
+enabled
+
+<img src="./media/image539.png" style="width:6.3in;height:0.85625in" />
+
+Comme on peut le voir avant et après l’activation de certains modules,
+le contenu du dossier a changé.
+
+### Installation de Php
+
+J’installe les packages de Php ainsi que les modules php les plus
+courants :
+
+apt **install** php php-cli  
+apt **install** php-{curl,gd,intl,memcache,xml,zip,mbstring,json}
+
+Pour interagir avec SQL :
+
+apt **install** php-mysql
+
+Pour tester le bon fonctionnement de Php je crée un fichier test.php
+
+**echo** "\<?php phpinfo(); ?\>" **\>** /var/www/html/test.php
+
+<img src="./media/image540.png" style="width:6.3in;height:0.84106in" />
+
+Dans la barre de recherche d’un navigateur je tape l’adresse de mon
+serveur web suivant de test.php, soit :
+
+http://172.28.1.206/test.php
+
+<img src="./media/image541.png" style="width:6.3in;height:1.816in" />
+
+Il s’agit de la page récapitulant la configuration de php (version
+7.4.30).
+
+Je peux éditer les options de PHP via le fichier
+***/etc/php/7.4/apache2/php.ini*** ou créer un fichier personnalisé dans
+***/etc/php/7.4/apache2/conf.d***.
+
+Mais je n’ai pas l’utilité de changer les options, je laisse donc php en
+configuration par défaut.
+
+### Installation de MariaDB (optionnel)
+
+Je choisis d’installer et utiliser MariaDB pour la base de données du
+serveur LAMP.
+
+MariaDB étant le fork<sup>1</sup> de mySQL, le fonctionnement de MariaDB
+fonctionnement est similaire a mySQL.
+
+> <sup>1</sup> <sup>Un fork (terme anglais signifiant « fourche », «
+> bifurcation », « embranchement ») désigne dans le jargon informatique,
+> un nouveau logiciel créé à partir du code source d'un logiciel
+> existant.</sup>
+
+J’installe le package :
+
+apt **install** mariadb-server
+
+Je démarre l’installation :
+
+mysql_secure_installation
+
+Change the root password? \[Y/n\] **Y**  
+New password: **Azerty123+**  
+Re-enter new password: **Azerty123+**  
+*Password updated successfully!*  
+Remove anonymous users? \[Y/n\] **Y**  
+Disallow root login remotely? \[Y/n\] **Y**  
+Remove test database and access to it? \[Y/n\] **Y**  
+Reload privilege tables now? \[Y/n\] **Y**
+
+Pour entrer dans la base de données :
+
+<img src="./media/image542.png" style="width:6.3in;height:1.63403in" />
+
+Création d’un utilisateur admin.
+
+<img src="./media/image543.png" style="width:6.3in;height:1.07014in" />
+
+J’active mariaDB au démarrage :
+
+<img src="./media/image544.png" style="width:6.3in;height:0.32569in" />
+
+### Rendre disponible une page web
+
+Je dois créer un fichier conf contenant le virtualhosts du site
+chuck-norris à mettre en place.
+
+Exemple avec le fichier 000-default.conf :
+
+<img src="./media/image545.png"
+style="width:4.93037in;height:3.3217in" />
+
+nano /etc/apache2/sites-available/chuck-norris.conf
+
+Fichier chuck-norris.conf créer :
+
+<img src="./media/image546.png"
+style="width:3.47965in;height:2.10446in" />
+
+En suite avec la commande suivante j’active le site :
+
+**a2ensite** chuck-norris
+
+**a2dissite** pour le désactivé
+
+Puis je recharge apache 2 :
+
+**systemctl** reload apache2
+
+### Vérification de l’activation du site
+
+Apache par défaut cherche automatiquement un fichier index.html à
+afficher.
+
+Ceci est propre à la configuration du réseau de production sur lequel je
+suis, cependant il faut bien renseigner le DNS pour rendre accessible le
+site sans avoir a tapé l’adresse IP.
+
+<img src="./media/image547.png"
+style="width:4.95903in;height:0.39589in" />
+
+Le CNAME est ***www*** car il est renseigné ainsi dans le virtualhost du
+fichier chuck-norris.conf :
+
+<img src="./media/image548.png"
+style="width:2.71913in;height:0.47923in" />
+
+Je n’aborderai pas dans cette documentation la possibilité du faire du
+multisites sur ce service web.
+
+Je renseigne l’adresse du site et vérifie sa disponibilité.
+
+<img src="./media/image549.png" style="width:6.3in;height:4.46389in" />
+
+La page est bien chargée et affichée, il ne s’agit que d’une page html
+basique afin de vérifier le bon fonctionnement du service web délivré
+par serveur LAMP sous conteneur.
+
+## Conclusion
+
+Le serveur LAMP est installé, configuré et
+
+**FreePBX**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **FreePBX**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un serveur FreepBX
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+- Routeur WIFI TP-LINK TL-WA801ND
+
+- 2 x tablettes sous LENOVO tab 7 essential sous android
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur FreepBX : SRV-PBX-VOIP 172.28.1.208/16
+
+### Documentation
+
+- <https://www.freepbx.org/>
+
+- <https://www.youtube.com/watch?v=Ef-ZNHMJ78k>
+
+- 
+
+## Processus
+
+### Installation VM FreePBX
+
+Je choisis l’installation recommandé
+
+<img src="./media/image550.png" style="width:5in;height:1.875in" />
+
+Je choisis le “graphic install – output to VGA” puis “FreePBX standard”
+
+<img src="./media/image551.png" style="width:5in;height:1.875in" />
+
+<img src="./media/image552.png" style="width:5in;height:1.85417in" />
+
+Pendant l’installation je configure le mdp root : “azerty123+”
+
+<img src="./media/image553.png" style="width:5in;height:1.29167in" />
+
+<img src="./media/image554.png" style="width:5in;height:1.39583in" />
+
+Je redémarré à la fin de l’installation
+
+Je me connecte
+
+<img src="./media/image555.png"
+style="width:2.92413in;height:0.8555in" />
+
+<img src="./media/image556.png"
+style="width:5.53202in;height:5.27157in" />
+
+J’ai ensuite modifié la langue du clavier en AZERTY :
+
+system-config-keyboard
+
+<img src="./media/image557.png"
+style="width:2.26791in;height:1.69286in" />
+
+Puis j’ai fixé l’adresse IP de la façon suivante :
+
+nano /etc/sysconfig/network-scripts/ifcfg-eth0
+
+<img src="./media/image558.png"
+style="width:5.89666in;height:3.30254in" />
+
+Redémarrage du service réseau
+
+systemctl restart network
+
+### Config FreePBX
+
+J’accède à la page de configuration sur l’adresse <http://172.28.1.208>
+
+Initial Setup
+
+<img src="./media/image559.png"
+style="width:5.51378in;height:3.18894in" />
+
+<img src="./media/image560.png" style="width:6.27014in;height:2.15in" />
+
+### FreePBX Administration
+
+Choix du langage (laissé en anglais)
+
+<img src="./media/image561.png"
+style="width:6.27014in;height:1.31736in" />
+
+Pour la configuration pare-feu j'ai laissé les paramètres par défaut.
+
+<img src="./media/image562.png"
+style="width:6.19375in;height:2.91667in" />
+
+<img src="./media/image563.png" style="width:5in;height:1.07292in" />
+
+Le pare feu passe en vert
+
+<img src="./media/image564.png"
+style="width:3.47917in;height:2.71806in" />
+
+### Interagir avec le firewall en ligne de commande
+
+Arrêter
+
+fwconsole firewall stop
+
+Démarrer
+
+fwconsole firewall start
+
+Ajouter une zone de confiance
+
+fwconsole firewall trust 172.28.0.0/16
+
+Retirer une adresse de confiance
+
+fwconsole firewall untrust 172.28.2.3/32
+
+Lister les adresses de confiance
+
+fwconsole firewall list trusted
+
+### Ajouter des utilisateurs par extension (non liée à l’Active Directory)
+
+Menu Application \> Extension \> Add Extention
+
+<img src="./media/image565.png"
+style="width:6.27014in;height:1.28403in" />
+
+Add new SIP
+
+<img src="./media/image566.png"
+style="width:2.68317in;height:1.54593in" />
+
+J’ai ajout user extension 1001 puis cliqué sur **Submit**. (Répéter la
+manipulation par utilisateur)
+
+<img src="./media/image567.png"
+style="width:6.27014in;height:4.38819in" />
+
+Les deux utilisateurs peuvent désormais communiquer
+
+<img src="./media/image568.png"
+style="width:6.27014in;height:1.38542in" />
+
+### Relier FreePBX avec l’Active Directory
+
+Menu \> User Manager \> Directory \> Add
+
+<img src="./media/image569.png"
+style="width:6.27014in;height:3.1875in" />
+
+<img src="./media/image570.png"
+style="width:6.27014in;height:0.82014in" />
+
+<img src="./media/image571.png"
+style="width:6.27014in;height:2.64722in" />
+
+Dans l’exemple, les numéros d’appels sont automatiquement récupérés
+depuis l’AD.
+
+<img src="./media/image572.png"
+style="width:3.75636in;height:3.96305in" />
+
+Les postes sont automatiquement créés
+
+<img src="./media/image573.png"
+style="width:6.27014in;height:1.62708in" />
+
+Mettre l’Active Directory par défaut
+
+Menu User Manager choix par défaut
+
+<img src="./media/image574.png"
+style="width:6.27014in;height:2.39792in" />
+
+### Editer les comptes utilisateurs
+
+Menu Applications \> Extentions \> Choix Utilisteur
+
+<img src="./media/image575.png"
+style="width:5.84571in;height:3.88592in" />
+
+On peut attribuer un mot de passe par défaut ou changer la langue dans
+le menu général.
+
+### Voicemail
+
+Accéder sur le téléphone par le bouton enveloppe ou sur une application
+en composant **\*97.**
+
+Pour appeler depuis un autre téléphone, appeler \*98 et suivez les
+instructions.
+
+<img src="./media/image576.png"
+style="width:6.27014in;height:1.90347in" />
+
+Mot de passe pour le répondeur : 1234
+
+NB : Il faut configurer le répondeur du premier appel.
+
+## Conclusion
+
+L’installation et la configuration basique du serveur FreePBX s’est bien
+déroulée.
+
+**OCS Inventory**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+# **Serveur OCS**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un serveur OCS Inventory dur un
+    containeur Debian 11.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur OCS : CT-DEB-GLPI 172.28.1.205/16 (colocalisé avec GLPI)
+
+### Documentation
+
+- <https://www.infotrucs.fr/tuto-installer-glpi-et-ocsinventory-sous-debian-11-sans-erreur/>
+
+## Processus
+
+### Installation et configuration des prérequis
+
+### Installation Apache2
+
+apt update
+
+apt install apache2 -y  
+systemctl enable apache2
+
+Création la configuration fqdn
+
+nano /etc/apache2/conf-available/fqdn.conf  
+*\# remplissez hostname*  
+ServerName CT-DEB-GLPI  
+a2enconf fqdn  
+systemctl reload apache2
+
+Installation Php
+
+apt install php -y
+
+Créer index.php
+
+nano /var/www/html/index.php  
+  
+*\# le contenu du fichier*  
+\< ?php  
+Phpinfo() ;  
+?\>
+
+Vérifiez dans le navigateur
+
+<http://172.28.1.211/index.php>
+
+<img src="./media/image577.png"
+style="width:6.27014in;height:3.60417in" />
+
+Supprimer les fichiers inutiles
+
+rm /var/www/html/index.php
+
+systemctl restart apache2
+
+### Installation Mariadb
+
+apt install mariadb-server mariadb-client -y
+
+systemctl enable mariadb.service
+
+Création de la base de données
+
+mariadb -u root
+
+<img src="./media/image578.png"
+style="width:6.27014in;height:3.1875in" />
+
+### Installation OCS Inventory
+
+apt install apache2-dev libmariadb-dev-compat php-soap cpanminus
+libnet-ssleay-perl libio-socket-ssl-perl -y
+
+cpan install YAML *\# répondre yes*
+
+cpan install –f CPAN *\# répondre yes*
+
+cpan install XML::Simple Compress::Zlib DBI DBD::mysql Apache::DBI
+Net::IP Archive::Zip XML::Entities
+
+apt install libxml-simple-perl libperl5.32 libdbi-perl libdbd-mysql-perl
+libapache-dbi-perl libnet-ip-perl libsoap-lite-perl libarchive-zip-perl
+make build-essential php-pclzip php-mbstring php-mysql php-curl php-xml
+php-zip php-gd -y
+
+cpan install Apache2::SOAP  
+cpan install Mojolicious::Lite Switch Plack::Handler
+
+### Installation du serveur
+
+J’ai téléchargé ocsinventory sur ce site :
+download.ocsinventory-ng.org/nightly
+
+cd /tmp  
+wget
+http://download.ocsinventory-ng.org/nightly/OCSNG_UNIX_SERVER_2.10.0-nightly-2022-08-19.tar.gz
+
+tar xzf OCSNG_UNIX_SERVER_2.10.0-nightly-2022-08-19.tar.gz  
+cd OCSNG_UNIX_SERVER
+
+systemctl restart apache2  
+sh setup.sh \## Tapez entrée à chaque question
+
+### Configuration du serveur OCS
+
+nano /etc/apache2/conf-available/z-ocsinventory-server.conf
+
+J’ai modifié ses deux lignes pour faire correspond avec la configuration
+de notre base de données
+
+<img src="./media/image579.png"
+style="width:3.49007in;height:0.56258in" />
+
+nano /etc/apache2/conf-available/zz-ocsinventory-restapi.conf
+
+<img src="./media/image580.png"
+style="width:3.20878in;height:0.40631in" />
+
+chown root:www-data /var/lib/ocsinventory-reports  
+chmod 775 /var/lib/ocsinventory-reports
+
+### Activation de la configuration de OCS
+
+a2enconf z-ocsinventory-server  
+a2enconf ocsinventory-reports  
+a2enconf zz-ocsinventory-restapi
+
+systemctl restart apache2
+
+On accède aux restes des configurations via le navigateur
+
+<http://172.28.1.205/ocsreports>
+
+<img src="./media/image581.png"
+style="width:6.27014in;height:4.11944in" />
+
+OCS va peupler la base de données
+
+<img src="./media/image582.png"
+style="width:6.27014in;height:0.79375in" />
+
+<img src="./media/image583.png"
+style="width:6.27014in;height:0.61389in" />
+
+J’ai cliqué sur « **Click here to enter OCS-NG GUI »** 
+
+<img src="./media/image584.png"
+style="width:6.27014in;height:0.99097in" />
+
+J’ai cliqué sur « **perform the update »**
+
+<img src="./media/image585.png"
+style="width:6.27014in;height:1.21736in" />
+
+Choix de langue en français login: admin, mdp. : admin
+
+<img src="./media/image586.png"
+style="width:6.27014in;height:5.18681in" />
+
+### Paramétrer OCS
+
+J’ai supprimé le fichier indiqué et crée un nouvel utilisateur avec un
+différente mot de passe.
+
+<img src="./media/image587.png"
+style="width:6.27014in;height:0.60208in" />
+
+Menu Configuration \> Utilisateurs \> Créer un utilisateur
+
+<img src="./media/image588.png"
+style="width:6.27014in;height:2.45347in" />
+
+<img src="./media/image589.png"
+style="width:6.27014in;height:0.65278in" />
+
+J’ai supprimé le compte créé par défaut
+
+<img src="./media/image590.png"
+style="width:6.27014in;height:0.46875in" />
+
+J’ai supprimé également le fichier install.php
+
+<img src="./media/image591.png"
+style="width:6.27014in;height:0.17222in" />
+
+Une fois la page rafraîchi, l’ALERTE SECURITE disparait.
+
+Menu Configuration \> General Configuration \> Serveur
+
+J’ai activé TRACE_DELETED (à cause de l’interconnexion avec GLPI)
+
+<img src="./media/image592.png"
+style="width:6.27014in;height:0.76389in" />
+
+### Configuration OCS avec GLPI 10.0.2
+
+J’ai créé un compte gratuit sur <https://services.glpi-network.com/>
+
+Ensuite j’ai copié la clé d’enregistrement
+
+<img src="./media/image593.png"
+style="width:6.29166in;height:1.76298in" />
+
+J’ai copié la clé dans
+
+Menu Configuration \> Générale \> GLPI Network
+
+<img src="./media/image594.png"
+style="width:6.27014in;height:3.21528in" />
+
+J’ai accédé GLPI marketplace et téléchargé le plugin OCS Inventory NG
+
+Configuration \> Plugins
+
+<img src="./media/image595.png"
+style="width:6.27014in;height:2.93264in" />
+
+J’ai cliqué sur configurer
+
+<img src="./media/image596.png"
+style="width:4.03181in;height:2.32324in" />
+
+Serveurs OCSNG
+
+<img src="./media/image597.png"
+style="width:5.59453in;height:1.05223in" />
+
+<img src="./media/image598.png"
+style="width:5.43826in;height:0.573in" />
+
+### Ajout serveur OCS
+
+<img src="./media/image599.png"
+style="width:4.10915in;height:3.82972in" />
+
+Tester
+
+<img src="./media/image600.png"
+style="width:6.27014in;height:1.63264in" />
+
+Menu Outils \> OCS Inventory NG
+
+<img src="./media/image601.png"
+style="width:6.27014in;height:2.35347in" />
+
+Cliqué sur
+
+<img src="./media/image602.png"
+style="width:4.38603in;height:1.31268in" />
+
+OCS est désormais lié, nous pouvons importer un inventaire.
+
+<img src="./media/image603.png" style="width:4.479in;height:2.2715in" />
+
+### Configuration SSL
+
+Création un dossier pour stocker le certificat
+
+mkdir /etc/apache2/ssl  
+*\# installation openssl si ce n’est pas déjà le cas*  
+apt install openssl
+
+Génération d’une clé RSA
+
+openssl genrsa 2048 \> /etc/apache2/ssl/gestparc.key
+
+Création du certificat
+
+openssl req -new -key /etc/apache2/ssl/gestparc.key -x509 -days 365 -out
+/etc/apache2/ssl/gestparc.crt
+
+A la question Common Name, j’ai mis : CT-DEB-GLPI
+
+Ensuite j’ai édité le fichier
+/etc/apache2/sites-available/default-ssl.conf
+
+<img src="./media/image604.png"
+style="width:5.24031in;height:0.51049in" />
+
+J’ai activé SSL
+
+a2enmod ssl  
+a2ensuite default-ssl  
+systemctl restart apache2
+
+J’accède à la page GLPI en https
+
+<img src="./media/image605.png"
+style="width:5.16739in;height:0.92721in" />
+
+### Installation OCS Inventory agent sur Windows
+
+J’ai téléchargé l’agent sur le site officiel :
+
+<https://github.com/OCSInventory-NG/WindowsAgent/releases/tag/2.9.2.0>
+
+J’ai installé l’agent
+
+<img src="./media/image606.png"
+style="width:5.46264in;height:1.46775in" />
+
+J’ai lancé l’installateur
+
+<img src="./media/image607.png"
+style="width:3.68007in;height:2.85981in" />
+
+<img src="./media/image608.png"
+style="width:3.63107in;height:2.8301in" />
+
+<img src="./media/image609.png"
+style="width:3.8079in;height:2.98478in" />
+
+<img src="./media/image610.png"
+style="width:3.7841in;height:2.92155in" />
+
+J’ai lancé l’installation
+
+<img src="./media/image611.png"
+style="width:3.71899in;height:2.86936in" />
+
+Ensuite j’ai copié le fichier gestparc.crt dans c:\ProgramData\OCS
+Inventory NG\Agent.
+
+Puis j’ai renommé en cacert.pem.
+
+<img src="./media/image612.png"
+style="width:4.36208in;height:2.33977in" />
+
+J’ai arrêté puis redémarré le service OCS Inventory
+
+<img src="./media/image613.png"
+style="width:2.87933in;height:3.64948in" />
+
+Notre client apparait dans OCS inventory
+
+<img src="./media/image614.png"
+style="width:6.27014in;height:0.21597in" />
+
+### Installation OCS Inventory agent sur Linux
+
+apt update
+
+apt install libmodule-install-perl dmidecode libxml-simple-perl
+libcompress-zlib-perl libnet-ip-perl libwww-perl libdigest-md5-perl
+libdata-uuid-perl
+
+apt install ocsinventory-agent
+
+**Choix http**
+
+J’ai rentré l’adresse de mon serveur OCS :
+<https://glpi-ocs.t2sr.io/ocsinventory>
+
+J’ai mis à jour le serveur (mis à jour manuel)
+
+ocsinventory-agent --server https://glpi-ocs.t2sr.io/ocsinventory
+
+J’ai modifié de manière que l’agent soit mis à jour par heure :
+
+mv /etc/cron.daily/ocsinventory-agent /etc/cron.hourly
+
+Le client Debian est bien arrivé sur OCS
+
+<img src="./media/image615.png"
+style="width:6.27014in;height:2.27778in" />
+
+### Importer l’inventaire dans GLPI 10.0.2
+
+Menu Outils \> OCS Inventroy NG \> Import de l’inventaire \> Importer et
+lier des ordinateurs
+
+<img src="./media/image616.png"
+style="width:6.27014in;height:1.91319in" />
+
+<img src="./media/image617.png"
+style="width:6.27014in;height:2.525in" />
+
+L’importation des ordinateurs ne s’est pas déroulée correctement. J’ai
+créé une issue sur la page GitHub du développeur.
+
+<https://github.com/pluginsGLPI/ocsinventoryng/issues/329>
+
+**  
+**
+
+**Site Web de documentation**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+**  
+**
+
+# **Site Web de documentation**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un site web documentaire.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur OCS : CT-DEB-WEB 172.28.1.206/16
+
+### Documentation
+
+- <https://www.sphinx-doc.org/en/master/>
+
+- 
+
+## Processus
+
+### Pandoc
+
+Je télécharge l’exécutable d’installation de Pandoc sur le site :
+<https://pandoc.org/installing.html>.
+
+Puis je l’exécute.
+
+#### Installation
+
+<img src="./media/image618.png"
+style="width:2.81658in;height:2.19958in" />
+
+J’accepte les thermes de la licence et j’installe Pandoc pour tous les
+utilisateurs
+
+<img src="./media/image619.png"
+style="width:2.81579in;height:2.22369in" /><img src="./media/image620.png"
+style="width:2.80833in;height:1.45108in" />
+
+J’attend la fin de l’installation.
+
+<img src="./media/image621.png"
+style="width:2.82569in;height:2.18689in" />
+
+Pandoc est bien installé sur mon système d’exploitation, pour l’utiliser
+il me suffit dans un cmd ou PowerShell de faire appel a lui parle biais
+de la commande *pandoc*.
+
+#### Conversion d’un docx en Markdown avec les images
+
+Je place le fichier docx : Cluster t2sr.io par Pierre et Zoltan ; dans
+un dossier sur lequel je vais travailler (dossier pandoc).
+
+Dans un cmd je me place dans mon dossier ou ce trouve mon fichier docx.
+Puis j’exécute la commande suivante :
+
+pandoc -o "Cluster t2sr.io par Pierre et Zoltan.md" --extract-media=./
+"Cluster t2sr.io par Pierre et Zoltan.md"
+
+<img src="./media/image622.png"
+style="width:2.63578in;height:0.91679in" />
+
+Pandoc va créer un dossier media avec toutes les images qui sont dans le
+docx ainsi qu’un fichier markdown où il modifie pour chaque image le
+chemin d’accès afin qu’elle soit affichée dans le fichier markdown
+lorsqu’il est compiler.
+
+Dans Visual Studio Code grâce a l’extension Markdown, je peux afficher
+des fichiers de cette extension et les compiler pour visualiser le
+rendu.
+
+<img src="./media/image623.png"
+style="width:3.56586in;height:2.36231in" />
+
+Voici le rendu du fichier markdown qui est beaucoup plus simple en mise
+en page.
+
+<img src="./media/image624.png" style="width:6.3in;height:2.83958in" />
+
+### Secure Copy Protocol
+
+Mon réseau de production étant 172.28.0.0/16, j’ai donné temporairement
+accès au réseau 192.168.0.0/26 avec un deuxième carte réseau à mon
+container WEB.
+
+<img src="./media/image625.png"
+style="width:4.44183in;height:2.74481in" />
+
+Depuis l’invite de commande de ma machine dans le réseau 192.168.0.0/26,
+sur lequel est hébergé mes fichiers de documentations.
+
+J’utilise la commande suivante :
+
+scp -r "doc t2sr.io" root@192.168.10.66:/root
+
+<img src="./media/image626.png" style="width:6.3in;height:1.41042in" />
+
+Sur mon container :
+
+<img src="./media/image627.png"
+style="width:5.15697in;height:0.3438in" />
+
+### Sphinx Python Documentation Generator
+
+#### Installation de pip
+
+Sur le serveur LAMP du container WEB qui a python3 j’ai installé le
+module pip (package installer for python).
+
+sudo apt install python3-pip
+
+Je vérifie la version de pip :
+
+<img src="./media/image628.png"
+style="width:5.94875in;height:0.35422in" />
+
+#### Documentation de sphinx
+
+<https://www.sphinx-doc.org/en/master/usage/installation.html>
+
+<https://www.sphinx-doc.org/en/master/tutorial/getting-started.html>
+
+#### Génération d’un projet avec sphinx
+
+Pour générer un site de documentation en HTML, j’utilise Sphinx.
+
+J’installe son package sur le container WEB
+
+apt-get install python3-sphinx
+
+je vérifie la version de sphinx :
+
+<img src="./media/image629.png"
+style="width:4.29227in;height:0.33338in" />
+
+Puis je créer l’arborescence d’un nouveau projet dans ***/var/www/*** :
+
+sphinx-quickstart docs
+
+<img src="./media/image630.png"
+style="width:5.7492in;height:3.94941in" />
+
+Une fois créer je vais générer une page html par défaut :
+
+sphinx-build -b html ./docs/source/ ./docs/build/html
+
+<img src="./media/image631.png"
+style="width:6.41511in;height:3.60143in" />
+
+Le dossier html a bien été généré avec son arborescence.
+
+<img src="./media/image632.png"
+style="width:3.00605in;height:4.9616in" />
+
+Je vérifie la page html généré dans un navigateur d’une VM de mon réseau
+de production.
+
+Pour ce faire je renseigne l’adresse suivante pour mon cas :
+
+<img src="./media/image633.png" style="width:6.3in;height:2.01806in" />
+
+#### Modifier le thème
+
+J’installe les packages du thème « Reads the Docs Sample » :
+
+pip **install** sphinx-rtd-theme
+
+<img src="./media/image634.png" style="width:6.3in;height:0.85625in" />
+
+Dans ***/var/www/docs/source*** je modifie la ligne « *html_theme =*
+**‘***alabaster***’** » dans le fichier conf.py
+
+<img src="./media/image635.png"
+style="width:3.87554in;height:0.39589in" />
+
+<img src="./media/image636.png"
+style="width:3.5403in;height:3.95466in" />
+
+Je replace la valeur **‘***alabaster***’** par :
+**‘***sphinx_rtd_theme***’**.
+
+Après avoir modifier le fichier dans la racine de docs
+(**/var/www/docs**) je fais cette commande pour générer un nouveau
+fichier html :
+
+**make html**
+
+<img src="./media/image637.png"
+style="width:6.08418in;height:3.75052in" />
+
+Je recharge la page html de mon navigateur internet :
+
+<img src="./media/image638.png" style="width:6.3in;height:2.6625in" />
+
+Le thème est appliqué correctement.
+
+#### Ajout du contenu au site de documentation (fichier markdown)
+
+J’installe recommonmark
+
+pip **install** --upgrade recommonmark
+
+<img src="./media/image639.png" style="width:6.3in;height:1.22847in" />
+
+Les deux sont des parser pour markdown
+
+J’édite le fichier conf.py dans ***/var/www/docs/source***
+
+<img src="./media/image640.png" style="width:6.3in;height:2.20347in" />
+
+Je place dans le dossier *source* les fichiers markdown
+
+<img src="./media/image641.png"
+style="width:6.57917in;height:0.52516in" />
+
+Puis j’édite le fichier **index.rst** situé a la racine de *source*
+
+<img src="./media/image642.png"
+style="width:1.99194in;height:2.18316in" />
+
+J’ai écrit les noms de mes fichier markdown dans le « **..
+toctree ::** »
+
+A la racine du dossier *docs* je fais la commande suivant pour généré de
+nouveau le site en html
+
+**make html**
+
+<img src="./media/image643.png" style="width:6.3in;height:2.49028in" />
+
+Puis je vérifie le site de documentation sur le navigateur :
+
+<img src="./media/image644.png" style="width:6.3in;height:5.14306in" />
+
+## Conclusion
+
+Le site de documentation est fonctionnel, cependant il faut faire
+attention à ce que les fichiers en markdown s’il y a de l’indexation
+avec des titres soit bien indexé et organisé.
+
+**PingCastle**
+
+par Pierre, *Zoltan***  
+  
+TSSR-2201**
+
+#  PingCastle
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation PingCastle pour auditer le serveur Active Directory.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VM’s:
+
+- Réseaux : 172.16.0.0/16
+
+- Le logiciel PingCastle est installé directement sur la VM du l’Active
+  Directory
+
+### Documentation
+
+- <https://www.it-connect.fr/comment-auditer-lactive-directory-avec-pingcastle/>
+
+- <https://techexpert.tips/fr/powershell-fr/powershell-renommer-un-fichier/>
+
+- <https://docs.microsoft.com/fr-fr/powershell/module/microsoft.powershell.management/?view=powershell-7.2>
+
+- <https://techexpert.tips/fr/windows-fr/gpo-creer-une-tache-planifiee/>
+
+- 
+
+## Processus
+
+### Téléchargement
+
+Lien de téléchargement :
+
+<https://www.pingcastle.com/download/>
+
+J’ai téléchargé l’archive et je l’ai extrait.
+
+<img src="./media/image645.png"
+style="width:4.75475in;height:2.45636in" />
+
+### Réalisation d’un audit AD
+
+J’exécute l’application *PingCastle.exe*
+
+<img src="./media/image646.png"
+style="width:5.12509in;height:1.97558in" />
+
+Je me place sur le premier choix et j’appuie sur la touche *Entrer*
+
+<img src="./media/image647.png"
+style="width:5.09184in;height:1.69443in" />
+
+PingCastle a reconnue le domaine t2sr.io, j’appuie donc de nouveau sur
+*Entrer* car il s’agit du choix par défaut.
+
+<img src="./media/image648.png"
+style="width:6.47919in;height:4.70227in" />
+
+L’audit prend quelques secondes à s’effectuer, une fois fini j’appuie
+sur *Entrer* et PingCastle se ferme.
+
+Deux fichiers ont été généré à la racine du dossier de PingCastle.
+
+<img src="./media/image649.png"
+style="width:5.77683in;height:1.19636in" />
+
+### Lecture du rapport de l’audit AD
+
+J’ouvre dans un navigateur le fichier *ad_hc_t2sr.io.html*
+
+<img src="./media/image650.png"
+style="width:4.89842in;height:3.16303in" />
+
+L’indicateur est élevé ce qui veux dire que l’AD n’est sécurisé comme il
+le devrait, cette note est normale étant donné que l’AD est proche d’une
+configuration par défaut, peut de sécurisation ont été fait dessus.
+
+Attention !  
+Ce compteur correspond à la note la plus élevé sur 4 catégories, dans
+notre cas il fait référence au compteur d’anomalies.
+
+<img src="./media/image651.png"
+style="width:4.92933in;height:2.77547in" />
+
+Grace au 4 compteur je peux situer les points de sécurité et les
+modifications à effectuer pour renforcer la sécurité générale de l’AD.
+
+- **Stale Object** : points de sécurité liés aux utilisateurs ou aux
+  ordinateurs
+
+- **Privileged Accounts** : points de sécurité liés aux comptes avec des
+  privilèges élevés (Administrateurs) du domaine Active Directory
+
+- **Trusts** : points de sécurité liés aux relations d'approbations
+  entre les domaines Active Directory
+
+- **Anomalies** : points de sécurité liés à d'autres aspects de la
+  configuration qui peuvent impacter la sécurité de votre annuaire
+
+> Juste en dessous des compteurs vient le tableau « **Risk Model** », il
+> permet de cerner les configurations auquel il faut porter attention.
+>
+> <img src="./media/image652.png"
+> style="width:4.81736in;height:3.74205in" />
+>
+> Ce qui est en blanc n’est pas dans la légende, cela veut dire :
+>
+> **Pas de problèmes tout est bon !**
+
+Ensuite vient les règles spécifiques catégories par catégories a modifié
+et à prendre en compte.
+
+> <img src="./media/image653.png"
+> style="width:4.08378in;height:3.6935in" />
+>
+> A savoir :
+>
+> Lorsque l’on exécute un audit AD avec PingCastle l’audit précédent est
+> écrasé !
+>
+> Il faut penser à sauvegarder les anciens audits.
+
+### Planifier un audit régulier de l’AD avec PingCastle
+
+J’ai créé un script PowerShell qui placé à la racine du Dossier de
+PingCastle permet de :
+
+Créer un dossier « ***auditBkp*** » s’il n’existe pas
+
+Exécuter un audit AD par le biais du PingCastle.exe
+
+Transférer les deux fichier html et xml dans le dossier ***auditBkp***
+et de les renommés en y ajoutant la date et l’heure lors de l’exécution
+de l’audit AD.
+
+Le script :
+
+<img src="./media/image654.png"
+style="width:6.31354in;height:2.47407in" />
+
+\$BkpPath = ".\auditBkp"  
+**If**(!(Test-Path \$BkpPath)){  
+New-Item -ItemType Directory -Force -Path \$BkpPath  
+}  
+  
+.\PingCastle.exe --server SRV-W19-AD.t2sr.io --healthcheck  
+  
+\$SourceFileHtmlPath = ".\ad_hc_t2sr.io.html"  
+\$SourceFileXmlPath = ".\ad_hc_t2sr.io.xml"  
+\$DateNow = Get-Date -Format "ddMMyyyyHHmm"  
+  
+\$FileHtml = "ad_hc_t2sr.io\_"+\$DateNow+".html"  
+\$FileXml = "ad_hc_t2sr.io\_"+\$DateNow+".xml"  
+  
+Move-Item -Path \$SourceFileHtmlPath
+-Destination.\auditBkp\\\$FileHtml  
+Move-Item -Path \$SourceFileXmlPath -Destination .\auditBkp\\\$FileXml
+
+Ce script est propre au réseau sur lequel je travaille (il s’agit d’un
+script PowerShell : **.ps1**).
+
+Pour m’aider j’ai consulté le « help » de PingCastle dans une invite de
+commande :
+
+.\PingCastle.exe --help
+
+<img src="./media/image655.png"
+style="width:5.90064in;height:4.05474in" />
+
+## Conclusion
+
+PingCastle est un outil très intéressant pour auditer l’Active Directory
+avant de sa mise en production.
