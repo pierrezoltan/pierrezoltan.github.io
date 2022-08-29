@@ -58,8 +58,7 @@ systemctl enable apache2 mariadb
 Installation des paquets nécessaires pour glpi
 ```bash
 apt install
-php-{ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2}
--y
+php-{ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2} -y
 # Redémarrer le serveur apache
 systemctl restart apache2
 ```
