@@ -7,7 +7,7 @@
   <title>Serveur WEB (LAMP) &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +18,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
@@ -143,8 +143,7 @@
 </colgroup>
 <thead>
 <tr class="header">
-<th><img src="./media/image550.png"
-style="width:2.02609in;height:2.50827in" /></th>
+<th><img src="./media/image550.png" style="width:2.02609in;height:2.50827in" /></th>
 <th><p>Il y a deux arborescences à prendre en compte :</p>
 <ul>
 <li><p>/var/www/</p></li>
@@ -192,7 +191,9 @@ dossiers sera effectué sur son homologue.</p>
 <section id="installation-dapache-2">
 <h3>Installation d’Apache 2<a class="headerlink" href="#installation-dapache-2" title="Lien permanent vers cette rubrique"></a></h3>
 <p>J’installe apache avec un module qui permet de gérer PHP.</p>
-<p>apt <strong>install</strong> apache2 libapache2-mod-php</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install apache2 libapache2-mod-php
+</pre></div>
+</div>
 <p>Je vérifier le bon fonctionnement du serveur web qui normalement renvoie
 la page d’accueil de apache2 (version Debian).</p>
 <p><img alt="_images/image552.png" src="_images/image552.png" /></p>
@@ -266,23 +267,26 @@ existant.</sup></p>
 </div>
 <p>Je démarre l’installation :</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql_secure_installation
-
-Change the root password? <span class="se">\[</span>Y/n<span class="se">\]</span> **Y**  
-New password: **Azerty123+**  
-Re-enter new password: **Azerty123+**  
-*Password updated successfully!*  
-Remove anonymous users? <span class="se">\[</span>Y/n<span class="se">\]</span> **Y**  
-Disallow root login remotely? <span class="se">\[</span>Y/n<span class="se">\]</span> **Y**  
-Remove <span class="nb">test</span> database and access to it? <span class="se">\[</span>Y/n<span class="se">\]</span> **Y**  
-Reload privilege tables now? <span class="se">\[</span>Y/n<span class="se">\]</span> **Y**
 </pre></div>
 </div>
+<blockquote>
+<div><p>Change the root password? [Y/n] Y<br />
+New password: __________<br />
+Re-enter new password: __________<br />
+Password updated successfully!<br />
+Remove anonymous users? [Y/n] Y<br />
+Disallow root login remotely? [Y/n] Y<br />
+Remove test database and access to it? [Y/n] Y<br />
+Reload privilege tables now? [Y/n] Y</p>
+</div></blockquote>
 <p>Pour entrer dans la base de données :</p>
 <img alt="_images/image556.png" src="_images/image556.png" />
 <p>Création d’un utilisateur admin.</p>
 <img alt="_images/image557.png" src="_images/image557.png" />
 <p>J’active mariaDB au démarrage :</p>
-<img alt="_images/image558.png" src="_images/image558.png" />
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> mariadb
+</pre></div>
+</div>
 <p><span id="_Rendre_disponible_une" class="anchor"></span></p>
 </section>
 <section id="rendre-disponible-une-page-web">
@@ -309,15 +313,23 @@ a2dissite pour le désactivé
 </section>
 <section id="verification-de-lactivation-du-site">
 <h3>Vérification de l’activation du site<a class="headerlink" href="#verification-de-lactivation-du-site" title="Lien permanent vers cette rubrique"></a></h3>
-<p>Apache par défaut cherche automatiquement un fichier index.html à
-afficher.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Apache par défaut cherche automatiquement un fichier index.html à afficher.</p>
+</div>
 <p>Ceci est propre à la configuration du réseau de production sur lequel je
 suis, cependant il faut bien renseigner le DNS pour rendre accessible le
 site sans avoir a tapé l’adresse IP.</p>
 <p><img alt="_images/image561.png" src="_images/image561.png" /></p>
 <p>Le CNAME est <em><strong>www</strong></em> car il est renseigné ainsi dans le virtualhost du
 fichier chuck-norris.conf :</p>
-<p><img alt="_images/image562.png" src="_images/image562.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>ServerName <a class="reference external" href="http://t2sr.io">t2sr.io</a></p></li>
+<li><p>ServerAlias <a class="reference external" href="http://www.t2sr.io">www.t2sr.io</a></p></li>
+</ul>
+</div>
 <p>Je n’aborderai pas dans cette documentation la possibilité du faire du
 multisites sur ce service web.</p>
 <p>Je renseigne l’adresse du site et vérifie sa disponibilité.</p>

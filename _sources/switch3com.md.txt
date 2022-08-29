@@ -4,7 +4,7 @@
 
 ### Objectif
 
-1.  Configurer un VLAN, ports trunk et tagg sur switch 3COM.
+Configurer un VLAN, ports trunk et tagg sur switch 3COM.
 
 ### Environnement
 
@@ -24,7 +24,6 @@ Adressage des VMS :
 
 - <https://www.manualslib.com/manual/232384/3com-5500g-Ei.html?page=19#manual>
 
-- 
 
 ## Processus
 

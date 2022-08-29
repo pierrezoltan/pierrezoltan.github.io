@@ -7,7 +7,7 @@
   <title>Serveur NAGIOS &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +18,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
@@ -117,9 +117,7 @@
 <h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
 <section id="objectif">
 <h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
-<ol class="arabic simple">
-<li><p>Installation NAGIOS sur un conteneur LXC de Proxmox.</p></li>
-</ol>
+<p>Installation NAGIOS sur un conteneur LXC de Proxmox.</p>
 </section>
 <section id="environnement">
 <h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
@@ -147,13 +145,9 @@
 <p>J’ai téléchargé Nagios sur le dépôt officielle, décompressé et lancé le
 script installation</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span>
-
 <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">assets</span><span class="o">.</span><span class="n">nagios</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">downloads</span><span class="o">/</span><span class="n">nagiosxi</span><span class="o">/</span><span class="n">xi</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-
 <span class="n">tar</span> <span class="n">xzf</span> <span class="n">xi</span><span class="o">-</span><span class="n">latest</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-
 <span class="n">cd</span> <span class="n">nagiosxi</span>
-
 <span class="o">./</span><span class="n">fullinstall</span>
 </pre></div>
 </div>
@@ -214,7 +208,6 @@ fonctionnalités facultatives</strong></p>
 <p>J’ai démarré le service avec une commande PowerShell et rendu démarrage
 automatique au lieu de manuel.</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Start-Service</span> <span class="n">-Name</span> <span class="s2">&quot;sshd&quot;</span>
-
 <span class="nb">Set-Service</span> <span class="n">-Name</span> <span class="s2">&quot;sshd&quot;</span> <span class="n">-StartupType</span> <span class="n">Automatic</span>
 </pre></div>
 </div>

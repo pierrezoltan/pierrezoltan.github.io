@@ -114,6 +114,12 @@ service smbd restart
 ```
 Nous avons rentré notre serveur samba dans le domaine
 
+<!--root@srv-ubu-smb:~#-->
+
+```
+net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io
+```
+
 <img src="./media/image472.png"
 style="width:6.27014in;height:0.18889in" />
 
@@ -177,16 +183,20 @@ Création du partage
 style="width:4.06307in;height:0.89596in" />
 
 Création du volume logique
+```bash
+lvcreate -n partage -L 9.9G samba
+```
+Retour de la commande :
+>Rounding up size to full physical extent 9.90 GiB
+>Logical volume "partage" created.
 
-<img src="./media/image482.png"
-style="width:6.26042in;height:0.59375in" />
 
 Formatage de la partition
 
 <img src="./media/image483.png"
 style="width:6.27083in;height:2.05208in" />
 
-#### Montage du volume logique
+### Montage du volume logique
 
 Récupération ID du disque
 
@@ -203,10 +213,11 @@ Montage de toutes les partitions et vérifier le montage
 <img src="./media/image486.png"
 style="width:5.07362in;height:1.64606in" />
 
-Retirer l’espace réservé pour root (inutile)
+```{tip}
+Retirer l’espace réservé pour root, inutile de le gardé dans notre cas.
 
-<img src="./media/image487.png"
-style="width:6.27083in;height:0.72917in" />
+<blockquote>tune2fs -m 0 /dev/mapper/samba-partage</blockquote>
+```
 
 #### Définition des droits d’accès avec les ACL
 
@@ -227,17 +238,19 @@ Puis j’ai ajouté deux membres
 style="width:3.8311in;height:1.88428in" />
 
 Définition ACL sur la racine du partage
-
-Attention ! T2SR\\**smbpartage** – partage correspond au nom groupe
+```
+setfacl -R -m g:"T2SR\smbpartage":rwx /home/partage
+```
+```{warning}
+T2SR\\**smbpartage** – partage correspond au nom groupe
 précédemment créé
-
-<img src="./media/image491.png"
-style="width:6.04251in;height:0.25003in" />
+```
 
 Définition ACL par défaut du partage
 
-<img src="./media/image492.png"
-style="width:6.16753in;height:0.16669in" />
+```
+setfacl -R -m d:g:"T2SR\smbpartage":rwx /home/partage
+```
 
 #### Modification du Samba
 
@@ -246,7 +259,9 @@ style="width:3.01084in;height:1.60439in" />
 
 Redémarrage le service Samba
 
+```bash
 sudo systemctl restart smbd
+```
 
 #### Test partage avec un client Debian
 

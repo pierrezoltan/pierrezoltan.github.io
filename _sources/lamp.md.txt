@@ -34,8 +34,7 @@ Fonctionnement de l’arborescence d’apache
 </colgroup>
 <thead>
 <tr class="header">
-<th><img src="./media/image550.png"
-style="width:2.02609in;height:2.50827in" /></th>
+<th><img src="./media/image550.png" style="width:2.02609in;height:2.50827in" /></th>
 <th><p>Il y a deux arborescences à prendre en compte :</p>
 <ul>
 <li><p>/var/www/</p></li>
@@ -87,7 +86,9 @@ dossiers sera effectué sur son homologue.
 
 J’installe apache avec un module qui permet de gérer PHP.
 
-apt **install** apache2 libapache2-mod-php
+```bash
+apt install apache2 libapache2-mod-php
+```
 
 Je vérifier le bon fonctionnement du serveur web qui normalement renvoie
 la page d’accueil de apache2 (version Debian).
@@ -176,16 +177,17 @@ apt install mariadb-server
 Je démarre l’installation :
 ```bash
 mysql_secure_installation
-
-Change the root password? \[Y/n\] **Y**  
-New password: **Azerty123+**  
-Re-enter new password: **Azerty123+**  
-*Password updated successfully!*  
-Remove anonymous users? \[Y/n\] **Y**  
-Disallow root login remotely? \[Y/n\] **Y**  
-Remove test database and access to it? \[Y/n\] **Y**  
-Reload privilege tables now? \[Y/n\] **Y**
 ```
+
+>Change the root password? [Y/n] Y  
+>New password: __________  
+>Re-enter new password: __________  
+>Password updated successfully!  
+>Remove anonymous users? [Y/n] Y  
+>Disallow root login remotely? [Y/n] Y  
+>Remove test database and access to it? [Y/n] Y  
+>Reload privilege tables now? [Y/n] Y
+
 Pour entrer dans la base de données :
 
 <img src="./media/image556.png" style="width:6.3in;height:1.63403in" />
@@ -195,8 +197,9 @@ Création d’un utilisateur admin.
 <img src="./media/image557.png" style="width:6.3in;height:1.07014in" />
 
 J’active mariaDB au démarrage :
-
-<img src="./media/image558.png" style="width:6.3in;height:0.32569in" />
+```bash
+systemctl enable mariadb
+```
 
 <span id="_Rendre_disponible_une" class="anchor"></span>
 
@@ -231,8 +234,9 @@ systemctl reload apache2
 ```
 ### Vérification de l’activation du site
 
-Apache par défaut cherche automatiquement un fichier index.html à
-afficher.
+```{note}
+Apache par défaut cherche automatiquement un fichier index.html à afficher.
+```
 
 Ceci est propre à la configuration du réseau de production sur lequel je
 suis, cependant il faut bien renseigner le DNS pour rendre accessible le
@@ -244,8 +248,10 @@ style="width:4.95903in;height:0.39589in" />
 Le CNAME est ***www*** car il est renseigné ainsi dans le virtualhost du
 fichier chuck-norris.conf :
 
-<img src="./media/image562.png"
-style="width:2.71913in;height:0.47923in" />
+```{note}
+- ServerName t2sr.io  
+- ServerAlias www.t2sr.io
+```
 
 Je n’aborderai pas dans cette documentation la possibilité du faire du
 multisites sur ce service web.

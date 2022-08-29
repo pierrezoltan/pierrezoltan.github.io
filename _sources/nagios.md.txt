@@ -5,7 +5,7 @@
 
 ### Objectif
 
-1.  Installation NAGIOS sur un conteneur LXC de Proxmox.
+Installation NAGIOS sur un conteneur LXC de Proxmox.
 
 ### Environnement
 
@@ -31,13 +31,9 @@ J’ai téléchargé Nagios sur le dépôt officielle, décompressé et lancé l
 script installation 
 ```
 cd /tmp
-
 wget https://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
-
 tar xzf xi-latest.tar.gz
-
 cd nagiosxi
-
 ./fullinstall
 ```
 ### Finalisation du l’installation
@@ -158,7 +154,6 @@ J’ai démarré le service avec une commande PowerShell et rendu démarrage
 automatique au lieu de manuel.
 ```powershell
 Start-Service -Name "sshd"
-
 Set-Service -Name "sshd" -StartupType Automatic
 ```
 J’ai vérifié à ce que ça soit bien démarré

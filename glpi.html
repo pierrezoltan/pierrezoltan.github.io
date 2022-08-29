@@ -7,7 +7,7 @@
   <title>Serveur GLPI &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +18,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
@@ -124,9 +124,7 @@
 <h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
 <section id="objectif">
 <h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
-<ol class="arabic simple">
-<li><p>L’installation d’un serveur GLPI sur un conteneur Debian 11.3.</p></li>
-</ol>
+<p>L’installation d’un serveur GLPI sur un conteneur Debian 11.3.</p>
 </section>
 <section id="environnement">
 <h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
@@ -163,7 +161,6 @@
 <h3>Mise à jour et installation des paquets nécessaires<a class="headerlink" href="#mise-a-jour-et-installation-des-paquets-necessaires" title="Lien permanent vers cette rubrique"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mise à jour</span>
 apt update <span class="o">&amp;&amp;</span> apt upgrade -y  
-  
 <span class="c1"># Installation Apache2 Php et Mariadb  </span>
 apt install apache2 perl php mariadb-server -y
 </pre></div>
@@ -175,11 +172,8 @@ l’ordinateur</p>
 </div>
 <p>Installation des paquets nécessaires pour glpi</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install
-php-<span class="o">{</span>ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2<span class="o">}</span>
--y
-
+php-<span class="o">{</span>ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2<span class="o">}</span> -y
 <span class="c1"># Redémarrer le serveur apache</span>
-
 systemctl restart apache2
 </pre></div>
 </div>
@@ -206,9 +200,7 @@ chmod -R <span class="m">775</span> /var/www/html/glpi
 create database glpi <span class="p">;</span>  
 create user glpi@localhost identified by ‘Azerty123+’ <span class="p">;</span>  
 grant all privileges on glpi.<span class="se">\*</span> to glpi@localhost<span class="p">;</span>
-
 flush privileges <span class="p">;</span>
-
 <span class="nb">exit</span> <span class="p">;</span>
 </pre></div>
 </div>
@@ -217,11 +209,12 @@ flush privileges <span class="p">;</span>
 <p><img alt="_images/image399.png" src="_images/image399.png" /></p>
 <p><img alt="_images/image400.png" src="_images/image400.png" /></p>
 <p><img alt="_images/image401.png" src="_images/image401.png" /></p>
-<blockquote>
-<div><p>Serveur SQL : localhost</p>
-<p>Utilisateur SQL : glpi</p>
-<p>Mot de passe SQL : glpi</p>
-</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Serveur SQL : <strong>localhost</strong>
+Utilisateur SQL : <strong>glpi</strong>
+Mot de passe SQL : <strong>glpi</strong></p>
+</div>
 <p><img alt="_images/image402.png" src="_images/image402.png" /></p>
 <p><img alt="_images/image403.png" src="_images/image403.png" /></p>
 <p><img alt="_images/image404.png" src="_images/image404.png" /></p>
@@ -244,7 +237,7 @@ flush privileges <span class="p">;</span>
 <p><img alt="_images/image413.png" src="_images/image413.png" /></p>
 <p>Une extension est absente</p>
 <p><img alt="_images/image414.png" src="_images/image414.png" /></p>
-<p>J’ai installé extension</p>
+<p>J’ai installé l’extension gd</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install php7.4-gd
 systemctl restart apache2
 </pre></div>
@@ -312,7 +305,10 @@ php bin/console glpi:plugin:activate fusioninventory
 </pre></div>
 </div>
 <p>J’ai modifié le fichier <strong>/etc/fusioninventory/agent.cfg</strong></p>
-<p><img alt="_images/image437.png" src="_images/image437.png" /></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>send tasks results to a FusionInventory <span class="k">for</span> GLPI server
+<span class="go">server = http://127.0.0.1/glpi/plugins/fusioninvnetory/</span>
+</pre></div>
+</div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart fusioninventory-agent.service
 </pre></div>
 </div>
@@ -327,7 +323,10 @@ sur sa page d’accueil dans un navigateur.</p>
 <p>Ce message d’erreur apparut</p>
 <p><img alt="_images/image439.png" src="_images/image439.png" /></p>
 <p>J’ai modifié le fichier <strong>/etc/fusioninventory/agent.cfg</strong></p>
-<p><img alt="_images/image440.png" src="_images/image440.png" /></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>trust requests without authentification token
+<span class="go">httpd-trust = 127.0.0.1,localhost</span>
+</pre></div>
+</div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart fusioninventory-agent.service
 </pre></div>
 </div>

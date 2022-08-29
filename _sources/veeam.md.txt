@@ -4,7 +4,7 @@
 
 ### Objectif
 
-1.  Installation Veeam backup sur une VM Windows Serveur 2019
+Installation Veeam backup sur une VM Windows Serveur 2019
 
 ### Environnement
 

@@ -7,7 +7,7 @@
   <title>Serveur pfSense &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +18,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
@@ -128,11 +128,7 @@
 <h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
 <section id="objectif">
 <h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
-<ol class="arabic simple">
-<li><p>Installer et configurer pfSense CE 2.6.0 en tant que pare-feu, proxy
-et portail captif. Il sera également le serveur DHCP de la
-plateforme.</p></li>
-</ol>
+<p>Installer et configurer pfSense CE 2.6.0 en tant que pare-feu, proxy et portail captif. Il sera également le serveur DHCP de la plateforme.</p>
 </section>
 <section id="environnement">
 <h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
@@ -190,10 +186,11 @@ plateforme.</p></li>
 <section id="configuration-du-pfsense">
 <h3>Configuration du pfSense<a class="headerlink" href="#configuration-du-pfsense" title="Lien permanent vers cette rubrique"></a></h3>
 <p>La VM pfSense est accessible sur l’adresse 172.28.1.254/16</p>
-<blockquote>
-<div><p>Login par défaut : admin</p>
-<p>Password par défaut : pfsense</p>
-</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Login par défaut : <strong>admin</strong>
+Password par défaut : <strong>pfsense</strong></p>
+</div>
 <p><img alt="_images/image162.png" src="_images/image162.png" /></p>
 <section id="configuration-generale">
 <h4>Configuration générale<a class="headerlink" href="#configuration-generale" title="Lien permanent vers cette rubrique"></a></h4>
@@ -287,13 +284,12 @@ peuvent administrer pfSense.</p>
 <p><img alt="_images/image200.png" src="_images/image200.png" /></p>
 <p>Test avec le client Linux</p>
 <p>J’ai créé un dossier pour accueillir notre certificat</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir /usr/local/share/ce-certificates/t2sr
-
-cp t2sr_ssl_cert.crt /usr/local/share/ce-certificates/t2sr
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir /usr/local/share/ce-certificates/t2sr</span>
+<span class="go">cp t2sr_ssl_cert.crt /usr/local/share/ce-certificates/t2sr</span>
 </pre></div>
 </div>
 <p>J’ai installé le certificat</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>update-ca-certificates
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">update-ca-certificates</span>
 </pre></div>
 </div>
 <p><img alt="_images/image201.png" src="_images/image201.png" /></p>

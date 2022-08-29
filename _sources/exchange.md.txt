@@ -4,7 +4,7 @@
 
 ### Objectif
 
-1.  L’installation d’un serveur exchange 2019.
+L’installation d’un serveur exchange 2019.
 
 ### Environnement
 
@@ -59,6 +59,7 @@ style="width:3.79825in;height:2.35811in" />
 Installation des fonctionnalités sur Windows serveur
 
 Exécuter la commande suivante en Powershell
+
 ```powershell
 Install-WindowsFeature Server-Media-Foundation,
 NET-Framework-45-Features, RPC-over-HTTP-proxy, RSAT-Clustering,
