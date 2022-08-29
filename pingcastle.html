@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html class="writer-html5" lang="fr" >
 <head>
@@ -289,4 +290,297 @@ avant de sa mise en production.</p>
 
 
 </body>
+=======
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PingCastle &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="Serveur OCS" href="ocs.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>PingCastle</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#telechargement">Téléchargement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#realisation-dun-audit-ad">Réalisation d’un audit AD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lecture-du-rapport-de-laudit-ad">Lecture du rapport de l’audit AD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planifier-un-audit-regulier-de-lad-avec-pingcastle">Planifier un audit régulier de l’AD avec PingCastle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>PingCastle</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pingcastle.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="pingcastle">
+<h1><strong>PingCastle</strong><a class="headerlink" href="#pingcastle" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<ol class="arabic simple">
+<li><p>L’installation PingCastle pour auditer le serveur Active Directory.</p></li>
+</ol>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.16.0.0/16</p></li>
+<li><p>Le logiciel PingCastle est installé directement sur la VM du l’Active
+Directory</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.it-connect.fr/comment-auditer-lactive-directory-avec-pingcastle/">https://www.it-connect.fr/comment-auditer-lactive-directory-avec-pingcastle/</a></p></li>
+<li><p><a class="reference external" href="https://techexpert.tips/fr/powershell-fr/powershell-renommer-un-fichier/">https://techexpert.tips/fr/powershell-fr/powershell-renommer-un-fichier/</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/fr-fr/powershell/module/microsoft.powershell.management/?view=powershell-7.2">https://docs.microsoft.com/fr-fr/powershell/module/microsoft.powershell.management/?view=powershell-7.2</a></p></li>
+<li><p><a class="reference external" href="https://techexpert.tips/fr/windows-fr/gpo-creer-une-tache-planifiee/">https://techexpert.tips/fr/windows-fr/gpo-creer-une-tache-planifiee/</a></p></li>
+<li></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="telechargement">
+<h3>Téléchargement<a class="headerlink" href="#telechargement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Lien de téléchargement :</p>
+<p><a class="reference external" href="https://www.pingcastle.com/download/">https://www.pingcastle.com/download/</a></p>
+<p>J’ai téléchargé l’archive et je l’ai extrait.</p>
+<p><img alt="_images/image659.png" src="_images/image659.png" /></p>
+</section>
+<section id="realisation-dun-audit-ad">
+<h3>Réalisation d’un audit AD<a class="headerlink" href="#realisation-dun-audit-ad" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’exécute l’application <em>PingCastle.exe</em></p>
+<p><img alt="_images/image660.png" src="_images/image660.png" /></p>
+<p>Je me place sur le premier choix et j’appuie sur la touche <em>Entrer</em></p>
+<p><img alt="_images/image661.png" src="_images/image661.png" /></p>
+<p>PingCastle a reconnu le domaine <a class="reference external" href="http://t2sr.io">t2sr.io</a>, j’appuie donc de nouveau sur
+<em>Entrer</em> car il s’agit du choix par défaut.</p>
+<p><img alt="_images/image662.png" src="_images/image662.png" /></p>
+<p>L’audit prend quelques secondes à s’effectuer, une fois fini j’appuie
+sur <em>Entrer</em> et PingCastle se ferme.</p>
+<p>Deux fichiers ont été généré à la racine du dossier de PingCastle.</p>
+<p><img alt="_images/image663.png" src="_images/image663.png" /></p>
+</section>
+<section id="lecture-du-rapport-de-laudit-ad">
+<h3>Lecture du rapport de l’audit AD<a class="headerlink" href="#lecture-du-rapport-de-laudit-ad" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ouvre dans un navigateur le fichier <em>ad_hc_t2sr.io.html</em></p>
+<p><img alt="_images/image664.png" src="_images/image664.png" /></p>
+<p>L’indicateur est élevé ce qui veux dire que l’AD n’est sécurisé comme il
+le devrait, cette note est normale étant donné que l’AD est proche d’une
+configuration par défaut, peut de sécurisation ont été fait dessus.</p>
+<p>Attention !<br />
+Ce compteur correspond à la note la plus élevé sur 4 catégories, dans
+notre cas il fait référence au compteur d’anomalies.</p>
+<p><img alt="_images/image665.png" src="_images/image665.png" /></p>
+<p>Grace au 4 compteur je peux situer les points de sécurité et les
+modifications à effectuer pour renforcer la sécurité générale de l’AD.</p>
+<ul class="simple">
+<li><p><strong>Stale Object</strong> : points de sécurité liés aux utilisateurs ou aux
+ordinateurs</p></li>
+<li><p><strong>Privileged Accounts</strong> : points de sécurité liés aux comptes avec des
+privilèges élevés (Administrateurs) du domaine Active Directory</p></li>
+<li><p><strong>Trusts</strong> : points de sécurité liés aux relations d’approbations
+entre les domaines Active Directory</p></li>
+<li><p><strong>Anomalies</strong> : points de sécurité liés à d’autres aspects de la
+configuration qui peuvent impacter la sécurité de votre annuaire</p></li>
+</ul>
+<blockquote>
+<div><p>Juste en dessous des compteurs vient le tableau « <strong>Risk Model</strong> », il
+permet de cerner les configurations auquel il faut porter attention.</p>
+<p><img alt="_images/image666.png" src="_images/image666.png" /></p>
+<p>Ce qui est en blanc n’est pas dans la légende, cela veut dire :</p>
+<p><strong>Pas de problèmes tout est bon !</strong></p>
+</div></blockquote>
+<p>Ensuite vient les règles spécifiques catégories par catégories a modifié
+et à prendre en compte.</p>
+<blockquote>
+<div><p><img alt="_images/image667.png" src="_images/image667.png" /></p>
+<p>A savoir :</p>
+<p>Lorsque l’on exécute un audit AD avec PingCastle l’audit précédent est
+écrasé !</p>
+<p>Il faut penser à sauvegarder les anciens audits.</p>
+</div></blockquote>
+</section>
+<section id="planifier-un-audit-regulier-de-lad-avec-pingcastle">
+<h3>Planifier un audit régulier de l’AD avec PingCastle<a class="headerlink" href="#planifier-un-audit-regulier-de-lad-avec-pingcastle" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai créé un script PowerShell qui placé à la racine du Dossier de
+PingCastle permet de :</p>
+<p>Créer un dossier « <em><strong>auditBkp</strong></em> » s’il n’existe pas</p>
+<p>Exécuter un audit AD par le biais du PingCastle.exe</p>
+<p>Transférer les deux fichier html et xml dans le dossier <em><strong>auditBkp</strong></em>
+et de les renommés en y ajoutant la date et l’heure lors de l’exécution
+de l’audit AD.</p>
+<p>Le script :</p>
+<p><img alt="_images/image668.png" src="_images/image668.png" /></p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">\</span><span class="nv">$BkpPath</span> <span class="p">=</span> <span class="s2">&quot;.\auditBkp&quot;</span>  
+<span class="p">**</span><span class="k">If</span><span class="p">**(!(</span><span class="nb">Test-Path</span> <span class="p">\</span><span class="nv">$BkpPath</span><span class="p">)){</span>  
+<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="p">\</span><span class="nv">$BkpPath</span>  
+<span class="p">}</span>  
+  
+<span class="p">.\</span><span class="n">PingCastle</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-server</span> <span class="n">SRV-W19-AD</span><span class="p">.</span><span class="n">t2sr</span><span class="p">.</span><span class="n">io</span> <span class="p">-</span><span class="n">-healthcheck</span>  
+  
+<span class="p">\</span><span class="nv">$SourceFileHtmlPath</span> <span class="p">=</span> <span class="s2">&quot;.\ad_hc_t2sr.io.html&quot;</span>  
+<span class="p">\</span><span class="nv">$SourceFileXmlPath</span> <span class="p">=</span> <span class="s2">&quot;.\ad_hc_t2sr.io.xml&quot;</span>  
+<span class="p">\</span><span class="nv">$DateNow</span> <span class="p">=</span> <span class="nb">Get-Date</span> <span class="n">-Format</span> <span class="s2">&quot;ddMMyyyyHHmm&quot;</span>  
+  
+<span class="p">\</span><span class="nv">$FileHtml</span> <span class="p">=</span> <span class="s2">&quot;ad_hc_t2sr.io\_&quot;</span><span class="p">+\</span><span class="nv">$DateNow</span><span class="p">+</span><span class="s2">&quot;.html&quot;</span>  
+<span class="p">\</span><span class="nv">$FileXml</span> <span class="p">=</span> <span class="s2">&quot;ad_hc_t2sr.io\_&quot;</span><span class="p">+\</span><span class="nv">$DateNow</span><span class="p">+</span><span class="s2">&quot;.xml&quot;</span>  
+  
+<span class="nb">Move-Item</span> <span class="n">-Path</span> <span class="p">\</span><span class="nv">$SourceFileHtmlPath</span>
+<span class="n">-Destination</span><span class="p">.\</span><span class="n">auditBkp</span><span class="p">\\\</span><span class="nv">$FileHtml</span>  
+<span class="nb">Move-Item</span> <span class="n">-Path</span> <span class="p">\</span><span class="nv">$SourceFileXmlPath</span> <span class="n">-Destination</span> <span class="p">.\</span><span class="n">auditBkp</span><span class="p">\\\</span><span class="nv">$FileXml</span>
+</pre></div>
+</div>
+<p>Ce script est propre au réseau sur lequel je travaille (il s’agit d’un
+script PowerShell : <strong>.ps1</strong>).</p>
+<p>Pour m’aider j’ai consulté le « help » de PingCastle dans une invite de
+commande :</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">PingCastle</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-help</span>
+</pre></div>
+</div>
+<p><img alt="_images/image669.png" src="_images/image669.png" /></p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>PingCastle est un outil très intéressant pour auditer l’Active Directory
+avant de sa mise en production.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="ocs.html" class="btn btn-neutral float-left" title="Serveur OCS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;}
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+>>>>>>> 2211c7e427ad6bb9808cbff36ef11a424d232916
 </html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html class="writer-html5" lang="fr" >
 <head>
@@ -306,4 +307,314 @@ pallier ce problème.</p>
 
 
 </body>
+=======
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveur Exchange 2019 &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Serveur CUPS (impression)" href="cups.html" />
+    <link rel="prev" title="Serveur VEEAM Backup" href="veeam.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur Exchange 2019</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-deuxieme-controleur-de-domaine">Configuration deuxième contrôleur de domaine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fixer-ladresse-ip">Fixer l’adresse IP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#entrer-le-serveur-dans-le-domaine">Entrer le serveur dans le domaine</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-microsoft-exchange">Installation Microsoft Exchange</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequis">Prérequis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation-microsoft-exchange-iso">Installation Microsoft Exchange ISO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-du-serveur">Configuration du serveur</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configurer-outlook">Configurer Outlook</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acces-a-webmail">Accès à Webmail</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-la-messagerie-avec-thunderbird">Configuration la messagerie avec Thunderbird</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Serveur Exchange 2019</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/exchange.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="serveur-exchange-2019">
+<h1><strong>Serveur Exchange 2019</strong><a class="headerlink" href="#serveur-exchange-2019" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<p>L’installation d’un serveur exchange 2019.</p>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.16.0.0/16</p></li>
+<li><p>Serveur Samba et impression : SRV-W19-EXC 172.28.1.201/16</p></li>
+<li><p>Client Debian 1 : clideb1 172.16.2.1/16</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://rdr-it.com/exchange2019-installation/2/">https://rdr-it.com/exchange2019-installation/2/</a></p></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="configuration-deuxieme-controleur-de-domaine">
+<h3>Configuration deuxième contrôleur de domaine<a class="headerlink" href="#configuration-deuxieme-controleur-de-domaine" title="Lien permanent vers cette rubrique"></a></h3>
+<section id="fixer-ladresse-ip">
+<h4>Fixer l’adresse IP<a class="headerlink" href="#fixer-ladresse-ip" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image344.png" src="_images/image344.png" /></p>
+</section>
+<section id="entrer-le-serveur-dans-le-domaine">
+<h4>Entrer le serveur dans le domaine<a class="headerlink" href="#entrer-le-serveur-dans-le-domaine" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image345.png" src="_images/image345.png" /></p>
+<p><img alt="_images/image346.png" src="_images/image346.png" /></p>
+<p><img alt="_images/image347.png" src="_images/image347.png" /></p>
+<p><img alt="_images/image348.png" src="_images/image348.png" /></p>
+</section>
+</section>
+<section id="installation-microsoft-exchange">
+<h3>Installation Microsoft Exchange<a class="headerlink" href="#installation-microsoft-exchange" title="Lien permanent vers cette rubrique"></a></h3>
+<section id="prerequis">
+<h4>Prérequis<a class="headerlink" href="#prerequis" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Installation Microsoft Visual C++ 2013</p>
+<p><img alt="_images/image349.png" src="_images/image349.png" /></p>
+<p>Installation des fonctionnalités sur Windows serveur</p>
+<p>Exécuter la commande suivante en Powershell</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Install-WindowsFeature</span> <span class="n">Server-Media-Foundation</span><span class="p">,</span>
+<span class="n">NET-Framework</span><span class="p">-</span><span class="n">45-Features</span><span class="p">,</span> <span class="n">RPC-over-HTTP-proxy</span><span class="p">,</span> <span class="n">RSAT-Clustering</span><span class="p">,</span>
+<span class="n">RSAT-Clustering-CmdInterface</span><span class="p">,</span> <span class="n">RSAT-Clustering-Mgmt</span><span class="p">,</span>
+<span class="n">RSAT-Clustering-PowerShell</span><span class="p">,</span> <span class="n">WAS-Process-Model</span><span class="p">,</span> <span class="n">Web-Asp-Net45</span><span class="p">,</span>
+<span class="n">Web-Basic-Auth</span><span class="p">,</span> <span class="n">Web-Client-Auth</span><span class="p">,</span> <span class="n">Web-Digest-Auth</span><span class="p">,</span> <span class="n">Web-Dir-Browsing</span><span class="p">,</span>
+<span class="n">Web-Dyn-Compression</span><span class="p">,</span> <span class="n">Web-Http-Errors</span><span class="p">,</span> <span class="n">Web-Http-Logging</span><span class="p">,</span>
+<span class="n">Web-Http-Redirect</span><span class="p">,</span> <span class="n">Web-Http-Tracing</span><span class="p">,</span> <span class="n">Web-ISAPI-Ext</span><span class="p">,</span> <span class="n">Web-ISAPI-Filter</span><span class="p">,</span>
+<span class="n">Web-Lgcy-Mgmt-Console</span><span class="p">,</span> <span class="n">Web-Metabase</span><span class="p">,</span> <span class="n">Web-Mgmt-Console</span><span class="p">,</span> <span class="n">Web-Mgmt-Service</span><span class="p">,</span>
+<span class="n">Web-Net-Ext45</span><span class="p">,</span> <span class="n">Web-Request-Monitor</span><span class="p">,</span> <span class="n">Web-Server</span><span class="p">,</span> <span class="n">Web-Stat-Compression</span><span class="p">,</span>
+<span class="n">Web-Static-Content</span><span class="p">,</span> <span class="n">Web-Windows-Auth</span><span class="p">,</span> <span class="n">Web-WMI</span><span class="p">,</span>
+<span class="n">Windows-Identity-Foundation</span><span class="p">,</span> <span class="n">RSAT-ADDS</span>
+</pre></div>
+</div>
+<p><img alt="_images/image350.png" src="_images/image350.png" /></p>
+</section>
+<section id="installation-microsoft-exchange-iso">
+<h4>Installation Microsoft Exchange ISO<a class="headerlink" href="#installation-microsoft-exchange-iso" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Exécution Setup an tant Administrateur</p>
+<p><img alt="_images/image351.png" src="_images/image351.png" /></p>
+<p><img alt="_images/image352.png" src="_images/image352.png" /></p>
+<p><img alt="_images/image353.png" src="_images/image353.png" /></p>
+<img alt="_images/image354.png" src="_images/image354.png" />
+<p><img alt="_images/image355.png" src="_images/image355.png" /></p>
+<p><img alt="_images/image356.png" src="_images/image356.png" /></p>
+<p><img alt="_images/image357.png" src="_images/image357.png" /></p>
+<p><img alt="_images/image358.png" src="_images/image358.png" /></p>
+<p>Installation complémentaire des prérequis nécessaires :</p>
+<ul class="simple">
+<li><p>.Net Framework 4.8</p></li>
+<li><p>Microsoft Unified Communications Managed API 4.0, Core Runtime 64-Bit</p></li>
+<li><p>URL Rewrite (module de réécriture d’URL IIS)</p></li>
+</ul>
+<p><img alt="_images/image359.png" src="_images/image359.png" /></p>
+<p><img alt="_images/image360.png" src="_images/image360.png" /></p>
+<p><img alt="_images/image361.png" src="_images/image361.png" /></p>
+</section>
+<section id="configuration-du-serveur">
+<h4>Configuration du serveur<a class="headerlink" href="#configuration-du-serveur" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Configuration langue et l’heure</p>
+<p><img alt="_images/image362.png" src="_images/image362.png" /></p>
+<p><img alt="_images/image363.png" src="_images/image363.png" /></p>
+<p>Créer une boite à lettre</p>
+<p><img alt="_images/image364.png" src="_images/image364.png" /></p>
+<p>Parcourir</p>
+<p><img alt="_images/image365.png" src="_images/image365.png" /></p>
+<p><img alt="_images/image366.png" src="_images/image366.png" /></p>
+<p><img alt="_images/image367.png" src="_images/image367.png" /></p>
+<p><img alt="_images/image368.png" src="_images/image368.png" /></p>
+</section>
+<section id="configurer-outlook">
+<h4>Configurer Outlook<a class="headerlink" href="#configurer-outlook" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Ouvrir application Outlook</p>
+<p><img alt="_images/image369.png" src="_images/image369.png" /></p>
+<p>Choix exchange</p>
+<p><img alt="_images/image370.png" src="_images/image370.png" /></p>
+<p><img alt="_images/image371.png" src="_images/image371.png" /></p>
+<p>J’ai installé les certificats</p>
+<p><img alt="_images/image372.png" src="_images/image372.png" /></p>
+<p>J’ai envoyé un message test entre deux compte Outlook</p>
+<img alt="_images/image373.png" src="_images/image373.png" />
+<p>L’échange de mail fonctionne correctement.</p>
+</section>
+<section id="acces-a-webmail">
+<h4>Accès à Webmail<a class="headerlink" href="#acces-a-webmail" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Je me suis rendu avec le client linux sur l’adresse
+<a class="reference external" href="https://srv-w19-exc/owa/">https://srv-w19-exc/owa/</a></p>
+<p><img alt="_images/image374.png" src="_images/image374.png" /></p>
+<p>Un fois les accès renseignés, j’accède aux mails</p>
+<p><img alt="_images/image375.png" src="_images/image375.png" /></p>
+</section>
+<section id="configuration-la-messagerie-avec-thunderbird">
+<h4>Configuration la messagerie avec Thunderbird<a class="headerlink" href="#configuration-la-messagerie-avec-thunderbird" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Tout d’abords il faut démarrer et laisser en mode automatique le service
+IMAP4 sur le serveur exchange</p>
+<p><img alt="_images/image376.png" src="_images/image376.png" /></p>
+<p>Les paramètres de ma configuration</p>
+<p><img alt="_images/image377.png" src="_images/image377.png" /></p>
+<p>Puis configuration manuelle</p>
+<p><img alt="_images/image378.png" src="_images/image378.png" /></p>
+<p>Puis cliqué sur terminer</p>
+<p>J’ai confirmé l’exception de sécurité</p>
+<p><img alt="_images/image379.png" src="_images/image379.png" /></p>
+<p><img alt="_images/image380.png" src="_images/image380.png" /></p>
+<p><img alt="_images/image381.png" src="_images/image381.png" /></p>
+<p>Thunderbird est ainsi configuré.</p>
+</section>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>Le serveur de messagerie est fonctionnel, néanmoins Thunderbird ne
+récupère pas automatiquement le carnet d’adresse. Ils existent des
+solutions payantes comme ExQuilla for Microsoft Echange plugin pour
+pallier ce problème.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="veeam.html" class="btn btn-neutral float-left" title="Serveur VEEAM Backup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="cups.html" class="btn btn-neutral float-right" title="Serveur CUPS (impression)" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;}
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+>>>>>>> 2211c7e427ad6bb9808cbff36ef11a424d232916
 </html>

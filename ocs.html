@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html class="writer-html5" lang="fr" >
 <head>
@@ -459,4 +460,467 @@ créé une issue sur la page GitHub du développeur.</p>
 
 
 </body>
+=======
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveur OCS &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js\rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="PingCastle" href="pingcastle.html" />
+    <link rel="prev" title="FreePBX" href="freepbx.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur OCS</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-et-configuration-des-prerequis">Installation et configuration des prérequis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-apache2">Installation Apache2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-mariadb">Installation Mariadb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-ocs-inventory">Installation OCS Inventory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-du-serveur">Installation du serveur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-du-serveur-ocs">Configuration du serveur OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#activation-de-la-configuration-de-ocs">Activation de la configuration de OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parametrer-ocs">Paramétrer OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-ocs-avec-glpi-10-0-2">Configuration OCS avec GLPI 10.0.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ajout-serveur-ocs">Ajout serveur OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-ssl">Configuration SSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-ocs-inventory-agent-sur-windows">Installation OCS Inventory agent sur Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-ocs-inventory-agent-sur-linux">Installation OCS Inventory agent sur Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importer-linventaire-dans-glpi-10-0-2">Importer l’inventaire dans GLPI 10.0.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integrer-le-serveur-ocs-dans-active-directory">Intégrer le serveur OCS dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Serveur OCS</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ocs.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="serveur-ocs">
+<h1><strong>Serveur OCS</strong><a class="headerlink" href="#serveur-ocs" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<ol class="arabic simple">
+<li><p>L’installation et configuration d’un serveur OCS Inventory dur un
+containeur Debian 11.</p></li>
+</ol>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.16.0.0/16</p></li>
+<li><p>Serveur OCS : CT-DEB-GLPI 172.28.1.205/16 (colocalisé avec GLPI)</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.infotrucs.fr/tuto-installer-glpi-et-ocsinventory-sous-debian-11-sans-erreur/">https://www.infotrucs.fr/tuto-installer-glpi-et-ocsinventory-sous-debian-11-sans-erreur/</a></p></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="installation-et-configuration-des-prerequis">
+<h3>Installation et configuration des prérequis<a class="headerlink" href="#installation-et-configuration-des-prerequis" title="Lien permanent vers cette rubrique"></a></h3>
+</section>
+<section id="installation-apache2">
+<h3>Installation Apache2<a class="headerlink" href="#installation-apache2" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt update
+apt install apache2 -y  
+systemctl <span class="nb">enable</span> apache2
+</pre></div>
+</div>
+<p>Création la configuration fqdn</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/apache2/conf-available/fqdn.conf  
+<span class="c1"># remplissez hostname  </span>
+ServerName CT-DEB-GLPI  
+a2enconf fqdn  
+systemctl reload apache2
+</pre></div>
+</div>
+<p>Installation Php</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install php -y
+</pre></div>
+</div>
+<p>Créer index.php</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /var/www/html/index.php  
+</pre></div>
+</div>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># le contenu du fichier</span>
+<span class="x">\&lt; ?php  </span>
+<span class="x">Phpinfo() ;  </span>
+<span class="x">?\&gt;</span>
+</pre></div>
+</div>
+<p>Vérifiez dans le navigateur</p>
+<p><a class="reference external" href="http://172.28.1.211/index.php">http://172.28.1.211/index.php</a></p>
+<p><img alt="_images/image591.png" src="_images/image591.png" /></p>
+<p>Supprimer les fichiers inutiles</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm /var/www/html/index.php
+systemctl restart apache2
+</pre></div>
+</div>
+</section>
+<section id="installation-mariadb">
+<h3>Installation Mariadb<a class="headerlink" href="#installation-mariadb" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install mariadb-server mariadb-client -y
+systemctl <span class="nb">enable</span> mariadb.service
+</pre></div>
+</div>
+<p>Création de la base de données</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mariadb -u root
+</pre></div>
+</div>
+<p><img alt="_images/image592.png" src="_images/image592.png" /></p>
+</section>
+<section id="installation-ocs-inventory">
+<h3>Installation OCS Inventory<a class="headerlink" href="#installation-ocs-inventory" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install apache2-dev libmariadb-dev-compat php-soap cpanminus
+libnet-ssleay-perl libio-socket-ssl-perl -y
+
+cpan install YAML <span class="c1"># répondre yes</span>
+
+cpan install –f CPAN <span class="c1"># répondre yes</span>
+
+cpan install XML::Simple Compress::Zlib DBI DBD::mysql Apache::DBI
+Net::IP Archive::Zip XML::Entities
+
+apt install libxml-simple-perl libperl5.32 libdbi-perl libdbd-mysql-perl
+libapache-dbi-perl libnet-ip-perl libsoap-lite-perl libarchive-zip-perl
+make build-essential php-pclzip php-mbstring php-mysql php-curl php-xml
+php-zip php-gd -y
+
+cpan install Apache2::SOAP  
+cpan install Mojolicious::Lite Switch Plack::Handler
+</pre></div>
+</div>
+</section>
+<section id="installation-du-serveur">
+<h3>Installation du serveur<a class="headerlink" href="#installation-du-serveur" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai téléchargé ocsinventory sur ce site :
+<a class="reference external" href="http://download.ocsinventory-ng.org/nightly">download.ocsinventory-ng.org/nightly</a></p>
+<p>cd /tmp<br />
+wget
+<a class="reference external" href="http://download.ocsinventory-ng.org/nightly/OCSNG_UNIX_SERVER_2.10.0-nightly-2022-08-19.tar.gz">http://download.ocsinventory-ng.org/nightly/OCSNG_UNIX_SERVER_2.10.0-nightly-2022-08-19.tar.gz</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar xzf OCSNG_UNIX_SERVER_2.10.0-nightly-2022-08-19.tar.gz  
+<span class="nb">cd</span> OCSNG_UNIX_SERVER
+systemctl restart apache2  
+sh setup.sh <span class="c1"># Tapez entrée à chaque question</span>
+</pre></div>
+</div>
+</section>
+<section id="configuration-du-serveur-ocs">
+<h3>Configuration du serveur OCS<a class="headerlink" href="#configuration-du-serveur-ocs" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/apache2/conf-available/z-ocsinventory-server.conf
+</pre></div>
+</div>
+<p>J’ai modifié ses deux lignes pour faire correspond avec la configuration
+de notre base de données</p>
+<p><img alt="_images/image593.png" src="_images/image593.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/apache2/conf-available/zz-ocsinventory-restapi.conf
+</pre></div>
+</div>
+<p><img alt="_images/image594.png" src="_images/image594.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chown root:www-data /var/lib/ocsinventory-reports  
+chmod <span class="m">775</span> /var/lib/ocsinventory-reports
+</pre></div>
+</div>
+</section>
+<section id="activation-de-la-configuration-de-ocs">
+<h3>Activation de la configuration de OCS<a class="headerlink" href="#activation-de-la-configuration-de-ocs" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>a2enconf z-ocsinventory-server  
+a2enconf ocsinventory-reports  
+a2enconf zz-ocsinventory-restapi
+systemctl restart apache2
+</pre></div>
+</div>
+<p>On accède aux restes des configurations via le navigateur</p>
+<p><a class="reference external" href="http://172.28.1.205/ocsreports">http://172.28.1.205/ocsreports</a></p>
+<p><img alt="_images/image595.png" src="_images/image595.png" /></p>
+<p>OCS va peupler la base de données</p>
+<p><img alt="_images/image596.png" src="_images/image596.png" /></p>
+<p><img alt="_images/image597.png" src="_images/image597.png" /></p>
+<p>J’ai cliqué sur « <strong>Click here to enter OCS-NG GUI »</strong></p>
+<p><img alt="_images/image598.png" src="_images/image598.png" /></p>
+<p>J’ai cliqué sur « <strong>perform the update »</strong></p>
+<p><img alt="_images/image599.png" src="_images/image599.png" /></p>
+<p>Choix de langue en français login: admin, mdp. : admin</p>
+<p><img alt="_images/image600.png" src="_images/image600.png" /></p>
+</section>
+<section id="parametrer-ocs">
+<h3>Paramétrer OCS<a class="headerlink" href="#parametrer-ocs" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai supprimé le fichier indiqué et crée un nouvel utilisateur avec un
+différente mot de passe.</p>
+<p><img alt="_images/image601.png" src="_images/image601.png" /></p>
+<p>Menu Configuration &gt; Utilisateurs &gt; Créer un utilisateur</p>
+<p><img alt="_images/image602.png" src="_images/image602.png" /></p>
+<p><img alt="_images/image603.png" src="_images/image603.png" /></p>
+<p>J’ai supprimé le compte créé par défaut</p>
+<p><img alt="_images/image604.png" src="_images/image604.png" /></p>
+<p>J’ai supprimé également le fichier install.php</p>
+<p><img alt="_images/image605.png" src="_images/image605.png" /></p>
+<p>Une fois la page rafraîchi, l’ALERTE SECURITE disparait.</p>
+<p>Menu Configuration &gt; General Configuration &gt; Serveur</p>
+<p>J’ai activé TRACE_DELETED (à cause de l’interconnexion avec GLPI)</p>
+<p><img alt="_images/image606.png" src="_images/image606.png" /></p>
+</section>
+<section id="configuration-ocs-avec-glpi-10-0-2">
+<h3>Configuration OCS avec GLPI 10.0.2<a class="headerlink" href="#configuration-ocs-avec-glpi-10-0-2" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai créé un compte gratuit sur <a class="reference external" href="https://services.glpi-network.com/">https://services.glpi-network.com/</a></p>
+<p>Ensuite j’ai copié la clé d’enregistrement</p>
+<p><img alt="_images/image607.png" src="_images/image607.png" /></p>
+<p>J’ai copié la clé dans</p>
+<p>Menu Configuration &gt; Générale &gt; GLPI Network</p>
+<p><img alt="_images/image608.png" src="_images/image608.png" /></p>
+<p>J’ai accédé GLPI marketplace et téléchargé le plugin OCS Inventory NG</p>
+<p>Configuration &gt; Plugins</p>
+<p><img alt="_images/image609.png" src="_images/image609.png" /></p>
+<p>J’ai cliqué sur configurer</p>
+<p><img alt="_images/image610.png" src="_images/image610.png" /></p>
+<p>Serveurs OCSNG</p>
+<p><img alt="_images/image611.png" src="_images/image611.png" /></p>
+<p><img alt="_images/image612.png" src="_images/image612.png" /></p>
+</section>
+<section id="ajout-serveur-ocs">
+<h3>Ajout serveur OCS<a class="headerlink" href="#ajout-serveur-ocs" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image613.png" src="_images/image613.png" /></p>
+<p>Tester</p>
+<p><img alt="_images/image614.png" src="_images/image614.png" /></p>
+<p>Menu Outils &gt; OCS Inventory NG</p>
+<p><img alt="_images/image615.png" src="_images/image615.png" /></p>
+<p>Cliqué sur</p>
+<p><img alt="_images/image616.png" src="_images/image616.png" /></p>
+<p>OCS est désormais lié, nous pouvons importer un inventaire.</p>
+<img alt="_images/image617.png" src="_images/image617.png" />
+</section>
+<section id="configuration-ssl">
+<h3>Configuration SSL<a class="headerlink" href="#configuration-ssl" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Création un dossier pour stocker le certificat</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir /etc/apache2/ssl  
+<span class="c1"># installation openssl si ce n’est pas déjà le cas*  </span>
+apt install openssl
+</pre></div>
+</div>
+<p>Génération d’une clé RSA</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl genrsa <span class="m">2048</span> <span class="se">\&gt;</span> /etc/apache2/ssl/gestparc.key
+</pre></div>
+</div>
+<p>Création du certificat</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>openssl req -new -key /etc/apache2/ssl/gestparc.key -x509 -days <span class="m">365</span> -out
+/etc/apache2/ssl/gestparc.crt
+</pre></div>
+</div>
+<p>A la question Common Name, j’ai mis : CT-DEB-GLPI</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Ensuite j’ai édité le fichier
+/etc/apache2/sites-available/default-ssl.conf
+</pre></div>
+</div>
+<p><img alt="_images/image618.png" src="_images/image618.png" /></p>
+<p>J’ai activé SSL</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>a2enmod ssl  
+a2ensuite default-ssl  
+systemctl restart apache2
+</pre></div>
+</div>
+<p>J’accède à la page GLPI en https</p>
+<p><img alt="_images/image619.png" src="_images/image619.png" /></p>
+</section>
+<section id="installation-ocs-inventory-agent-sur-windows">
+<h3>Installation OCS Inventory agent sur Windows<a class="headerlink" href="#installation-ocs-inventory-agent-sur-windows" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai téléchargé l’agent sur le site officiel :</p>
+<p><a class="reference external" href="https://github.com/OCSInventory-NG/WindowsAgent/releases/tag/2.9.2.0">https://github.com/OCSInventory-NG/WindowsAgent/releases/tag/2.9.2.0</a></p>
+<p>J’ai installé l’agent</p>
+<p><img alt="_images/image620.png" src="_images/image620.png" /></p>
+<p>J’ai lancé l’installateur</p>
+<p><img alt="_images/image621.png" src="_images/image621.png" /></p>
+<p><img alt="_images/image622.png" src="_images/image622.png" /></p>
+<p><img alt="_images/image623.png" src="_images/image623.png" /></p>
+<p><img alt="_images/image624.png" src="_images/image624.png" /></p>
+<p>J’ai lancé l’installation</p>
+<p><img alt="_images/image625.png" src="_images/image625.png" /></p>
+<p>Ensuite j’ai copié le fichier gestparc.crt dans c:\ProgramData\OCS
+Inventory NG\Agent.</p>
+<p>Puis j’ai renommé en cacert.pem.</p>
+<p><img alt="_images/image626.png" src="_images/image626.png" /></p>
+<p>J’ai arrêté puis redémarré le service OCS Inventory</p>
+<p><img alt="_images/image627.png" src="_images/image627.png" /></p>
+<p>Notre client apparait dans OCS inventory</p>
+<p><img alt="_images/image628.png" src="_images/image628.png" /></p>
+</section>
+<section id="installation-ocs-inventory-agent-sur-linux">
+<h3>Installation OCS Inventory agent sur Linux<a class="headerlink" href="#installation-ocs-inventory-agent-sur-linux" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt update
+apt install libmodule-install-perl dmidecode libxml-simple-perl
+libcompress-zlib-perl libnet-ip-perl libwww-perl libdigest-md5-perl
+libdata-uuid-perl
+apt install ocsinventory-agent
+</pre></div>
+</div>
+<p><strong>Choix http</strong></p>
+<p>J’ai rentré l’adresse de mon serveur OCS :
+<a class="reference external" href="https://glpi-ocs.t2sr.io/ocsinventory">https://glpi-ocs.t2sr.io/ocsinventory</a></p>
+<p>J’ai mis à jour le serveur (mis à jour manuel)</p>
+<p>ocsinventory-agent –server <a class="reference external" href="https://glpi-ocs.t2sr.io/ocsinventory">https://glpi-ocs.t2sr.io/ocsinventory</a></p>
+<p>J’ai modifié de manière que l’agent soit mis à jour par heure :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv /etc/cron.daily/ocsinventory-agent /etc/cron.hourly
+</pre></div>
+</div>
+<p>Le client Debian est bien arrivé sur OCS</p>
+<p><img alt="_images/image629.png" src="_images/image629.png" /></p>
+</section>
+<section id="importer-linventaire-dans-glpi-10-0-2">
+<h3>Importer l’inventaire dans GLPI 10.0.2<a class="headerlink" href="#importer-linventaire-dans-glpi-10-0-2" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Menu Outils &gt; OCS Inventroy NG &gt; Import de l’inventaire &gt; Importer et
+lier des ordinateurs</p>
+<p><img alt="_images/image630.png" src="_images/image630.png" /></p>
+<p><img alt="_images/image631.png" src="_images/image631.png" /></p>
+</section>
+<section id="integrer-le-serveur-ocs-dans-active-directory">
+<h3>Intégrer le serveur OCS dans Active Directory<a class="headerlink" href="#integrer-le-serveur-ocs-dans-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image148.png" src="_images/image148.png" /></p>
+<p>NB : le procédé d’intégration est expliqué dans le chapitre <a class="reference internal" href="active_directory.html"><span class="doc std std-doc">Active Directory</span></a>.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>L’importation des ordinateurs ne s’est pas déroulée correctement. J’ai
+créé une issue sur la page GitHub du développeur.</p>
+<p><a class="reference external" href="https://github.com/pluginsGLPI/ocsinventoryng/issues/329">https://github.com/pluginsGLPI/ocsinventoryng/issues/329</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="freepbx.html" class="btn btn-neutral float-left" title="FreePBX" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="pingcastle.html" class="btn btn-neutral float-right" title="PingCastle" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;}
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+>>>>>>> 2211c7e427ad6bb9808cbff36ef11a424d232916
 </html>
