@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveur Zabbix &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="TrueNAS" href="truenas.html" />
+    <link rel="prev" title="Serveur SAMBA" href="samba.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur Zabbix</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation :</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-de-zabbix">Installation de Zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ajouter-un-host">Ajouter un Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linstallation-de-lagent-zabbix-sous-windows">L’installation de l’agent Zabbix sous Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#le-tableau-de-bord">Le tableau de bord</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integrer-zabbix-dans-active-directory">Intégrer Zabbix dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Serveur Zabbix</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/zabbix.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="serveur-zabbix">
+<h1><strong>Serveur Zabbix</strong><a class="headerlink" href="#serveur-zabbix" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<ol class="arabic simple">
+<li><p>L’installation et configuration d’un serveur Zabbix</p></li>
+</ol>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.16.0.0/16</p></li>
+<li><p>Serveur FreePBX : SRV-UBU-ZBX 172.28.1.210/16</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation :<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<p>- <a class="reference external" href="https://www.zabbix.com/">https://www.zabbix.com/</a></p>
+<p>- <a class="reference external" href="https://repo.zabbix.com/zabbix/6.0/">https://repo.zabbix.com/zabbix/6.0/</a></p>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="installation-de-zabbix">
+<h3>Installation de Zabbix<a class="headerlink" href="#installation-de-zabbix" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Nous avons créé une VM avec l’ISO de Zabbix 6.0 LTS puis lancé
+l’installation</p>
+<p><img alt="_images/image502.png" src="_images/image502.png" /></p>
+<p>L’installation se déroule automatiquement</p>
+<p><img alt="_images/image503.png" src="_images/image503.png" /></p>
+<p>Une fois l’installation est terminée, nous pouvons accéder à Zabbix via
+le navigateur web :</p>
+<p><a class="reference external" href="http://172.28.1.210/zabbix">http://172.28.1.210/zabbix</a></p>
+<p>Utilisateur par défaut : Admin</p>
+<p>Mot de passe par défaut : zabbix</p>
+<p><img alt="_images/image504.png" src="_images/image504.png" /></p>
+</section>
+<section id="ajouter-un-host">
+<h3>Ajouter un Host<a class="headerlink" href="#ajouter-un-host" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Dans la barre latérale Configuration &gt; Hôtes</p>
+<p><img alt="_images/image505.png" src="_images/image505.png" /></p>
+<p>Créer un hôte</p>
+<p><img alt="_images/image506.png" src="_images/image506.png" /></p>
+<p>L’installation de l’agent Zabbix sous Linux</p>
+<p>J’ai téléchargé la package zabbix correspondant à la VM depuis le site
+officiel :</p>
+<p><img alt="_images/image507.png" src="_images/image507.png" /></p>
+<p>Installation du package et démarrage du service</p>
+<p><img alt="_images/image508.png" src="_images/image508.png" /></p>
+<p>Modification du fichier de configuration :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/zabbix/zabbix_agentd.conf
+</pre></div>
+</div>
+<p>Server doit correspond à l’adresse ip du serveur zabbix.</p>
+<p><img alt="_images/image509.png" src="_images/image509.png" /></p>
+<p>Puis j’ai redémarré le service</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart zabbix-agent
+</pre></div>
+</div>
+<p>Le serveur GLPI a correctement monté :</p>
+<p><img alt="_images/image510.png" src="_images/image510.png" /></p>
+<p>J’ai effectué les mêmes manipulations pour tous les serveurs de type
+linux.</p>
+<p><img alt="_images/image511.png" src="_images/image511.png" /></p>
+</section>
+<section id="linstallation-de-lagent-zabbix-sous-windows">
+<h3>L’installation de l’agent Zabbix sous Windows<a class="headerlink" href="#linstallation-de-lagent-zabbix-sous-windows" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai téléchargé l’agent sur le site officiel correspondant à Windows:</p>
+<p><a class="reference external" href="https://www.zabbix.com/download_agents?version=6.0+LTS&amp;amp;release=6.0.7&amp;amp;os=Windows&amp;amp;os_version=Any&amp;amp;hardware=amd64&amp;amp;encryption=OpenSSL&amp;amp;packaging=MSI&amp;amp;show_legacy=0">https://www.zabbix.com/download_agents?version=6.0+LTS&amp;release=6.0.7&amp;os=Windows&amp;os_version=Any&amp;hardware=amd64&amp;encryption=OpenSSL&amp;packaging=MSI&amp;show_legacy=0</a></p>
+<p><img alt="_images/image512.png" src="_images/image512.png" /></p>
+<p><img alt="_images/image513.png" src="_images/image513.png" /></p>
+<p><img alt="_images/image514.png" src="_images/image514.png" /></p>
+<p>Menu Configuration &gt; Hôte &gt; Ajouter</p>
+<p><img alt="_images/image515.png" src="_images/image515.png" /></p>
+<p>Environ 60s plus tard le serveur ajouté devient disponible</p>
+<p><img alt="_images/image516.png" src="_images/image516.png" /></p>
+</section>
+<section id="le-tableau-de-bord">
+<h3>Le tableau de bord<a class="headerlink" href="#le-tableau-de-bord" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image517.png" src="_images/image517.png" /></p>
+<p>Les serveurs surveillés</p>
+<p><img alt="_images/image518.png" src="_images/image518.png" /></p>
+</section>
+<section id="integrer-zabbix-dans-active-directory">
+<h3>Intégrer Zabbix dans Active Directory<a class="headerlink" href="#integrer-zabbix-dans-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image148.png" src="_images/image148.png" /></p>
+<p>NB : le procédé d’intégration est expliqué dans le chapitre <a class="reference internal" href="active_directory.html"><span class="doc std std-doc">Active Directory</span></a>.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>La configuration du serveur Zabbix avec le déploiement des agents est
+terminée.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="samba.html" class="btn btn-neutral float-left" title="Serveur SAMBA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="truenas.html" class="btn btn-neutral float-right" title="TrueNAS" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;}
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+</html>
