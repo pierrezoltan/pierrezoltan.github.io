@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Switch 3COM &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Serveur Active Directory" href="active_directory.html" />
+    <link rel="prev" title="Serveur Proxmox" href="serveur_proxmox.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Switch 3COM</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#administration-vlan-en-cli">Administration VLAN en CLI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-dun-vlan">Création d’un VLAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#supprimer-un-vlan">Supprimer un VLAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#administration-vlan-par-interface-web">Administration VLAN par interface Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configurer-dune-adresse-ip-en-gui">Configurer d’une adresse IP en GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creer-un-trunk-sur-un-port">Créer un Trunk sur un port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tagger-un-port">Tagger un port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cisco-packet-tracer">Cisco Packet Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#schema-du-reseau">Schéma du réseau</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-du-switch1-t2sr">Configuration du Switch1 (T2SR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-du-switch2-t2sr2">Configuration du Switch2 (T2SR2)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Switch 3COM</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/switch3com.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="switch-3com">
+<h1><strong>Switch 3COM</strong><a class="headerlink" href="#switch-3com" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Configurer un VLAN, ports trunk et tagg sur switch 3COM.</p>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>2 x Switch 3COM SuperStack 3 4500 26-port</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux VLAN 200 switch1 : 172.28.1.253/16</p></li>
+<li><p>Réseaux VLAN 200 switch2 : 172.28.1.249/16</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=DR5Ov2XgkAc">https://www.youtube.com/watch?v=DR5Ov2XgkAc</a></p></li>
+<li><p><a class="reference external" href="https://www.manualslib.com/manual/232384/3com-5500g-Ei.html?page=19#manual">https://www.manualslib.com/manual/232384/3com-5500g-Ei.html?page=19#manual</a></p></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<p>Nous sommes connectés sur le port série d’un ordinateur d’un côté et sur
+le port Console du switch de l’autre.</p>
+<p>Nous avons configuré PuTTY comme suite dans Connection / Serial :</p>
+<p><img alt="_images/image53.png" src="_images/image53.png" /></p>
+<p>Ensuite Session &gt; Open</p>
+<p><img alt="_images/image54.png" src="_images/image54.png" /></p>
+<p>Nous avons accédé à la console du switch</p>
+<p><img alt="_images/image55.png" src="_images/image55.png" /></p>
+<section id="administration-vlan-en-cli">
+<h3>Administration VLAN en CLI<a class="headerlink" href="#administration-vlan-en-cli" title="Lien permanent vers cette rubrique"></a></h3>
+</section>
+<section id="creation-dun-vlan">
+<h3>Création d’un VLAN<a class="headerlink" href="#creation-dun-vlan" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Passage en mode system</span>
+<span class="n">system</span><span class="o">-</span><span class="n">view</span> <span class="n">ou</span> <span class="n">sys</span>  
+  
+<span class="c1"># Création du VLAN 200</span>
+<span class="n">vlan</span> <span class="mi">200</span>  
+  
+<span class="c1"># Définition l’adresse IP/Sous-masque pour le VLAN 200</span>
+<span class="c1"># Choix VLAN</span>
+<span class="n">interface</span> <span class="n">vlan</span> <span class="mi">200</span> <span class="n">ou</span> <span class="nb">int</span> <span class="n">vlan</span> <span class="mi">200</span>
+
+<span class="c1"># Renseigner l’adresse IP ainsi que le sous-masque</span>
+<span class="n">ip</span> <span class="n">address</span> <span class="mf">172.28.1.253</span> <span class="mf">255.255.0.0</span>  
+  
+<span class="c1"># Ajout d’un port dans le VLAN, ici du 7 à 10</span>
+<span class="n">port</span> <span class="n">Eth1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">7</span>  
+<span class="n">port</span> <span class="n">Eth1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">8</span>  
+<span class="n">port</span> <span class="n">Eth1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">9</span>  
+<span class="n">port</span> <span class="n">Eth1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">10</span>
+</pre></div>
+</div>
+<p>Afficher la configuration de VLAN’s</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">display</span> <span class="n">vlan</span> <span class="nb">all</span>
+</pre></div>
+</div>
+<p><img alt="_images/image56.png" src="_images/image56.png" /></p>
+<p>Une autre méthode pour afficher la configuration de ports en utilisant
+la commande display brief interface</p>
+<p><img alt="_images/image57.png" src="_images/image57.png" /></p>
+</section>
+<section id="supprimer-un-vlan">
+<h3>Supprimer un VLAN<a class="headerlink" href="#supprimer-un-vlan" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mode system  </span>
+<span class="n">system</span><span class="o">-</span><span class="n">view</span> <span class="n">ou</span> <span class="n">sys</span>  
+<span class="c1"># Supprimer le VLAN 200  </span>
+<span class="n">undo</span> <span class="n">VLAN</span> <span class="mi">200</span>
+</pre></div>
+</div>
+</section>
+<section id="administration-vlan-par-interface-web">
+<h3>Administration VLAN par interface Web<a class="headerlink" href="#administration-vlan-par-interface-web" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’accède à l’interface web sur l’adresse 172.28.1.253/16</p>
+<p><img alt="_images/image58.png" src="_images/image58.png" /></p>
+<p>Menu &gt; Device &gt; VLAN &gt; Setup</p>
+<p><img alt="_images/image59.png" src="_images/image59.png" /></p>
+<p>Création d’un VLAN</p>
+<p>Modify VLAN</p>
+<p>VLAN 200 avec ses ports actifs</p>
+<p><img alt="_images/image60.png" src="_images/image60.png" /></p>
+</section>
+<section id="configurer-dune-adresse-ip-en-gui">
+<h3>Configurer d’une adresse IP en GUI<a class="headerlink" href="#configurer-dune-adresse-ip-en-gui" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Administration &gt; IP setup</p>
+<p><img alt="_images/image61.png" src="_images/image61.png" /></p>
+<p>VLAN1</p>
+<p>Nous avons laissé en mode DHCP</p>
+<p><img alt="_images/image62.png" src="_images/image62.png" /></p>
+<p>VLAN 200</p>
+<p><img alt="_images/image63.png" src="_images/image63.png" /></p>
+</section>
+<section id="creer-un-trunk-sur-un-port">
+<h3>Créer un Trunk sur un port<a class="headerlink" href="#creer-un-trunk-sur-un-port" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Cela permet de faire communiquer deux switches et faire passer plusieurs
+VLAN</p>
+<p>Switch 1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choix de l’interface  </span>
+<span class="n">Interface</span> <span class="n">GigabitEthernet1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">28</span>  
+<span class="c1"># Changer le type de link  </span>
+<span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">trunk</span>  
+<span class="c1"># Ajouter dans les VLAN souhaités  </span>
+<span class="n">port</span> <span class="n">trunk</span> <span class="n">permit</span> <span class="n">vlan</span> <span class="mi">1</span> <span class="mi">200</span>
+</pre></div>
+</div>
+<p>Configuration des ports actuel</p>
+<p><img alt="_images/image64.png" src="_images/image64.png" /></p>
+</section>
+<section id="tagger-un-port">
+<h3>Tagger un port<a class="headerlink" href="#tagger-un-port" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Pour interconnecter les deux switches, nous avons tagué les ports 28 sur
+chacun</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">GigabitEthernet1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">28</span>
+<span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">hybrid</span>  
+<span class="n">port</span> <span class="n">hybrid</span> <span class="n">vlan</span> <span class="mi">1</span> <span class="mi">200</span> <span class="n">tagged</span>
+</pre></div>
+</div>
+</section>
+<section id="cisco-packet-tracer">
+<h3>Cisco Packet Tracer<a class="headerlink" href="#cisco-packet-tracer" title="Lien permanent vers cette rubrique"></a></h3>
+</section>
+<section id="schema-du-reseau">
+<h3>Schéma du réseau<a class="headerlink" href="#schema-du-reseau" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image65.png" src="_images/image65.png" /></p>
+</section>
+<section id="configuration-du-switch1-t2sr">
+<h3>Configuration du Switch1 (T2SR)<a class="headerlink" href="#configuration-du-switch1-t2sr" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Nous avons exécuté les commandes suivantes pour créer le VLAN 200</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Entrer dans mode Privileged EXEC  </span>
+<span class="n">enable</span>  
+
+<span class="c1"># Entrer dans le mode configuration  </span>
+<span class="n">config</span>  
+
+<span class="c1"># Choix terminal </span>
+<span class="n">terminal</span>  
+
+<span class="c1"># Configuration du VLAN </span>
+<span class="n">vlan</span> <span class="mi">200</span>  
+
+<span class="c1"># Ajouter le port 0/7 dans le VLAN 200 </span>
+<span class="n">interface</span> <span class="n">FastEthernet0</span><span class="o">/</span><span class="mi">7</span> 
+
+<span class="c1"># Mettre en mode accesible</span>
+<span class="n">switchport</span> <span class="n">mode</span> <span class="n">access</span> 
+
+<span class="c1"># Donner accès au port pour le VLAN 200 </span>
+<span class="n">switchport</span> <span class="n">access</span> <span class="n">vlan</span> <span class="mi">200</span> 
+
+<span class="c1"># Quitter la configuration</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p><img alt="_images/image66.png" src="_images/image66.png" /></p>
+<p>Nous avons effectué les mêmes commandes pour les ports 8 à 10, puis nous
+avons vérifié la configuration des ports avec la commande</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p><img alt="_images/image67.png" src="_images/image67.png" /></p>
+<p>Nous avons créé un trunk entre vlan 1 et 200 sur le port
+GigabitEthernet2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+
+<span class="n">config</span> <span class="p">(</span><span class="n">choisir</span> <span class="n">terminal</span><span class="p">)</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">2</span>  
+<span class="n">switchport</span> <span class="n">access</span> <span class="n">vlan</span> <span class="mi">200</span>  
+<span class="n">switchport</span> <span class="n">mode</span> <span class="n">trunk</span>
+
+<span class="n">sh</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p><img alt="_images/image68.png" src="_images/image68.png" /></p>
+<p>Nous pouvons obtenir les mêmes résultats en mode GUI</p>
+<p><strong>Menu Config</strong></p>
+<p><img alt="_images/image69.png" src="_images/image69.png" /></p>
+</section>
+<section id="configuration-du-switch2-t2sr2">
+<h3>Configuration du Switch2 (T2SR2)<a class="headerlink" href="#configuration-du-switch2-t2sr2" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Nous avons exécuté les commandes suivantes pour créer le VLAN 200</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Entrer dans mode Privileged EXEC  </span>
+<span class="n">enable</span> 
+
+<span class="c1"># Entrer dans le mode configuration  </span>
+<span class="n">config</span>  
+
+<span class="c1"># Choix terminal</span>
+<span class="n">terminal</span>
+
+<span class="c1"># Configuration du VLAN </span>
+<span class="n">vlan</span> <span class="mi">200</span>
+</pre></div>
+</div>
+<p>Nous avons créé un trunk pour faire passer le VLAN 200 sur le port
+FastEthernet1 et 2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+
+<span class="n">config</span> <span class="p">(</span><span class="n">choisir</span> <span class="n">terminal</span><span class="p">)</span>
+
+<span class="n">interface</span> <span class="n">FastEthernet0</span><span class="o">/</span><span class="mi">1</span>  
+<span class="n">switchport</span> <span class="n">access</span> <span class="n">vlan</span> <span class="mi">200</span>  
+<span class="n">switchport</span> <span class="n">mode</span> <span class="n">trunk</span>
+
+<span class="n">interface</span> <span class="n">FastEthernet0</span><span class="o">/</span><span class="mi">2</span>  
+<span class="n">switchport</span> <span class="n">access</span> <span class="n">vlan</span> <span class="mi">200</span>  
+<span class="n">switchport</span> <span class="n">mode</span> <span class="n">trunk</span>
+
+<span class="n">sh</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p><img alt="_images/image70.png" src="_images/image70.png" /></p>
+<p>Nous avons créé un trunk entre vlan 1 et 200 sur le port
+GigabitEthernet2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+
+<span class="n">config</span> <span class="p">(</span><span class="n">choisir</span> <span class="n">terminal</span><span class="p">)</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">2</span>  
+<span class="n">switchport</span> <span class="n">access</span> <span class="n">vlan</span> <span class="mi">200</span>  
+<span class="n">switchport</span> <span class="n">mode</span> <span class="n">trunk</span>
+
+<span class="n">sh</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p><img alt="_images/image68.png" src="_images/image68.png" /></p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>La configuration des switches est correctement déroulée. Nombreuses
+tâches sont plus aisées à faire en GUI, d’autres en CLI. La
+configuration en CLI est privilégiée.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="serveur_proxmox.html" class="btn btn-neutral float-left" title="Serveur Proxmox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="active_directory.html" class="btn btn-neutral float-right" title="Serveur Active Directory" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;}
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+</html>
