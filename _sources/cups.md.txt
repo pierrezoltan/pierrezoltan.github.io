@@ -4,8 +4,7 @@
 
 ### Objectif
 
-1.  L’installation d’un serveur d’impression sur linux (SAMBA). Ce
-    serveur est colocalisé avec le serveur de fichier.
+L’installation d’un serveur d’impression sur linux (SAMBA). Ce serveur est colocalisé avec le serveur de fichier.
 
 ### Environnement
 

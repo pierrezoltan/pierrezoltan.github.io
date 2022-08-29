@@ -5,9 +5,7 @@
 
 ### Objectif
 
-1.  Installer et configurer pfSense CE 2.6.0 en tant que pare-feu, proxy
-    et portail captif. Il sera également le serveur DHCP de la
-    plateforme.
+Installer et configurer pfSense CE 2.6.0 en tant que pare-feu, proxy et portail captif. Il sera également le serveur DHCP de la plateforme.
 
 ### Environnement
 
@@ -100,9 +98,10 @@ style="width:6.27014in;height:0.42569in" />
 
 La VM pfSense est accessible sur l’adresse 172.28.1.254/16
 
->Login par défaut : admin
->
->Password par défaut : pfsense
+```{note}
+Login par défaut : **admin**
+Password par défaut : **pfsense**
+```
 
 <img src="./media/image162.png"
 style="width:3.09418in;height:1.76066in" />
@@ -302,13 +301,12 @@ style="width:6.27014in;height:3.38264in" />
 Test avec le client Linux
 
 J’ai créé un dossier pour accueillir notre certificat
-```bash
+```console
 mkdir /usr/local/share/ce-certificates/t2sr
-
 cp t2sr_ssl_cert.crt /usr/local/share/ce-certificates/t2sr
 ```
 J’ai installé le certificat
-```bash
+```console
 update-ca-certificates
 ```
 <img src="./media/image201.png"

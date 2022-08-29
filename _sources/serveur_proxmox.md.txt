@@ -4,9 +4,7 @@
 
 ### Objectif
 
-1.  Installation et configuration d’un cluster Proxmox avec trois
-    serveurs en haute disponibilité sur serveurs. Tolérance de panne
-    d’un serveur.
+Installation et configuration d’un cluster Proxmox avec trois serveurs en haute disponibilité sur serveurs. Tolérance de panne d’un serveur.
 
 ### Environnement
 
@@ -28,10 +26,8 @@ Adressage des VMS :
 
 ### Configuration préalable
 
-**Nous allons utiliser des disques formattés en Ceph pour la haute
-disponibilité. Ces disques doivent être non RAID ou RAID0 à 1 disque,
-sinon Ceph ne pourra pas s’installer.**
-
+```{warning} **Nous allons utiliser des disques formattés en Ceph pour la haut disponibilité. Ces disques doivent être non RAID ou RAID0 à 1 disque, sinon Ceph ne pourra pas s’installer.**
+```
 ## Processus
 
 ### Création d’un Cluster
