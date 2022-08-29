@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveur GLPI &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Serveur SAMBA" href="samba.html" />
+    <link rel="prev" title="Serveur CUPS (impression)" href="cups.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur GLPI</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-du-conteneur">Configuration du conteneur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mise-a-jour-et-installation-des-paquets-necessaires">Mise à jour et installation des paquets nécessaires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#telechargement-du-paquet-glpi-9-5-6">Téléchargement du paquet GLPI 9.5.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creation-de-la-base-de-donnees">Création de la base de données</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-du-version-glpi-10-0-2">Installation du version GLPI 10.0.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connecter-le-serveur-glpi-avec-une-active-directory">Connecter le serveur GLPI avec une Active Directory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation-plugin-fusioninventory-sur-glpi-9-5-6">Installation plugin fusioninventory sur GLPI 9.5.6</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-fusioninventory-agent-sur-linux">Installation fusioninventory agent sur linux</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#forcer-la-synchronisation-du-lagent">Forcer la synchronisation du l’agent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-fusioninventory-agent-sur-windows">Installation fusioninventory agent sur Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integrer-glpi-dans-active-directory">Intégrer GLPI dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Serveur GLPI</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/glpi.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="serveur-glpi">
+<h1><strong>Serveur GLPI</strong><a class="headerlink" href="#serveur-glpi" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<p>L’installation d’un serveur GLPI sur un conteneur Debian 11.3.</p>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.28.0.0/16</p></li>
+<li><p>Serveur GLPI : 172.28.1.205</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://rdr-it.com/glpi-liaison-avec-un-active-directory/">https://rdr-it.com/glpi-liaison-avec-un-active-directory/</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=5cThhFcGwc0&amp;amp;t=4s">https://www.youtube.com/watch?v=5cThhFcGwc0&amp;t=4s</a></p></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="configuration-du-conteneur">
+<h3>Configuration du conteneur<a class="headerlink" href="#configuration-du-conteneur" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Ressources</p>
+<p><img alt="_images/image395.png" src="_images/image395.png" /></p>
+<p>Network</p>
+<p><img alt="_images/image396.png" src="_images/image396.png" /></p>
+<p>DNS</p>
+<p><img alt="_images/image397.png" src="_images/image397.png" /></p>
+</section>
+<section id="mise-a-jour-et-installation-des-paquets-necessaires">
+<h3>Mise à jour et installation des paquets nécessaires<a class="headerlink" href="#mise-a-jour-et-installation-des-paquets-necessaires" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mise à jour</span>
+apt update <span class="o">&amp;&amp;</span> apt upgrade -y  
+<span class="c1"># Installation Apache2 Php et Mariadb  </span>
+apt install apache2 perl php mariadb-server -y
+</pre></div>
+</div>
+<p>Autoriser le serveur apache et mariadb pour se lancer au démarrage du
+l’ordinateur</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> apache2 mariadb
+</pre></div>
+</div>
+<p>Installation des paquets nécessaires pour glpi</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install
+php-<span class="o">{</span>ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2<span class="o">}</span> -y
+<span class="c1"># Redémarrer le serveur apache</span>
+systemctl restart apache2
+</pre></div>
+</div>
+</section>
+<section id="telechargement-du-paquet-glpi-9-5-6">
+<h3>Téléchargement du paquet GLPI 9.5.6<a class="headerlink" href="#telechargement-du-paquet-glpi-9-5-6" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget github.com/glpi-project/glpi/releases/download/9.5.6/glpi-9.5.6.tgz
+</pre></div>
+</div>
+<p>Décompression du fichier dans l’emplacement prévu</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar -xvf glpi-9.5.6.tgz -C /var/www/html/
+</pre></div>
+</div>
+<p>J’ai ensuite changé le propriétaire du dossier téléchargé et ajouter des
+droits</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chown -R www-data:www-data /var/www/html/glpi  
+chmod -R <span class="m">775</span> /var/www/html/glpi
+</pre></div>
+</div>
+</section>
+<section id="creation-de-la-base-de-donnees">
+<h3>Création de la base de données<a class="headerlink" href="#creation-de-la-base-de-donnees" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql  
+create database glpi <span class="p">;</span>  
+create user glpi@localhost identified by ‘Azerty123+’ <span class="p">;</span>  
+grant all privileges on glpi.<span class="se">\*</span> to glpi@localhost<span class="p">;</span>
+flush privileges <span class="p">;</span>
+<span class="nb">exit</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>Je suis allé sur la page internet <a class="reference external" href="http://172.28.1.212/glpi">http://172.28.1.212/glpi</a></p>
+<p><img alt="_images/image398.png" src="_images/image398.png" /></p>
+<p><img alt="_images/image399.png" src="_images/image399.png" /></p>
+<p><img alt="_images/image400.png" src="_images/image400.png" /></p>
+<p><img alt="_images/image401.png" src="_images/image401.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Serveur SQL : <strong>localhost</strong>
+Utilisateur SQL : <strong>glpi</strong>
+Mot de passe SQL : <strong>glpi</strong></p>
+</div>
+<p><img alt="_images/image402.png" src="_images/image402.png" /></p>
+<p><img alt="_images/image403.png" src="_images/image403.png" /></p>
+<p><img alt="_images/image404.png" src="_images/image404.png" /></p>
+<p><img alt="_images/image405.png" src="_images/image405.png" /></p>
+<p><img alt="_images/image406.png" src="_images/image406.png" /></p>
+<p><img alt="_images/image407.png" src="_images/image407.png" /></p>
+<p><img alt="_images/image408.png" src="_images/image408.png" /></p>
+<p><img alt="_images/image409.png" src="_images/image409.png" /></p>
+</section>
+<section id="installation-du-version-glpi-10-0-2">
+<h3>Installation du version GLPI 10.0.2<a class="headerlink" href="#installation-du-version-glpi-10-0-2" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget github.com/glpi-project/glpi/releases/download/10.0.2/glpi-10.0.2.tgz
+</pre></div>
+</div>
+<p>Les étapes restantes sont identiques à l’étape précédente.</p>
+<p>Je suis allé sur la page internet <a class="reference external" href="http://127.0.0.1/glpi">http://127.0.0.1/glpi</a></p>
+<p><img alt="_images/image410.png" src="_images/image410.png" /></p>
+<p><img alt="_images/image411.png" src="_images/image411.png" /></p>
+<p><img alt="_images/image412.png" src="_images/image412.png" /></p>
+<p><img alt="_images/image413.png" src="_images/image413.png" /></p>
+<p>Une extension est absente</p>
+<p><img alt="_images/image414.png" src="_images/image414.png" /></p>
+<p>J’ai installé l’extension gd</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install php7.4-gd
+systemctl restart apache2
+</pre></div>
+</div>
+<p>J’ai réessayé la configuration</p>
+<p><img alt="_images/image415.png" src="_images/image415.png" /></p>
+<p>La configuration est correcte</p>
+<p><img alt="_images/image416.png" src="_images/image416.png" /></p>
+<p>C’est avertissement n’est pas bloquante</p>
+<p><img alt="_images/image417.png" src="_images/image417.png" /></p>
+<p><img alt="_images/image418.png" src="_images/image418.png" /></p>
+<p><img alt="_images/image419.png" src="_images/image419.png" /></p>
+<p><img alt="_images/image420.png" src="_images/image420.png" /></p>
+<p><img alt="_images/image421.png" src="_images/image421.png" /></p>
+<p><img alt="_images/image422.png" src="_images/image422.png" /></p>
+<p><img alt="_images/image423.png" src="_images/image423.png" /></p>
+<p><img alt="_images/image424.png" src="_images/image424.png" /></p>
+<p><img alt="_images/image425.png" src="_images/image425.png" /></p>
+</section>
+<section id="connecter-le-serveur-glpi-avec-une-active-directory">
+<h3>Connecter le serveur GLPI avec une Active Directory<a class="headerlink" href="#connecter-le-serveur-glpi-avec-une-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Menu Configuration &gt; Authentification</p>
+<p><img alt="_images/image426.png" src="_images/image426.png" /></p>
+<p>Annuaire LDAP, puis ajouter</p>
+<p><img alt="_images/image427.png" src="_images/image427.png" /></p>
+<p><img alt="_images/image428.png" src="_images/image428.png" /></p>
+<p>Nous avons utilisé cette configuration :</p>
+<p><img alt="_images/image429.png" src="_images/image429.png" /></p>
+<p>OU administrateurs contient l’ensemble des utilisateurs qu’on souhaite
+importer. Un fois la configuration faite, nous pouvons la tester :</p>
+<p><img alt="_images/image430.png" src="_images/image430.png" /></p>
+<p><img alt="_images/image431.png" src="_images/image431.png" /></p>
+<p>Importer les utilisateurs</p>
+<p>Administration &gt; Utilisateurs &gt; Liaison annuaire LDAP</p>
+<p><img alt="_images/image432.png" src="_images/image432.png" /></p>
+<p>Puis importation de nouveaux utilisateurs &gt; Rechercher</p>
+<p><img alt="_images/image433.png" src="_images/image433.png" /></p>
+<p>J’ai sélectionné les utilisateurs, puis importer.</p>
+<p><img alt="_images/image434.png" src="_images/image434.png" /></p>
+<section id="installation-plugin-fusioninventory-sur-glpi-9-5-6">
+<h4>Installation plugin fusioninventory sur GLPI 9.5.6<a class="headerlink" href="#installation-plugin-fusioninventory-sur-glpi-9-5-6" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Pour pallier le problème du lien entre OCS inventory et GLPI, j’ai
+installé le plugin fusioninventory sur GLPI 9.5.6. Au moment de la
+rédaction du document, fusioninventory n’est pas compatible avec GLPI
+10.0.2.</p>
+<p>Installation du plugin</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.5%2B4.2
+</pre></div>
+</div>
+<p>J’ai décompressé le fichier dans /var/www/html/plugins</p>
+<p>Puis installé avec la commande suivante :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>php bin/console glpi:plugin:install --username<span class="o">=</span>glpi fusioninventory  
+php bin/console glpi:plugin:activate fusioninventory
+</pre></div>
+</div>
+<p>Accueil &gt; Configuration &gt; Plugins</p>
+<p><img alt="_images/image435.png" src="_images/image435.png" /></p>
+<p>Accueil &gt; Administration &gt; Entités &gt; Entité racine &gt; Fusioninventory</p>
+<p><img alt="_images/image436.png" src="_images/image436.png" /></p>
+</section>
+</section>
+<section id="installation-fusioninventory-agent-sur-linux">
+<h3>Installation fusioninventory agent sur linux<a class="headerlink" href="#installation-fusioninventory-agent-sur-linux" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install -y fusioninventory-agent
+</pre></div>
+</div>
+<p>J’ai modifié le fichier <strong>/etc/fusioninventory/agent.cfg</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>send tasks results to a FusionInventory <span class="k">for</span> GLPI server
+<span class="go">server = http://127.0.0.1/glpi/plugins/fusioninvnetory/</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart fusioninventory-agent.service
+</pre></div>
+</div>
+<section id="forcer-la-synchronisation-du-lagent">
+<h4>Forcer la synchronisation du l’agent<a class="headerlink" href="#forcer-la-synchronisation-du-lagent" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Pour vérifier que le plugin fonctionne correctement, on peut se rendre
+sur sa page d’accueil dans un navigateur.</p>
+<p><a class="reference external" href="http://xn--localhost-oja:62354">http://localhost :62354</a></p>
+<p><img alt="_images/image438.png" src="_images/image438.png" /></p>
+<p>Pour forcer la synchronistation je suis allé sur le site</p>
+<p><a class="reference external" href="http://localhost:62354/now">http://localhost:62354/now</a></p>
+<p>Ce message d’erreur apparut</p>
+<p><img alt="_images/image439.png" src="_images/image439.png" /></p>
+<p>J’ai modifié le fichier <strong>/etc/fusioninventory/agent.cfg</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>trust requests without authentification token
+<span class="go">httpd-trust = 127.0.0.1,localhost</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart fusioninventory-agent.service
+</pre></div>
+</div>
+<p><img alt="_images/image441.png" src="_images/image441.png" /></p>
+<p><img alt="_images/image442.png" src="_images/image442.png" /></p>
+</section>
+</section>
+<section id="installation-fusioninventory-agent-sur-windows">
+<h3>Installation fusioninventory agent sur Windows<a class="headerlink" href="#installation-fusioninventory-agent-sur-windows" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai téléchargé l’installateur sur le site de GitHub</p>
+<p><a class="reference external" href="https://github.com/fusioninventory/fusioninventory-agent/releases/tag/2.6">https://github.com/fusioninventory/fusioninventory-agent/releases/tag/2.6</a></p>
+<p><img alt="_images/image443.png" src="_images/image443.png" /><img alt="_images/image444.png" src="_images/image444.png" /></p>
+<p><img alt="_images/image445.png" src="_images/image445.png" /><img alt="_images/image446.png" src="_images/image446.png" /></p>
+<p><img alt="_images/image447.png" src="_images/image447.png" /><img alt="_images/image448.png" src="_images/image448.png" /></p>
+<p><img alt="_images/image449.png" src="_images/image449.png" /><img alt="_images/image450.png" src="_images/image450.png" /></p>
+<p><img alt="_images/image451.png" src="_images/image451.png" /><img alt="_images/image452.png" src="_images/image452.png" /></p>
+<p><img alt="_images/image453.png" src="_images/image453.png" /><img alt="_images/image454.png" src="_images/image454.png" /></p>
+<p><img alt="_images/image455.png" src="_images/image455.png" />
+<img alt="_images/image456.png" src="_images/image456.png" /></p>
+<p><img alt="_images/image457.png" src="_images/image457.png" /></p>
+<p><img alt="_images/image458.png" src="_images/image458.png" /></p>
+<p><img alt="_images/image459.png" src="_images/image459.png" /></p>
+</section>
+<section id="integrer-glpi-dans-active-directory">
+<h3>Intégrer GLPI dans Active Directory<a class="headerlink" href="#integrer-glpi-dans-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image148.png" src="_images/image148.png" /></p>
+<p>NB : le procédé d’intégration est expliqué dans le chapitre <a class="reference internal" href="active_directory.html"><span class="doc std std-doc">Active Directory</span></a>.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>L’installation du serveur GLPI est correctement déroulée sur un
+conteneur Debian 11.3 ainsi que l’intégration du l’agent fusion
+inventory.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="cups.html" class="btn btn-neutral float-left" title="Serveur CUPS (impression)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="samba.html" class="btn btn-neutral float-right" title="Serveur SAMBA" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        /* .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;} */
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+</html>

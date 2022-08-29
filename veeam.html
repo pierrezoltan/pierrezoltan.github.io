@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveur VEEAM Backup &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Serveur Exchange 2019" href="exchange.html" />
+    <link rel="prev" title="Serveur pfSense" href="pfsense.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur VEEAM Backup</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#connexion-au-serveur">Connexion au serveur</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ajout-dun-dossier-de-sauvegarde">Ajout d’un dossier de sauvegarde</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creation-dun-backup-job">Création d’un Backup Job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sauvegarder-le-serveur-ad">Sauvegarder le Serveur AD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sauvegarder-une-vm-linux">Sauvegarder une VM Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sauvegarder-une-vm-windows">Sauvegarder une VM Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#restaurer-dun-fichier">Restaurer d’un fichier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#restaurer-dun-fichier-dun-vm-linux">Restaurer d’un fichier d’un VM Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restaurer-dun-fichier-dun-vm-windows">Restaurer d’un fichier d’un VM Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Serveur VEEAM Backup</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/veeam.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="serveur-veeam-backup">
+<h1><strong>Serveur VEEAM Backup</strong><a class="headerlink" href="#serveur-veeam-backup" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Installation Veeam backup sur une VM Windows Serveur 2019</p>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.16.0.0/16</p></li>
+<li><p>Serveur Windows 2019 : VEEAM 172.28.1.204/16</p></li>
+<li><p>Serveur AD – Windows serveur 2019 : 172.28.1.200/16</p></li>
+<li><p>Client Linux Debian 11 : DHCP</p></li>
+<li><p>Client Windows Win 10 Pro : DHCP</p></li>
+<li><p>Helper Host (pour la restauration) Ubuntu serveur 22.04 :
+172.28.1.202/16</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/c/veeam">https://www.youtube.com/c/veeam</a></p></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai téléchargé l’image sur le site officielle :</p>
+<p><a class="reference external" href="https://www.veeam.com/">https://www.veeam.com/</a></p>
+<p>Choix Veeam Backup &amp; Replication</p>
+<p><img alt="_images/image233.png" src="_images/image233.png" /></p>
+<p><img alt="_images/image234.png" src="_images/image234.png" /></p>
+<p>J’ai cliqué sur OK pour l’installer le paquet manquant</p>
+<p><img alt="_images/image235.png" src="_images/image235.png" /></p>
+<p><img alt="_images/image236.png" src="_images/image236.png" /></p>
+<p>J’ai choisi Install pour installer les prérequis manquants</p>
+<p><img alt="_images/image237.png" src="_images/image237.png" /></p>
+<p><img alt="_images/image238.png" src="_images/image238.png" /></p>
+<p><img alt="_images/image239.png" src="_images/image239.png" /></p>
+<p><img alt="_images/image240.png" src="_images/image240.png" /></p>
+<section id="connexion-au-serveur">
+<h4>Connexion au serveur<a class="headerlink" href="#connexion-au-serveur" title="Lien permanent vers cette rubrique"></a></h4>
+<p>J’ai lancé l’application</p>
+<p><img alt="_images/image241.png" src="_images/image241.png" /></p>
+<p><img alt="_images/image242.png" src="_images/image242.png" /></p>
+<p>Choix Apply</p>
+<p><img alt="_images/image243.png" src="_images/image243.png" /></p>
+<p><img alt="_images/image244.png" src="_images/image244.png" /></p>
+</section>
+<section id="ajout-dun-dossier-de-sauvegarde">
+<h4>Ajout d’un dossier de sauvegarde<a class="headerlink" href="#ajout-dun-dossier-de-sauvegarde" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Backup Infrastructure / Backup Repositories / Add Repository</p>
+<p><img alt="_images/image245.png" src="_images/image245.png" /></p>
+<p><img alt="_images/image246.png" src="_images/image246.png" /></p>
+<p><img alt="_images/image247.png" src="_images/image247.png" /></p>
+<p>J’ai cliqué sur <strong>Browse</strong> pour sélectionner la nouvelle partition de
+partage</p>
+<p><img alt="_images/image248.png" src="_images/image248.png" /></p>
+<p>Choix partition <strong>F:\</strong> précédemment préparé (Partition REFS/64ko).</p>
+<p><img alt="_images/image249.png" src="_images/image249.png" /></p>
+<p>En cliquant sur <strong>Populate</strong>, nous pouvons voir la capacité du disque et
+l’espace libre restant.</p>
+<p><img alt="_images/image250.png" src="_images/image250.png" /></p>
+<p><img alt="_images/image251.png" src="_images/image251.png" /></p>
+<p>A la fin de configuration j’ai cliqué sur <strong>Apply</strong></p>
+<p><img alt="_images/image252.png" src="_images/image252.png" /></p>
+<p><img alt="_images/image253.png" src="_images/image253.png" /></p>
+<p>Choix Oui</p>
+<p><img alt="_images/image254.png" src="_images/image254.png" /></p>
+<p>Sauvegarder des VM</p>
+</section>
+<section id="creation-dun-backup-job">
+<h4>Création d’un Backup Job<a class="headerlink" href="#creation-dun-backup-job" title="Lien permanent vers cette rubrique"></a></h4>
+</section>
+<section id="sauvegarder-le-serveur-ad">
+<h4>Sauvegarder le Serveur AD<a class="headerlink" href="#sauvegarder-le-serveur-ad" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image255.png" src="_images/image255.png" /></p>
+<p>Ajouter ordinateurs pour sauvegarder</p>
+<p><img alt="_images/image256.png" src="_images/image256.png" /></p>
+<p><img alt="_images/image257.png" src="_images/image257.png" /></p>
+<p><img alt="_images/image258.png" src="_images/image258.png" /></p>
+<p><img alt="_images/image259.png" src="_images/image259.png" /></p>
+<p><img alt="_images/image260.png" src="_images/image260.png" /></p>
+<p><img alt="_images/image261.png" src="_images/image261.png" /></p>
+<p><img alt="_images/image262.png" src="_images/image262.png" /></p>
+<p>Laissé par défaut</p>
+<p><img alt="_images/image263.png" src="_images/image263.png" /></p>
+<p>Possibilité de programmer l’exécution du <strong>Job</strong></p>
+<p><img alt="_images/image264.png" src="_images/image264.png" /></p>
+<p>Une fois le Job est lancé, nous pouvons suivre son évolution</p>
+<p><img alt="_images/image265.png" src="_images/image265.png" /></p>
+<p><img alt="_images/image266.png" src="_images/image266.png" /></p>
+<p><img alt="_images/image267.png" src="_images/image267.png" /></p>
+</section>
+<section id="sauvegarder-une-vm-linux">
+<h4>Sauvegarder une VM Linux<a class="headerlink" href="#sauvegarder-une-vm-linux" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Créer un nouveau job &gt; Linux Computer</p>
+<p><img alt="_images/image268.png" src="_images/image268.png" /></p>
+<p>Choix <strong>Server &gt; Managed by backup server</strong></p>
+<p><img alt="_images/image269.png" src="_images/image269.png" /></p>
+<p><img alt="_images/image270.png" src="_images/image270.png" /></p>
+<p>J’ai ajouté la VM en question</p>
+<p><img alt="_images/image271.png" src="_images/image271.png" /></p>
+<p>N’ayant pas déclaré dans le DNS, j’ai utilisé son adresse IP.
+Credentials (droits) &gt; Add &gt; Linux Account</p>
+<p><img alt="_images/image272.png" src="_images/image272.png" /></p>
+<p><img alt="_images/image273.png" src="_images/image273.png" /></p>
+<p><img alt="_images/image274.png" src="_images/image274.png" /></p>
+<p>J’ai choisi sauvegarder la VM en entier</p>
+<p><img alt="_images/image275.png" src="_images/image275.png" /></p>
+<p>J’ai choisi de garder les deux derniers points de restauration</p>
+<p><img alt="_images/image276.png" src="_images/image276.png" /></p>
+<p>J’ai laissé ses options désélectionné (par défaut)</p>
+<p><img alt="_images/image277.png" src="_images/image277.png" /></p>
+<p>J’ai choisi une sauvegarde mensuelle</p>
+<p><img alt="_images/image278.png" src="_images/image278.png" /></p>
+<p>Le récapitulatif du job et lancement de la sauvegarde</p>
+<p><img alt="_images/image279.png" src="_images/image279.png" /></p>
+<p><img alt="_images/image280.png" src="_images/image280.png" /></p>
+<p>Lancement du job, début de la sauvegarde</p>
+<p><img alt="_images/image281.png" src="_images/image281.png" /></p>
+<p>Le serveur va lancer un scan et automatiquement installer
+automatiquement un client VEEAM sur la VM Debian si manquant (ici c’est
+le cas)</p>
+<p><img alt="_images/image282.png" src="_images/image282.png" /></p>
+<p>Une fois l’agent est installé nous avons une réponse succès</p>
+<p><img alt="_images/image283.png" src="_images/image283.png" /></p>
+<p>J’ai installé les paquets nécessaires pour linux (Debian)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install dkms gcc make perl openssh-server
+linux-headers-<span class="se">\$</span><span class="o">(</span>uname -r<span class="o">)</span> libudev-dev libacl1 libattr1 lvm2 libfuse-dev
+libfuse2 libncurses5 dmidecode default-libmysqlclient-dev libpq5 python3
+isolinux btrfs-progs squashfs-tools wget xorriso
+</pre></div>
+</div>
+<p>Ensuite j’ai téléchargé et installé VEEAM</p>
+<p><a class="reference external" href="http://repository.veeam.com/.private/deb/veeam/">http://repository.veeam.com/.private/deb/veeam/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">veeam_5</span><span class="mf">.0.2.4567</span><span class="n">_amd64</span><span class="o">.</span><span class="n">deb</span>
+</pre></div>
+</div>
+<p>Début de la sauvegarde</p>
+<p><img alt="_images/image284.png" src="_images/image284.png" /></p>
+<p>Fin de la sauvegarde</p>
+<p><img alt="_images/image285.png" src="_images/image285.png" /></p>
+</section>
+<section id="sauvegarder-une-vm-windows">
+<h4>Sauvegarder une VM Windows<a class="headerlink" href="#sauvegarder-une-vm-windows" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Création d’un nouveau job &gt; Windows computer</p>
+<p><img alt="_images/image286.png" src="_images/image286.png" /></p>
+<p>Server &gt; Managed by agent</p>
+<p><img alt="_images/image287.png" src="_images/image287.png" /></p>
+<p>Add &gt; Individual computer</p>
+<p><img alt="_images/image288.png" src="_images/image288.png" /></p>
+<p>J’ai renseigné l’host et les droits d’accès</p>
+<img alt="_images/image289.png" src="_images/image289.png" />
+<p>Nous avons la possibilité de renseigner directement l’utilisateur et son
+mot de passe ou passer par <strong>browse</strong> et chercher sur l’AD.</p>
+<p><img alt="_images/image290.png" src="_images/image290.png" /></p>
+<p>J’ai choisi <strong>browse</strong></p>
+<p><img alt="_images/image291.png" src="_images/image291.png" /></p>
+<p><img alt="_images/image292.png" src="_images/image292.png" /></p>
+<p>Puis avancé et renseigner l’accès à l’AD</p>
+<p><img alt="_images/image293.png" src="_images/image293.png" /></p>
+<p>Puis trouver l’utilisateur qu’on souhaite</p>
+<p><img alt="_images/image294.png" src="_images/image294.png" /></p>
+<p><img alt="_images/image295.png" src="_images/image295.png" /></p>
+<p><img alt="_images/image296.png" src="_images/image296.png" /></p>
+<p><img alt="_images/image297.png" src="_images/image297.png" /></p>
+<p>Choix Volume level backup</p>
+<p><img alt="_images/image298.png" src="_images/image298.png" /></p>
+<p>Choix de objets avec Add &gt; OS volume (je veux sauvegarder uniquement le
+volume contenant l’OS)</p>
+<p><img alt="_images/image299.png" src="_images/image299.png" /></p>
+<p>J’ai choisi Veeam backup repository (crée au début du TP)</p>
+<p><img alt="_images/image300.png" src="_images/image300.png" /></p>
+<p>Le nom DNS est automatiquement rempli</p>
+<p><img alt="_images/image301.png" src="_images/image301.png" /></p>
+<p>Choix de 2 points de restauration</p>
+<p><img alt="_images/image302.png" src="_images/image302.png" /></p>
+<p>Je ne choisis pas de créer une cache</p>
+<p><img alt="_images/image303.png" src="_images/image303.png" /></p>
+<p>J’ai laissé par défaut application-aware processing (traitement sensible
+aux applications)</p>
+<p><img alt="_images/image304.png" src="_images/image304.png" /></p>
+<p>J’ai choisi une sauvegarde par mois</p>
+<p><img alt="_images/image305.png" src="_images/image305.png" /></p>
+<p>Le récapitulatif</p>
+<p><img alt="_images/image306.png" src="_images/image306.png" /></p>
+<p>VEEAM lance son scan vers le client et installe l’agent si nécessaire</p>
+<p><img alt="_images/image307.png" src="_images/image307.png" /></p>
+<p>Début de la sauvegarde</p>
+<p><img alt="_images/image308.png" src="_images/image308.png" /></p>
+<p>Fin de la sauvegarde</p>
+<p><img alt="_images/image309.png" src="_images/image309.png" /></p>
+</section>
+</section>
+<section id="restaurer-dun-fichier">
+<h3>Restaurer d’un fichier<a class="headerlink" href="#restaurer-dun-fichier" title="Lien permanent vers cette rubrique"></a></h3>
+<section id="restaurer-dun-fichier-dun-vm-linux">
+<h4>Restaurer d’un fichier d’un VM Linux<a class="headerlink" href="#restaurer-dun-fichier-dun-vm-linux" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Pour tester la restauration d’un fichier, j’ai créé un fichier test.odt
+puis j’ai effectué une sauvegarde. Par la suite j’ai supprimé le fichier
+pour pouvoir restaurer à partir de la sauvegarde.</p>
+<p><img alt="_images/image310.png" src="_images/image310.png" /></p>
+<p>Choix restore</p>
+<p><img alt="_images/image311.png" src="_images/image311.png" /></p>
+<p>Choix guest files restore</p>
+<p><img alt="_images/image312.png" src="_images/image312.png" /></p>
+<p><img alt="_images/image313.png" src="_images/image313.png" /></p>
+<p>Choix de la machine virtuelle sur laquelle je veux restaurer le fichier
+supprimé.</p>
+<p><img alt="_images/image314.png" src="_images/image314.png" /></p>
+<p>Choix du point de restauration</p>
+<p><img alt="_images/image315.png" src="_images/image315.png" /></p>
+<p>Choix du linux serveur sur lequel on va « monter » notre VM debcli2</p>
+<p>Linux server &gt; Add</p>
+<p><img alt="_images/image316.png" src="_images/image316.png" /></p>
+<p>J’ai choisi comme helper host un Ubuntu serveur 22.04</p>
+<p><img alt="_images/image317.png" src="_images/image317.png" /></p>
+<p>Credentials &gt; Add &gt; Linux Account</p>
+<p><img alt="_images/image318.png" src="_images/image318.png" /></p>
+<p><img alt="_images/image319.png" src="_images/image319.png" /></p>
+<p>Choix <strong>Oui</strong></p>
+<p><img alt="_images/image320.png" src="_images/image320.png" /></p>
+<p>Les composants manquants seront automatiquement installés sur le Helper
+host</p>
+<p><img alt="_images/image321.png" src="_images/image321.png" /></p>
+<p><img alt="_images/image322.png" src="_images/image322.png" /></p>
+<p>Récapitulatif</p>
+<p><img alt="_images/image323.png" src="_images/image323.png" /></p>
+<p>On peut renseigner une raison pour laquelle on effectue une
+restauration.</p>
+<p><img alt="_images/image324.png" src="_images/image324.png" /></p>
+<p>Choix Browse</p>
+<p><img alt="_images/image325.png" src="_images/image325.png" /></p>
+<p>La sauvegarde linux a été correctement monté, on peut rechercher le
+fichier supprimé</p>
+<p><img alt="_images/image326.png" src="_images/image326.png" /></p>
+<p>J’ai effectué un clic droit sur le fichier à restaurer :</p>
+<p><img alt="_images/image327.png" src="_images/image327.png" /></p>
+<p>Restauration en cours</p>
+<p><img alt="_images/image328.png" src="_images/image328.png" /></p>
+<p>Restauration effectuée</p>
+<p><img alt="_images/image329.png" src="_images/image329.png" /></p>
+<p>Je me suis reconnecté sur le client <strong>debcli01</strong> pour vérifier si la
+restauration a bien été effectué.</p>
+<p><img alt="_images/image330.png" src="_images/image330.png" /></p>
+<p>Le fichier a été correctement restauré. Une fois la fenêtre fermée, le
+client est automatiquement démonté du serveur.</p>
+<p><img alt="_images/image331.png" src="_images/image331.png" /></p>
+</section>
+<section id="restaurer-dun-fichier-dun-vm-windows">
+<h4>Restaurer d’un fichier d’un VM Windows<a class="headerlink" href="#restaurer-dun-fichier-dun-vm-windows" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Je supprime un fichier du dossier téléchargement</p>
+<p><img alt="_images/image332.png" src="_images/image332.png" /></p>
+<p>Choix Restore</p>
+<p><img alt="_images/image333.png" src="_images/image333.png" /></p>
+<p>Choix Guest files restore</p>
+<p><img alt="_images/image334.png" src="_images/image334.png" /></p>
+<p>Choix Microsoft Windows</p>
+<p><img alt="_images/image335.png" src="_images/image335.png" /></p>
+<p>J’ai choisi la machine CLIWIN01</p>
+<p><img alt="_images/image336.png" src="_images/image336.png" /></p>
+<p><img alt="_images/image337.png" src="_images/image337.png" /></p>
+<p><img alt="_images/image338.png" src="_images/image338.png" /></p>
+<p>Récapitulatif. J’ai cliqué sur <strong>Browse</strong>.</p>
+<p><img alt="_images/image339.png" src="_images/image339.png" /></p>
+<p>J’ai recherché le fichier manquant</p>
+<p><img alt="_images/image340.png" src="_images/image340.png" /></p>
+<p>J’ai choisi le fichier à restaurer</p>
+<p><img alt="_images/image341.png" src="_images/image341.png" /></p>
+<p>Le fichier a été correctement restauré</p>
+<p><img alt="_images/image342.png" src="_images/image342.png" /></p>
+<p>J’ai vérifié sur la VM si le fichier a bien été récupéré. Le fichier a
+été correctement restauré.</p>
+<p><img alt="_images/image343.png" src="_images/image343.png" /></p>
+</section>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>VEEAM est un outil complet proposant une multitude de possibilité de
+sauvegarde. Il est très performant même dans sa version Community
+Edition. La restauration d’une VM entier actuellement n’est compatible
+qu’avec VMWare et HYPER-V mais pas des VM Proxmox.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="pfsense.html" class="btn btn-neutral float-left" title="Serveur pfSense" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="exchange.html" class="btn btn-neutral float-right" title="Serveur Exchange 2019" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        /* .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;} */
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+</html>

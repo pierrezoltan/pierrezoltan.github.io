@@ -1,0 +1,378 @@
+# **Serveur GLPI**
+
+## Objectif et environnement
+
+### Objectif
+
+L’installation d’un serveur GLPI sur un conteneur Debian 11.3.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.28.0.0/16
+
+- Serveur GLPI : 172.28.1.205
+
+### Documentation
+
+- <https://rdr-it.com/glpi-liaison-avec-un-active-directory/>
+
+- <https://www.youtube.com/watch?v=5cThhFcGwc0&t=4s>
+
+## Processus
+
+### Configuration du conteneur
+
+Ressources
+
+<img src="./media/image395.png"
+style="width:4.24017in;height:1.07307in" />
+
+Network
+
+<img src="./media/image396.png"
+style="width:6.27014in;height:0.23819in" />
+
+DNS
+
+<img src="./media/image397.png"
+style="width:2.96916in;height:0.80219in" />
+
+### Mise à jour et installation des paquets nécessaires
+```bash
+# Mise à jour
+apt update && apt upgrade -y  
+# Installation Apache2 Php et Mariadb  
+apt install apache2 perl php mariadb-server -y
+```
+Autoriser le serveur apache et mariadb pour se lancer au démarrage du
+l’ordinateur
+```bash
+systemctl enable apache2 mariadb
+```
+Installation des paquets nécessaires pour glpi
+```bash
+apt install
+php-{ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2} -y
+# Redémarrer le serveur apache
+systemctl restart apache2
+```
+### Téléchargement du paquet GLPI 9.5.6
+```bash
+wget github.com/glpi-project/glpi/releases/download/9.5.6/glpi-9.5.6.tgz
+```
+Décompression du fichier dans l’emplacement prévu
+```bash
+tar -xvf glpi-9.5.6.tgz -C /var/www/html/
+```
+J’ai ensuite changé le propriétaire du dossier téléchargé et ajouter des
+droits
+```bash
+chown -R www-data:www-data /var/www/html/glpi  
+chmod -R 775 /var/www/html/glpi
+```
+### Création de la base de données
+```bash
+mysql  
+create database glpi ;  
+create user glpi@localhost identified by ‘Azerty123+’ ;  
+grant all privileges on glpi.\* to glpi@localhost;
+flush privileges ;
+exit ;
+```
+Je suis allé sur la page internet <http://172.28.1.212/glpi>
+
+<img src="./media/image398.png"
+style="width:6.27014in;height:1.86944in" />
+
+<img src="./media/image399.png"
+style="width:6.27014in;height:3.99861in" />
+
+<img src="./media/image400.png"
+style="width:6.27014in;height:2.49514in" />
+
+<img src="./media/image401.png"
+style="width:4.67107in;height:5.7518in" />
+
+```{note}
+Serveur SQL : **localhost**
+Utilisateur SQL : **glpi**
+Mot de passe SQL : **glpi**
+```
+
+<img src="./media/image402.png"
+style="width:6.27014in;height:3.31875in" />
+
+<img src="./media/image403.png"
+style="width:6.27014in;height:3.04653in" />
+
+<img src="./media/image404.png"
+style="width:6.27014in;height:1.50556in" />
+
+<img src="./media/image405.png"
+style="width:6.27014in;height:2.11389in" />
+
+<img src="./media/image406.png"
+style="width:6.27014in;height:3.88125in" />
+
+<img src="./media/image407.png"
+style="width:6.27014in;height:3.02986in" />
+
+<img src="./media/image408.png"
+style="width:6.27014in;height:2.68681in" />
+
+<img src="./media/image409.png"
+style="width:3.70885in;height:3.7922in" />
+
+### Installation du version GLPI 10.0.2
+```bash
+wget github.com/glpi-project/glpi/releases/download/10.0.2/glpi-10.0.2.tgz
+```
+Les étapes restantes sont identiques à l’étape précédente.
+
+Je suis allé sur la page internet <http://127.0.0.1/glpi>
+
+<img src="./media/image410.png"
+style="width:4.74418in;height:1.54059in" />
+
+<img src="./media/image411.png"
+style="width:4.77564in;height:3.10424in" />
+
+<img src="./media/image412.png"
+style="width:4.82015in;height:1.93521in" />
+
+<img src="./media/image413.png"
+style="width:6.27014in;height:5.81736in" />
+
+Une extension est absente
+
+<img src="./media/image414.png"
+style="width:6.27014in;height:0.53472in" />
+
+J’ai installé l'extension gd
+```bash
+apt install php7.4-gd
+systemctl restart apache2
+```
+J’ai réessayé la configuration
+
+<img src="./media/image415.png"
+style="width:6.27014in;height:0.92778in" />
+
+La configuration est correcte 
+
+<img src="./media/image416.png"
+style="width:6.27014in;height:0.55833in" />
+
+C’est avertissement n’est pas bloquante
+
+<img src="./media/image417.png"
+style="width:6.27014in;height:0.73472in" />
+
+<img src="./media/image418.png"
+style="width:5.54408in;height:3.31024in" />
+
+<img src="./media/image419.png"
+style="width:5.08718in;height:3.44479in" />
+
+<img src="./media/image420.png"
+style="width:6.27014in;height:2.21875in" />
+
+<img src="./media/image421.png"
+style="width:4.37904in;height:3.99832in" />
+
+<img src="./media/image422.png"
+style="width:3.67727in;height:2.23104in" />
+
+<img src="./media/image423.png"
+style="width:4.31776in;height:2.20073in" />
+
+<img src="./media/image424.png"
+style="width:4.31847in;height:3.02326in" />
+
+<img src="./media/image425.png"
+style="width:6.27014in;height:3.47708in" />
+
+### Connecter le serveur GLPI avec une Active Directory
+
+Menu Configuration \> Authentification
+
+<img src="./media/image426.png"
+style="width:1.5137in;height:2.97476in" />
+
+Annuaire LDAP, puis ajouter
+
+<img src="./media/image427.png"
+style="width:2.79947in;height:2.05887in" />
+
+<img src="./media/image428.png"
+style="width:6.27014in;height:0.36181in" />
+
+Nous avons utilisé cette configuration :
+
+<img src="./media/image429.png"
+style="width:6.2407in;height:4.78645in" />
+
+OU administrateurs contient l’ensemble des utilisateurs qu’on souhaite
+importer. Un fois la configuration faite, nous pouvons la tester :
+
+<img src="./media/image430.png"
+style="width:6.27014in;height:1.19444in" />
+
+<img src="./media/image431.png"
+style="width:6.27014in;height:1.03889in" />
+
+Importer les utilisateurs
+
+Administration \> Utilisateurs \> Liaison annuaire LDAP
+
+<img src="./media/image432.png"
+style="width:6.27014in;height:0.85972in" />
+
+Puis importation de nouveaux utilisateurs \> Rechercher
+
+<img src="./media/image433.png"
+style="width:6.27014in;height:1.13681in" />
+
+J’ai sélectionné les utilisateurs, puis importer.
+
+<img src="./media/image434.png"
+style="width:5.50518in;height:2.15354in" />
+
+#### Installation plugin fusioninventory sur GLPI 9.5.6
+
+Pour pallier le problème du lien entre OCS inventory et GLPI, j’ai
+installé le plugin fusioninventory sur GLPI 9.5.6. Au moment de la
+rédaction du document, fusioninventory n’est pas compatible avec GLPI
+10.0.2.
+
+Installation du plugin
+```bash
+wget https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.5%2B4.2
+```
+J’ai décompressé le fichier dans /var/www/html/plugins
+
+Puis installé avec la commande suivante :
+```bash
+php bin/console glpi:plugin:install --username=glpi fusioninventory  
+php bin/console glpi:plugin:activate fusioninventory
+```
+Accueil \> Configuration \> Plugins
+
+<img src="./media/image435.png"
+style="width:6.27014in;height:1.67639in" />
+
+Accueil \> Administration \> Entités \> Entité racine \> Fusioninventory
+
+<img src="./media/image436.png"
+style="width:6.27014in;height:3.06944in" />
+
+### Installation fusioninventory agent sur linux
+```bash
+apt install -y fusioninventory-agent
+```
+J’ai modifié le fichier **/etc/fusioninventory/agent.cfg**
+
+```console
+# send tasks results to a FusionInventory for GLPI server
+server = http://127.0.0.1/glpi/plugins/fusioninvnetory/
+```
+
+```bash
+systemctl restart fusioninventory-agent.service
+```
+#### Forcer la synchronisation du l’agent
+
+Pour vérifier que le plugin fonctionne correctement, on peut se rendre
+sur sa page d’accueil dans un navigateur.
+
+[http://localhost :62354](http://localhost :62354)
+
+<img src="./media/image438.png"
+style="width:6.27014in;height:3.59653in" />
+
+Pour forcer la synchronistation je suis allé sur le site
+
+<http://localhost:62354/now>
+
+Ce message d’erreur apparut
+
+<img src="./media/image439.png"
+style="width:5.19864in;height:0.94805in" />
+
+J’ai modifié le fichier **/etc/fusioninventory/agent.cfg**
+
+```console
+# trust requests without authentification token
+httpd-trust = 127.0.0.1,localhost
+```
+
+```bash
+systemctl restart fusioninventory-agent.service
+```
+<img src="./media/image441.png"
+style="width:4.45252in;height:0.90166in" />
+
+<img src="./media/image442.png"
+style="width:6.27014in;height:0.99375in" />
+
+### Installation fusioninventory agent sur Windows
+
+J’ai téléchargé l’installateur sur le site de GitHub
+
+<https://github.com/fusioninventory/fusioninventory-agent/releases/tag/2.6>
+
+<img src="./media/image443.png"
+style="width:2.96916in;height:1.58355in" /><img src="./media/image444.png"
+style="width:3.01798in;height:2.33318in" />
+
+<img src="./media/image445.png"
+style="width:2.97044in;height:2.29643in" /><img src="./media/image446.png"
+style="width:2.99842in;height:2.32605in" />
+
+<img src="./media/image447.png"
+style="width:3.08173in;height:2.37964in" /><img src="./media/image448.png"
+style="width:3.10219in;height:2.39062in" />
+
+<img src="./media/image449.png"
+style="width:3.05119in;height:2.36973in" /><img src="./media/image450.png"
+style="width:3.15734in;height:2.46068in" />
+
+<img src="./media/image451.png"
+style="width:2.93893in;height:2.29046in" /><img src="./media/image452.png"
+style="width:2.92579in;height:2.26513in" />
+
+<img src="./media/image453.png"
+style="width:3.06827in;height:2.40234in" /><img src="./media/image454.png"
+style="width:2.99915in;height:2.32734in" />
+
+<img src="./media/image455.png"
+style="width:2.98284in;height:2.31799in" />
+<img src="./media/image456.png"
+style="width:3.01747in;height:2.34083in" />
+
+<img src="./media/image457.png"
+style="width:6.27014in;height:0.85903in" />
+
+<img src="./media/image458.png"
+style="width:6.27014in;height:1.87708in" />
+
+<img src="./media/image459.png"
+style="width:6.27014in;height:1.91111in" />
+
+### Intégrer GLPI dans Active Directory
+
+<img src="./media/image148.png"
+style="width:3.27764in;height:1.64777in" />
+
+NB : le procédé d’intégration est expliqué dans le chapitre [Active Directory](active_directory.md).
+## Conclusion
+
+L’installation du serveur GLPI est correctement déroulée sur un
+conteneur Debian 11.3 ainsi que l’intégration du l’agent fusion
+inventory.

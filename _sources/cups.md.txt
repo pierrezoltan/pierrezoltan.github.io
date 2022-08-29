@@ -1,0 +1,119 @@
+# **Serveur CUPS (impression)**
+
+## Objectif et environnement
+
+### Objectif
+
+L’installation d’un serveur d’impression sur linux (SAMBA). Ce serveur est colocalisé avec le serveur de fichier.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.28.0.0/16
+
+- Serveur SRV-UBU-SMB(SAMBA) : 172.28.1.202
+
+### Documentation
+
+- <http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d%27impression#:~:text=sur%20le%20serveur-,Principe,connect%C3%A9es%20en%20direct%20au%20serveur>).
+
+## Processus
+
+Pour l’installation nous avons utilisé le VM serveur de fichier ou SAMBA
+est déjà installé.
+
+### Configuration CUPS
+```bash
+apt install cups cups-client
+```
+Sauvegarder le fichier de configuration CUPS avant de le modifier :
+```bash
+cp /etc.cups/cupsd.conf /etc.cups/cupsd.conf.bkp
+```
+Le fichier cupsd.conf
+
+<img src="./media/image382.png"
+style="width:4.47979in;height:1.17725in" />
+
+<img src="./media/image383.png"
+style="width:3.84429in;height:4.44854in" />
+
+Ajout du serveur d’impression dans SAMBA
+```bash
+nano /etc/samba.smb.conf
+```
+<img src="./media/image384.png"
+style="width:5.92791in;height:2.95875in" />
+
+Redémarrer les services
+```bash
+systemctl restart cups smbd nmdb
+```
+L’administration du CUPS est accessible sur le port 631.
+
+<img src="./media/image385.png"
+style="width:6.26042in;height:2.79167in" />
+
+### Ajouter une imprimante
+
+Pour pouvoir tester l’imprimante du PEI, nous avons ajouté
+temporairement une carte réseau au VM dans le réseau 192.168.10.0/24 en
+dhcp.
+
+<img src="./media/image386.png"
+style="width:4.79569in;height:2.89473in" />
+
+<img src="./media/image387.png"
+style="width:5.75416in;height:3.10746in" />
+
+<img src="./media/image388.png"
+style="width:3.78209in;height:2.31165in" />
+
+J’ai choisi une pilote générique, puis continuer
+
+<img src="./media/image389.png"
+style="width:2.61659in;height:2.71746in" />
+
+Choix PCL laser printer, puis ajouter une imprimante
+
+<img src="./media/image390.png"
+style="width:2.98717in;height:3.03604in" />
+
+<img src="./media/image391.png"
+style="width:2.49958in;height:0.68432in" />
+
+Pour tester, il suffit d’imprimer une page de test
+
+<img src="./media/image392.png"
+style="width:4.2366in;height:1.61365in" />
+
+### Ajouter une imprimante aux clients
+
+L’imprimante partagée est automatiquement reconnue sur le réseau :
+
+Linux
+
+<img src="./media/image393.png"
+style="width:3.9842in;height:1.36983in" />
+
+Windows
+
+<img src="./media/image394.png"
+style="width:2.70417in;height:1.70062in" />
+
+### Intégrer le serveur d’impression dans Active Directory
+
+<img src="./media/image148.png"
+style="width:3.27764in;height:1.64777in" />
+
+NB : le procédé d’intégration est expliqué dans le chapitre [Active Directory](active_directory.md).
+
+## Conclusion
+
+CUPS est un outil léger pour ajouter une imprimante en réseaux,
+néanmoins l’ajout de pilotes propriétaires peut être fastidieux.

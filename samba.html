@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveur SAMBA &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rtd_sphinx_search.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/js/rtd_sphinx_search.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Serveur Zabbix" href="zabbix.html" />
+    <link rel="prev" title="Serveur GLPI" href="glpi.html" />
+<style>
+        .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
+</style>
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Documentation Projet Cluster Proxmox
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur SAMBA</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation :</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation-des-logiciels-dauthentification-sur-le-domaine">Installation des logiciels d’authentification sur le domaine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creer-lespace-de-stockage-des-partages">Créer l’espace de stockage des partages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#joindre-la-machine-virtuelle-au-domaine">Joindre la machine virtuelle au domaine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installer-kerberos">Installer Kerberos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation-samba">Installation SAMBA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#preparation-pam">Préparation PAM</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#montage-du-volume-logique">Montage du volume logique</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#definition-des-droits-dacces-avec-les-acl">Définition des droits d’accès avec les ACL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modification-du-samba">Modification du Samba</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test-partage-avec-un-client-debian">Test partage avec un client Debian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test-partage-avec-un-client-windows">Test partage avec un client Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#integrer-samba-dans-active-directory">Intégrer Samba dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingcastle.html"><strong>PingCastle</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Projet Cluster Proxmox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><strong>Serveur SAMBA</strong></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/samba.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="serveur-samba">
+<h1><strong>Serveur SAMBA</strong><a class="headerlink" href="#serveur-samba" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="objectif-et-environnement">
+<h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>L’installation et configuration un serveur de partage de fichier SAMBA et impression sur Ubuntu serveur.</p>
+</div>
+</section>
+<section id="environnement">
+<h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Matériels :</p>
+<ul class="simple">
+<li><p>Dell PowerEdge r240 avec Proxmox 7.1-7</p></li>
+</ul>
+<p>Adressage des VMS :</p>
+<ul class="simple">
+<li><p>Réseaux : 172.16.0.0/16</p></li>
+<li><p>Serveur Samba et impression : SRV-UBU-SMB 172.28.1.202/16</p></li>
+<li><p>Client Debian 1 : clideb1 172.28.2.1/16</p></li>
+</ul>
+</section>
+<section id="documentation">
+<h3>Documentation :<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://linuxfr.org/news/creation-d-un-serveur-de-fichiers-sous-ubuntu#toc-introduction">https://linuxfr.org/news/creation-d-un-serveur-de-fichiers-sous-ubuntu#toc-introduction</a></p></li>
+</ul>
+</section>
+</section>
+<section id="processus">
+<h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ai créé une sauvegarde en faisant :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo cp /etc/netplan/00-installer-config.yaml
+/etc/netplan//00-installer-config.yaml.bkp
+</pre></div>
+</div>
+<p>Dans le fichier /etc/netplan/00-installer-config.yaml</p>
+<p><img alt="_images/image460.png" src="_images/image460.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo netplan apply
+</pre></div>
+</div>
+<section id="installation-des-logiciels-dauthentification-sur-le-domaine">
+<h4>Installation des logiciels d’authentification sur le domaine<a class="headerlink" href="#installation-des-logiciels-dauthentification-sur-le-domaine" title="Lien permanent vers cette rubrique"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install acl realmd libnss-winbind winbind
+</pre></div>
+</div>
+</section>
+<section id="creer-lespace-de-stockage-des-partages">
+<h4>Créer l’espace de stockage des partages<a class="headerlink" href="#creer-lespace-de-stockage-des-partages" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image461.png" src="_images/image461.png" /></p>
+<p>Création nouvelle partition</p>
+<p><img alt="_images/image462.png" src="_images/image462.png" /></p>
+<p>Créer le groupe de volumes LVM</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vgcreate samba /dev/sdb1
+</pre></div>
+</div>
+<p><img alt="_images/image463.png" src="_images/image463.png" /></p>
+</section>
+</section>
+<section id="joindre-la-machine-virtuelle-au-domaine">
+<h3>Joindre la machine virtuelle au domaine<a class="headerlink" href="#joindre-la-machine-virtuelle-au-domaine" title="Lien permanent vers cette rubrique"></a></h3>
+<section id="installer-kerberos">
+<h4>Installer Kerberos<a class="headerlink" href="#installer-kerberos" title="Lien permanent vers cette rubrique"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install krb5-user
+</pre></div>
+</div>
+<p><img alt="_images/image464.png" src="_images/image464.png" /></p>
+<p><img alt="_images/image465.png" src="_images/image465.png" /></p>
+<p><img alt="_images/image466.png" src="_images/image466.png" /></p>
+<p>On a édité le fichier /etc/krb5.conf</p>
+<p><img alt="_images/image467.png" src="_images/image467.png" /></p>
+<p><img alt="_images/image468.png" src="_images/image468.png" /></p>
+<p><img alt="_images/image469.png" src="_images/image469.png" /></p>
+</section>
+<section id="installation-samba">
+<h4>Installation SAMBA<a class="headerlink" href="#installation-samba" title="Lien permanent vers cette rubrique"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade -y
+
+sudo apt install -y samba
+</pre></div>
+</div>
+<p>Modifier le fichier /etc/samba/smb.conf</p>
+<p><img alt="_images/image470.png" src="_images/image470.png" /></p>
+<p><img alt="_images/image471.png" src="_images/image471.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install -y ntp
+</pre></div>
+</div>
+<p>On a modifié le fichier /etc/ntp.conf comme suite :</p>
+<p>Redémarrer ntp et smbd</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>service ntp restart  
+service smbd restart
+</pre></div>
+</div>
+<p>Nous avons rentré notre serveur samba dans le domaine</p>
+<!--root@srv-ubu-smb:~#-->
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">net</span> <span class="n">ads</span> <span class="n">join</span> <span class="o">-</span><span class="n">S</span> <span class="n">SRV</span><span class="o">-</span><span class="n">W19</span><span class="o">-</span><span class="n">AD</span> <span class="o">-</span><span class="n">U</span> <span class="n">Administrateur</span> <span class="n">joined</span> <span class="n">srv</span><span class="o">-</span><span class="n">ubu</span><span class="o">-</span><span class="n">smb</span> <span class="n">to</span> <span class="n">realm</span> <span class="n">t2sr</span><span class="o">.</span><span class="n">io</span>
+</pre></div>
+</div>
+<p><img alt="_images/image472.png" src="_images/image472.png" /></p>
+<p>Configurer NSS</p>
+<p>service winbind restart</p>
+<p>Nous avons modifié le fichier /etc/nsswitch.conf</p>
+<p><img alt="_images/image473.png" src="_images/image473.png" /></p>
+<p>Pour vérifier si tout est fonctionnel jusqu’au présent</p>
+<p><img alt="_images/image474.png" src="_images/image474.png" /></p>
+</section>
+<section id="preparation-pam">
+<h4>Préparation PAM<a class="headerlink" href="#preparation-pam" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image475.png" src="_images/image475.png" /></p>
+<p>pam-auth-update</p>
+<p><img alt="_images/image476.png" src="_images/image476.png" /></p>
+<p>Nous avons sélectionné <strong>Non</strong>.</p>
+<p>Nous avons modifié le fichier /etc/pam.d/common-auth</p>
+<p><img alt="_images/image477.png" src="_images/image477.png" /></p>
+<p>Nous avons modifié le fichier /etc/pam.d/common-password</p>
+<p><img alt="_images/image478.png" src="_images/image478.png" /></p>
+<p>Nous avons modifié le fichier /etc/pam.d/common-session</p>
+<p><img alt="_images/image479.png" src="_images/image479.png" /></p>
+<p>Configuration du fuseau horaire (choix France/Paris)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo dpkg-reconfigure tzdata
+sudo reboot
+</pre></div>
+</div>
+<p>Vérification espace de partage disponible</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo vgdisplay <span class="se">\&gt;</span> vgdisplay.txt  
+vim vgdisplay.txt
+</pre></div>
+</div>
+<p><img alt="_images/image480.png" src="_images/image480.png" /></p>
+<p>Création du partage</p>
+<p><img alt="_images/image481.png" src="_images/image481.png" /></p>
+<p>Création du volume logique</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lvcreate -n partage -L <span class="m">9</span>.9G samba
+</pre></div>
+</div>
+<p>Retour de la commande :</p>
+<blockquote>
+<div><p>Rounding up size to full physical extent 9.90 GiB
+Logical volume “partage” created.</p>
+</div></blockquote>
+<p>Formatage de la partition</p>
+<p><img alt="_images/image483.png" src="_images/image483.png" /></p>
+</section>
+</section>
+<section id="montage-du-volume-logique">
+<h3>Montage du volume logique<a class="headerlink" href="#montage-du-volume-logique" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Récupération ID du disque</p>
+<p><img alt="_images/image484.png" src="_images/image484.png" /></p>
+<p>Nous avons ajouté le fichier /etc/fstab pour un montage automatique</p>
+<p><img alt="_images/image485.png" src="_images/image485.png" /></p>
+<p>Montage de toutes les partitions et vérifier le montage</p>
+<p><img alt="_images/image486.png" src="_images/image486.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Astuce</p>
+<p>Retirer l’espace réservé pour root, inutile de le gardé dans notre cas.</p>
+<blockquote>tune2fs -m 0 /dev/mapper/samba-partage</blockquote>
+</div>
+<section id="definition-des-droits-dacces-avec-les-acl">
+<h4>Définition des droits d’accès avec les ACL<a class="headerlink" href="#definition-des-droits-dacces-avec-les-acl" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image488.png" src="_images/image488.png" /></p>
+<p>Création d’un groupe sur l’Active Directory</p>
+<p>En prévision des définitions ACL j’ai créé un groupe nommé <strong>partage</strong>
+sur l’AD</p>
+<p><img alt="_images/image489.png" src="_images/image489.png" /></p>
+<p>Puis j’ai ajouté deux membres</p>
+<p><img alt="_images/image490.png" src="_images/image490.png" /></p>
+<p>Définition ACL sur la racine du partage</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">R</span> <span class="o">-</span><span class="n">m</span> <span class="n">g</span><span class="p">:</span><span class="s2">&quot;T2SR\smbpartage&quot;</span><span class="p">:</span><span class="n">rwx</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">partage</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>T2SR\<strong>smbpartage</strong> – partage correspond au nom groupe
+précédemment créé</p>
+</div>
+<p>Définition ACL par défaut du partage</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setfacl</span> <span class="o">-</span><span class="n">R</span> <span class="o">-</span><span class="n">m</span> <span class="n">d</span><span class="p">:</span><span class="n">g</span><span class="p">:</span><span class="s2">&quot;T2SR\smbpartage&quot;</span><span class="p">:</span><span class="n">rwx</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">partage</span>
+</pre></div>
+</div>
+</section>
+<section id="modification-du-samba">
+<h4>Modification du Samba<a class="headerlink" href="#modification-du-samba" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image493.png" src="_images/image493.png" /></p>
+<p>Redémarrage le service Samba</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl restart smbd
+</pre></div>
+</div>
+</section>
+<section id="test-partage-avec-un-client-debian">
+<h4>Test partage avec un client Debian<a class="headerlink" href="#test-partage-avec-un-client-debian" title="Lien permanent vers cette rubrique"></a></h4>
+<p>+ Autre emplacements</p>
+<p><img alt="_images/image494.png" src="_images/image494.png" /></p>
+<p>Nous avons renseigné le dossier partage</p>
+<img alt="_images/image495.png" src="_images/image495.png" />
+<p>Si le fichier /etc/hosts est bien renseigné, on peut se connecter par le
+nom aussi</p>
+<p><img alt="_images/image496.png" src="_images/image496.png" /></p>
+<p><img alt="_images/image497.png" src="_images/image497.png" /></p>
+<p><img alt="_images/image498.png" src="_images/image498.png" /></p>
+</section>
+<section id="test-partage-avec-un-client-windows">
+<h4>Test partage avec un client Windows<a class="headerlink" href="#test-partage-avec-un-client-windows" title="Lien permanent vers cette rubrique"></a></h4>
+<p>J’ai ajouté un emplacement réseau</p>
+<p><img alt="_images/image499.png" src="_images/image499.png" /></p>
+<p><img alt="_images/image500.png" src="_images/image500.png" /></p>
+<p><img alt="_images/image501.png" src="_images/image501.png" /></p>
+</section>
+</section>
+<section id="integrer-samba-dans-active-directory">
+<h3>Intégrer Samba dans Active Directory<a class="headerlink" href="#integrer-samba-dans-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
+<p><img alt="_images/image148.png" src="_images/image148.png" /></p>
+<p>NB : le procédé d’intégration est expliqué dans le chapitre <a class="reference internal" href="active_directory.html"><span class="doc std std-doc">Active Directory</span></a>.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
+<p>La mise en place d’un serveur de partage est complexe si on souhaite
+synchroniser les accès et droits avec un Active Directory.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="glpi.html" class="btn btn-neutral float-left" title="Serveur GLPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="zabbix.html" class="btn btn-neutral float-right" title="Serveur Zabbix" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Pierre Bonnenfant &amp; Zoltan Sram.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+        /* .wy-nav-content { max-width: none;}
+        .rst-content {width: 800px;} */
+         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
+         /*.wy-nav-content-wrap { max-width: none;}*/
+  </style>
+
+
+
+</body>
+</html>

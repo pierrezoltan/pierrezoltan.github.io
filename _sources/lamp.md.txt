@@ -1,0 +1,279 @@
+# **Serveur WEB (LAMP)**
+
+## Objectif et environnement
+
+### Objectif
+
+1.  L’installation et configuration d’un serveur LAMP.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur CT-DEB-WEB : 172.28.1.208/16
+
+### Documentation :
+
+Un serveur LAMP c’est quoi ?
+
+<img src="./media/image549.png"
+style="width:1.632in;height:0.86203in" />
+
+Fonctionnement de l’arborescence d’apache
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="./media/image550.png" style="width:2.02609in;height:2.50827in" /></th>
+<th><p>Il y a deux arborescences à prendre en compte :</p>
+<ul>
+<li><p>/var/www/</p></li>
+</ul>
+<blockquote>
+<p>De préférence, il est recommandé de placer les sites internet à cet
+endroit. Celui par défaut d’apache est le dossier html, c’est le fichier
+index.html qui est visé et afficher lorsque je tape l’adresse du
+serveur.</p>
+<p>Pour le TP j’ai rajouté un second dossier avec les fichiers
+nécessaire pour un site internet.</p>
+</blockquote>
+<ul>
+<li><p>/etc/apache2 :</p></li>
+</ul>
+<blockquote>
+<p>C’est là que ce trouve les fichiers conf qui constitue le service
+web.</p>
+<p>Le fichier chuck-norris.conf est représenté car il est utilisé dans
+le cadre du TP pour montrer la mise en place d’un site (<a
+href="#_Rendre_disponible_une">cf.</a>).</p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<img src="./media/image551.png" style="width:6.3in;height:2.46458in" />
+
+Illustration des éléments prendre en compte dans /etc/apache2
+
+Il y a dans apache une notion de fichier « **disponible** » et
+« **actif** », les fichiers conf dit *disponible* doivent être activé
+pour être consultable sur le navigateur internet (sans avoir a tapé
+l’URL).
+
+Par exemple dans le cas du fichier 000-default.conf qui est disponible
+et activé, tout changement édité sur le fichier dans un des deux
+dossiers sera effectué sur son homologue.
+
+## Processus
+
+### Installation d’Apache 2
+
+J’installe apache avec un module qui permet de gérer PHP.
+
+```bash
+apt install apache2 libapache2-mod-php
+```
+
+Je vérifier le bon fonctionnement du serveur web qui normalement renvoie
+la page d’accueil de apache2 (version Debian).
+
+<img src="./media/image552.png"
+style="width:5.08479in;height:3.50868in" />
+
+Je configure le service apache2 pour qu’il démarre automatiquement au
+démarrage du centenaire.
+```bash
+systemctl enable apache2
+```
+J’active des modules apaches :
+```bash
+a2enmod rewrite  
+a2enmod deflate  
+a2enmod headers
+```
+Puis je recharge la configuration avec la commande suivante :
+```bash
+systemctl reload apache2
+```
+Cette commande permet de recharger la configuration d’apache sans pour
+autant avoir besoin de relancer entièrement le service.
+
+Pour voir la liste des modules activé je vais dans /etc/apache2/modes
+enabled
+
+<img src="./media/image553.png" style="width:6.3in;height:0.85625in" />
+
+Comme on peut le voir avant et après l’activation de certains modules,
+le contenu du dossier a changé.
+
+### Installation de Php
+
+J’installe les packages de Php ainsi que les modules php les plus
+courants :
+```bash
+apt install php php-cli  
+apt install php-{curl,gd,intl,memcache,xml,zip,mbstring,json}
+```
+Pour interagir avec SQL :
+```bash
+apt install php-mysql
+```
+Pour tester le bon fonctionnement de Php je crée un fichier test.php
+```php
+echo "\<?php phpinfo(); ?\>" \> /var/www/html/test.php
+```
+<img src="./media/image554.png" style="width:6.3in;height:0.84106in" />
+
+Dans la barre de recherche d’un navigateur je tape l’adresse de mon
+serveur web suivant de test.php, soit :
+
+http://172.28.1.206/test.php
+
+<img src="./media/image555.png" style="width:6.3in;height:1.816in" />
+
+Il s’agit de la page récapitulant la configuration de php (version
+7.4.30).
+
+Je peux éditer les options de PHP via le fichier
+***/etc/php/7.4/apache2/php.ini*** ou créer un fichier personnalisé dans
+***/etc/php/7.4/apache2/conf.d***.
+
+Mais je n’ai pas l’utilité de changer les options, je laisse donc php en
+configuration par défaut.
+
+### Installation de MariaDB (optionnel)
+
+Je choisis d’installer et utiliser MariaDB pour la base de données du
+serveur LAMP.
+
+MariaDB étant le fork<sup>1</sup> de mySQL, le fonctionnement de MariaDB
+fonctionnement est similaire a mySQL.
+
+> <sup>1</sup> <sup>Un fork (terme anglais signifiant « fourche », «
+> bifurcation », « embranchement ») désigne dans le jargon informatique,
+> un nouveau logiciel créé à partir du code source d'un logiciel
+> existant.</sup>
+
+J’installe le package :
+```
+apt install mariadb-server
+```
+Je démarre l’installation :
+```bash
+mysql_secure_installation
+```
+
+>Change the root password? [Y/n] Y  
+>New password: __________  
+>Re-enter new password: __________  
+>Password updated successfully!  
+>Remove anonymous users? [Y/n] Y  
+>Disallow root login remotely? [Y/n] Y  
+>Remove test database and access to it? [Y/n] Y  
+>Reload privilege tables now? [Y/n] Y
+
+Pour entrer dans la base de données :
+
+<img src="./media/image556.png" style="width:6.3in;height:1.63403in" />
+
+Création d’un utilisateur admin.
+
+<img src="./media/image557.png" style="width:6.3in;height:1.07014in" />
+
+J’active mariaDB au démarrage :
+```bash
+systemctl enable mariadb
+```
+
+<span id="_Rendre_disponible_une" class="anchor"></span>
+
+### Rendre disponible une page web
+
+Je dois créer un fichier conf contenant le virtualhosts du site
+chuck-norris à mettre en place.
+
+Exemple avec le fichier 000-default.conf :
+
+<img src="./media/image559.png"
+style="width:4.93037in;height:3.3217in" />
+
+```bash
+nano /etc/apache2/sites-available/chuck-norris.conf
+```
+
+Fichier chuck-norris.conf créer :
+
+<img src="./media/image560.png"
+style="width:3.47965in;height:2.10446in" />
+
+En suite avec la commande suivante j’active le site :
+```bash
+a2ensite chuck-norris
+
+a2dissite pour le désactivé
+```
+Puis je recharge apache 2 :
+```bash
+systemctl reload apache2
+```
+### Vérification de l’activation du site
+
+```{note}
+Apache par défaut cherche automatiquement un fichier index.html à afficher.
+```
+
+Ceci est propre à la configuration du réseau de production sur lequel je
+suis, cependant il faut bien renseigner le DNS pour rendre accessible le
+site sans avoir a tapé l’adresse IP.
+
+<img src="./media/image561.png"
+style="width:4.95903in;height:0.39589in" />
+
+Le CNAME est ***www*** car il est renseigné ainsi dans le virtualhost du
+fichier chuck-norris.conf :
+
+```{note}
+- ServerName t2sr.io  
+- ServerAlias www.t2sr.io
+```
+
+Je n’aborderai pas dans cette documentation la possibilité du faire du
+multisites sur ce service web.
+
+Je renseigne l’adresse du site et vérifie sa disponibilité.
+
+<img src="./media/image563.png"
+style="width:4.21231in;height:2.98465in" />
+
+La page est bien chargée et affichée, il ne s’agit que d’une page html
+basique afin de vérifier le bon fonctionnement du service web délivré
+par serveur LAMP sous conteneur.
+
+### Intégrer le serveur WEB dans Active Directory
+
+<img src="./media/image148.png"
+style="width:3.27764in;height:1.64777in" />
+
+NB : le procédé d’intégration est expliqué dans le chapitre [Active Directory](active_directory.md).
+
+## Conclusion
+
+Le serveur LAMP est installé et configuré. Actuellement le serveur web
+n’utilise pas de base de données, mail elle est installé en mesure
+d’être configuré pour une utilisation ultérieure.
