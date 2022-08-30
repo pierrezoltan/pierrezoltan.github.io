@@ -4,9 +4,7 @@
 
 ### Objectif
 
-:::{note}
 L’installation et configuration un serveur de partage de fichier SAMBA et impression sur Ubuntu serveur.
-:::
 
 ### Environnement
 
@@ -22,7 +20,7 @@ Adressage des VMS :
 
 - Client Debian 1 : clideb1 172.28.2.1/16
 
-### Documentation :
+### Documentation
 
 - <https://linuxfr.org/news/creation-d-un-serveur-de-fichiers-sous-ubuntu#toc-introduction>
 
@@ -31,21 +29,27 @@ Adressage des VMS :
 ### Installation
 
 J’ai créé une sauvegarde en faisant :
+
 ```bash
 sudo cp /etc/netplan/00-installer-config.yaml
 /etc/netplan//00-installer-config.yaml.bkp
 ```
+
 Dans le fichier /etc/netplan/00-installer-config.yaml
 
 <img src="./media/image460.png"
 style="width:3.69843in;height:1.88568in" />
+
 ```bash
 sudo netplan apply
 ```
+
 #### Installation des logiciels d’authentification sur le domaine
+
 ```bash
 sudo apt install acl realmd libnss-winbind winbind
 ```
+
 #### Créer l’espace de stockage des partages
 
 <img src="./media/image461.png"
@@ -57,18 +61,22 @@ Création nouvelle partition
 style="width:6.27083in;height:2.80208in" />
 
 Créer le groupe de volumes LVM
+
 ```bash
 vgcreate samba /dev/sdb1
 ```
+
 <img src="./media/image463.png"
 style="width:6.26042in;height:1.01042in" />
 
 ### Joindre la machine virtuelle au domaine
 
 #### Installer Kerberos
+
 ```bash
 sudo apt install krb5-user
 ```
+
 <img src="./media/image464.png"
 style="width:6.27014in;height:1.82569in" />
 
@@ -90,11 +98,12 @@ style="width:3.58383in;height:0.91679in" />
 style="width:2.74731in;height:2.27296in" />
 
 #### Installation SAMBA
+
 ```bash
 sudo apt update && sudo apt upgrade -y
-
 sudo apt install -y samba
 ```
+
 Modifier le fichier /etc/samba/smb.conf
 
 <img src="./media/image470.png"
@@ -102,26 +111,27 @@ style="width:5.42019in;height:3.73692in" />
 
 <img src="./media/image471.png"
 style="width:3.6776in;height:2.11488in" />
+
 ```bash
 sudo apt install -y ntp
 ```
+
 On a modifié le fichier /etc/ntp.conf comme suite :
 
 Redémarrer ntp et smbd
+
 ```bash
 service ntp restart  
 service smbd restart
 ```
+
 Nous avons rentré notre serveur samba dans le domaine
 
 <!--root@srv-ubu-smb:~#-->
 
-```
+```console
 net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io
 ```
-
-<img src="./media/image472.png"
-style="width:6.27014in;height:0.18889in" />
 
 Configurer NSS
 
@@ -129,8 +139,11 @@ service winbind restart
 
 Nous avons modifié le fichier /etc/nsswitch.conf
 
-<img src="./media/image473.png"
-style="width:2.63926in;height:0.43341in" />
+```console
+passwd:     files systemd winbind
+group:      files systemd winbind
+shadow:     files winbind
+```
 
 Pour vérifier si tout est fonctionnel jusqu’au présent
 
@@ -165,15 +178,19 @@ Nous avons modifié le fichier /etc/pam.d/common-session
 style="width:6.27014in;height:1.17708in" />
 
 Configuration du fuseau horaire (choix France/Paris)
+
 ```bash
 sudo dpkg-reconfigure tzdata
 sudo reboot
 ```
+
 Vérification espace de partage disponible
+
 ```bash
 sudo vgdisplay \> vgdisplay.txt  
 vim vgdisplay.txt
 ```
+
 <img src="./media/image480.png"
 style="width:4.13081in;height:2.74686in" />
 
@@ -183,13 +200,14 @@ Création du partage
 style="width:4.06307in;height:0.89596in" />
 
 Création du volume logique
+
 ```bash
 lvcreate -n partage -L 9.9G samba
 ```
+
 Retour de la commande :
 >Rounding up size to full physical extent 9.90 GiB
 >Logical volume "partage" created.
-
 
 Formatage de la partition
 
@@ -238,9 +256,11 @@ Puis j’ai ajouté deux membres
 style="width:3.8311in;height:1.88428in" />
 
 Définition ACL sur la racine du partage
-```
+
+```console
 setfacl -R -m g:"T2SR\smbpartage":rwx /home/partage
 ```
+
 ```{warning}
 T2SR\\**smbpartage** – partage correspond au nom groupe
 précédemment créé
@@ -248,7 +268,7 @@ précédemment créé
 
 Définition ACL par défaut du partage
 
-```
+```console
 setfacl -R -m d:g:"T2SR\smbpartage":rwx /home/partage
 ```
 
@@ -272,7 +292,8 @@ style="width:2.82963in;height:2.96936in" />
 
 Nous avons renseigné le dossier partage
 
-<img src="./media/image495.png" style="width:6.27014in;height:0.35in" />
+<img src="./media/image495.png"
+style="width:6.27014in;height:0.35in" />
 
 Si le fichier /etc/hosts est bien renseigné, on peut se connecter par le
 nom aussi

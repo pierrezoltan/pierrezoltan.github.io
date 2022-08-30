@@ -135,7 +135,7 @@ style="width:4.7715in;height:1.27101in" />
 
 Sauvegarder des VM
 
-#### Création d’un Backup Job 
+#### Création d’un Backup Job
 
 #### Sauvegarder le Serveur AD
 
@@ -264,18 +264,22 @@ Une fois l’agent est installé nous avons une réponse succès
 style="width:6.27083in;height:1.98958in" />
 
 J’ai installé les paquets nécessaires pour linux (Debian)
+
 ```bash
 sudo apt install dkms gcc make perl openssh-server
 linux-headers-\$(uname -r) libudev-dev libacl1 libattr1 lvm2 libfuse-dev
 libfuse2 libncurses5 dmidecode default-libmysqlclient-dev libpq5 python3
 isolinux btrfs-progs squashfs-tools wget xorriso
 ```
+
 Ensuite j’ai téléchargé et installé VEEAM
 
 <http://repository.veeam.com/.private/deb/veeam/>
-```
+
+```console
 sudo dpkg -i veeam_5.0.2.4567_amd64.deb
 ```
+
 Début de la sauvegarde
 
 <img src="./media/image284.png"
@@ -305,7 +309,8 @@ style="width:6.27014in;height:1.41319in" />
 
 J’ai renseigné l’host et les droits d’accès
 
-<img src="./media/image289.png" style="width:4in;height:2.44792in" />
+<img src="./media/image289.png"
+style="width:4in;height:2.44792in" />
 
 Nous avons la possibilité de renseigner directement l’utilisateur et son
 mot de passe ou passer par **browse** et chercher sur l’AD.
@@ -579,7 +584,7 @@ J’ai vérifié sur la VM si le fichier a bien été récupéré. Le fichier a
 <img src="./media/image343.png"
 style="width:6.27014in;height:1.28611in" />
 
-## Conclusion 
+## Conclusion
 
 VEEAM est un outil complet proposant une multitude de possibilité de
 sauvegarde. Il est très performant même dans sa version Community

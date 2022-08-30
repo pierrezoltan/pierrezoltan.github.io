@@ -4,8 +4,7 @@
 
 ### Objectif
 
-1.  L’installation et configuration d’un serveur OCS Inventory dur un
-    containeur Debian 11.
+L’installation et configuration d’un serveur OCS Inventory dur un containeur Debian 11.
 
 ### Environnement
 
@@ -39,8 +38,10 @@ Création la configuration fqdn
 
 ```bash
 nano /etc/apache2/conf-available/fqdn.conf  
-# remplissez hostname  
-ServerName CT-DEB-GLPI  
+# j'ai remplie le hostname  
+ServerName CT-DEB-GLPI
+```
+```
 a2enconf fqdn  
 systemctl reload apache2
 ```
@@ -139,15 +140,21 @@ nano /etc/apache2/conf-available/z-ocsinventory-server.conf
 J’ai modifié ses deux lignes pour faire correspond avec la configuration
 de notre base de données
 
-<img src="./media/image593.png"
-style="width:3.49007in;height:0.56258in" />
+```console
+PerlSetEnv OCS_DB_USER ocsbdd
+# Password for user
+PerlSetVar OCS_DB_PWD Azerty123+
+```
+
 
 ```bash
 nano /etc/apache2/conf-available/zz-ocsinventory-restapi.conf
 ```
 
-<img src="./media/image594.png"
-style="width:3.20878in;height:0.40631in" />
+```console
+$ENV{OCS_DB_USER} = 'ocsbdd';
+$ENV{OCS_DB_PWD} = 'Azerty123+';
+```
 
 ```bash
 chown root:www-data /var/lib/ocsinventory-reports  
@@ -216,8 +223,11 @@ style="width:6.27014in;height:0.46875in" />
 
 J’ai supprimé également le fichier install.php
 
-<img src="./media/image605.png"
-style="width:6.27014in;height:0.17222in" />
+```console
+rm /usr/share/ocsinventory-reports/ocsreports/install.php
+```
+
+
 
 Une fois la page rafraîchi, l’ALERTE SECURITE disparait.
 
@@ -313,13 +323,14 @@ openssl req -new -key /etc/apache2/ssl/gestparc.key -x509 -days 365 -out
 
 A la question Common Name, j’ai mis : CT-DEB-GLPI
 
-```bash
-Ensuite j’ai édité le fichier
-/etc/apache2/sites-available/default-ssl.conf
+
+Ensuite j’ai édité le fichier **/etc/apache2/sites-available/default-ssl.conf**
+
+```console
+SSLCertificateFile /etc/apache2/ssl/gestparc.crt
+SSLCertificateKeyFile /etc/apache2/ssl/gestparc.key
 ```
 
-<img src="./media/image618.png"
-style="width:5.24031in;height:0.51049in" />
 
 J’ai activé SSL
 
@@ -364,10 +375,10 @@ J’ai lancé l’installation
 <img src="./media/image625.png"
 style="width:3.71899in;height:2.86936in" />
 
-Ensuite j’ai copié le fichier gestparc.crt dans c:\ProgramData\OCS
-Inventory NG\Agent.
+Ensuite j’ai copié le fichier **gestparc.crt** dans **c:\ProgramData\OCS
+Inventory NG\Agent**.
 
-Puis j’ai renommé en cacert.pem.
+Puis j’ai renommé en **cacert.pem**.
 
 <img src="./media/image626.png"
 style="width:4.36208in;height:2.33977in" />

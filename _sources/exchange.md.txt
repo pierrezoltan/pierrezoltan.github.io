@@ -73,6 +73,7 @@ Web-Net-Ext45, Web-Request-Monitor, Web-Server, Web-Stat-Compression,
 Web-Static-Content, Web-Windows-Auth, Web-WMI,
 Windows-Identity-Foundation, RSAT-ADDS
 ```
+
 <img src="./media/image350.png"
 style="width:6.26129in;height:1.0939in" />
 
@@ -89,7 +90,8 @@ style="width:6.27014in;height:2.85486in" />
 <img src="./media/image353.png"
 style="width:4.38941in;height:3.29363in" />
 
-<img src="./media/image354.png" style="width:5.98in;height:2.42742in" />
+<img src="./media/image354.png"
+style="width:5.98in;height:2.42742in" />
 
 <img src="./media/image355.png"
 style="width:5.30282in;height:2.1253in" />
@@ -171,7 +173,8 @@ style="width:2.74425in;height:3.5195in" />
 
 J’ai envoyé un message test entre deux compte Outlook
 
-<img src="./media/image373.png" style="width:6.27014in;height:2.45in" />
+<img src="./media/image373.png"
+style="width:6.27014in;height:2.45in" />
 
 L’échange de mail fonctionne correctement.
 

@@ -23,7 +23,7 @@ Adressage des VMS :
 
 - client Linux Debian : CLI-DEB-01, DHCP
 
-### Documentation :
+### Documentation
 
 - <https://www.youtube.com/watch?v=wv1qTYR3faQ&t=1670s>
 
@@ -171,7 +171,8 @@ accès à l’internet. La passerelle par pfSense est fonctionnelle.
 
 System \> User Manager \> Authentification Servers \> Add
 
-<img src="./media/image175.png" style="width:6.27014in;height:0.85in" />
+<img src="./media/image175.png"
+style="width:6.27014in;height:0.85in" />
 
 <img src="./media/image176.png"
 style="width:5.86351in;height:3.30354in" />
@@ -301,14 +302,18 @@ style="width:6.27014in;height:3.38264in" />
 Test avec le client Linux
 
 J’ai créé un dossier pour accueillir notre certificat
+
 ```console
 mkdir /usr/local/share/ce-certificates/t2sr
 cp t2sr_ssl_cert.crt /usr/local/share/ce-certificates/t2sr
 ```
+
 J’ai installé le certificat
+
 ```console
 update-ca-certificates
 ```
+
 <img src="./media/image201.png"
 style="width:6.27014in;height:0.80764in" />
 
@@ -324,7 +329,7 @@ Apres l’application du blacklist
 <img src="./media/image203.png"
 style="width:6.27014in;height:3.36042in" />
 
-#### Configuration SquidGard 
+#### Configuration SquidGard
 
 Une autre manière de créer de site blacklisté est d’utiliser SquidGard
 

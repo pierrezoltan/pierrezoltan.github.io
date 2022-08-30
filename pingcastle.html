@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PingCastle &mdash; Documentation Documentation Projet Cluster Proxmox 0.1</title>
+  <title>PingCastle &mdash; Documentation Documentation Projet Cluster Proxmox 0.2</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
@@ -47,22 +47,385 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Sommaire :</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="recap.html"><strong>Récapitulatif des matériels et logiciels</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="recap.html#logiciels">Logiciels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recap.html#materiels">Matériels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recap.html#adressage-ip">Adressage IP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recap.html#schema-du-deploiement">Schéma du déploiement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="serveur_proxmox.html"><strong>Serveur Proxmox</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="serveur_proxmox.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="serveur_proxmox.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="serveur_proxmox.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="serveur_proxmox.html#documentation">Documentation :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="serveur_proxmox.html#configuration-prealable">Configuration préalable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="serveur_proxmox.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="serveur_proxmox.html#creation-dun-cluster">Création d’un Cluster</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#installation-ceph">Installation Ceph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#ajout-des-monitors-et-managers">Ajout des Monitors et Managers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#creation-dun-pool-de-stockage">Création d’un pool de stockage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#creation-dun-pool">Création d’un pool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#mise-en-place-de-la-haute-disponibilite-ha">Mise en place de la haute disponibilité (HA)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#test-de-la-migration-dune-vm">Test de la migration d’une VM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="serveur_proxmox.html#test-de-la-haute-disponibilite-lors-dune-coupure-dun-serveur">Test de la haute disponibilité lors d’une coupure d’un serveur</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="serveur_proxmox.html#suppression-dun-cluster">Suppression d’un cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="serveur_proxmox.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="switch3com.html"><strong>Switch 3COM</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="switch3com.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="switch3com.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#administration-vlan-en-cli">Administration VLAN en CLI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#creation-dun-vlan">Création d’un VLAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#supprimer-un-vlan">Supprimer un VLAN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#administration-vlan-par-interface-web">Administration VLAN par interface Web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#configurer-dune-adresse-ip-en-gui">Configurer d’une adresse IP en GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#creer-un-trunk-sur-un-port">Créer un Trunk sur un port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#tagger-un-port">Tagger un port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#cisco-packet-tracer">Cisco Packet Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#schema-du-reseau">Schéma du réseau</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#configuration-du-switch1-t2sr">Configuration du Switch1 (T2SR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#menu-config">Menu Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch3com.html#configuration-du-switch2-t2sr2">Configuration du Switch2 (T2SR2)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="switch3com.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="active_directory.html"><strong>Serveur Active Directory</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="active_directory.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#environnement">Environnement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="active_directory.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#fixer-ladresse-ip">Fixer l’adresse IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#linstallation-active-directory">L’installation Active Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#promouvoir-le-serveur-en-controleur-de-domaine">Promouvoir le serveur en contrôleur de domaine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#creation-des-utilisateurs">Création des utilisateurs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="active_directory.html#creer-les-utilisateurs-manuellement">Créer les utilisateurs manuellement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#creer-automatiquement-les-utilisateurs-a-partir-dun-fichier-csv">Créer automatiquement les utilisateurs à partir d’un fichier csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#installation-du-serveur-dns">Installation du serveur DNS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="active_directory.html#joindre-un-client-linux-dans-active-directory">Joindre un client linux dans Active Directory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="active_directory.html#installation-des-package-necessaires-sur-des-distributions-basees-sur-debian">Installation des package nécessaires sur des distributions basées sur Debian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="active_directory.html#installation-des-package-necessaires-sur-des-distributions-basees-sur-centos-freepbx">Installation des package nécessaires sur des distributions basées sur CentOS (FreePBX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="active_directory.html#joindre-le-serveur-ad">Joindre le serveur AD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="active_directory.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nagios.html"><strong>Serveur NAGIOS</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nagios.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nagios.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#finalisation-du-linstallation">Finalisation du l’installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#integrer-active-directory-dans-nagios">Intégrer Active Directory dans NAGIOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#installation-openssh-sur-windows-serveur-2019">Installation OpenSSH sur Windows Serveur 2019</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#deployer-lagent-nagios-sur-windows-server">Déployer l’agent Nagios sur Windows Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#ajouter-un-windows-serveur-2019-adds-a-surveiller">Ajouter un Windows serveur 2019 (ADDS) à surveiller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#deployer-lagent-nagios-sur-serveur-ubuntu-samba">Déployer l’agent Nagios sur Serveur Ubuntu (SAMBA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nagios.html#integrer-nagios-dans-active-directory">Intégrer Nagios dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nagios.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pfsense.html"><strong>Serveur pfSense</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pfsense.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pfsense.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfsense.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pfsense.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pfsense.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pfsense.html#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#configuration-les-adresse-ip-du-pfsense">Configuration les adresse IP du pfSense</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pfsense.html#configuration-du-pfsense">Configuration du pfSense</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#configuration-generale">Configuration générale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#configurations-acces-au-serveur">Configurations accès au serveur</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#configuration-serveur-dhcp">Configuration serveur DHCP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#connexion-et-authentification-par-active-directory">Connexion et authentification par Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pfsense.html#mise-en-place-serveur-proxy">Mise en place serveur Proxy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#activation-squid-proxy">Activation Squid Proxy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#configuration-squidgard">Configuration SquidGard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#configuration-du-firewall">Configuration du firewall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#creer-firewall-aliases">Créer Firewall Aliases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pfsense.html#mise-en-place-portail-captif">Mise en Place Portail Captif</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pfsense.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="veeam.html"><strong>Serveur VEEAM Backup</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="veeam.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="veeam.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="veeam.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="veeam.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="veeam.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="veeam.html#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#connexion-au-serveur">Connexion au serveur</a></li>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#ajout-dun-dossier-de-sauvegarde">Ajout d’un dossier de sauvegarde</a></li>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#creation-dun-backup-job">Création d’un Backup Job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#sauvegarder-le-serveur-ad">Sauvegarder le Serveur AD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#sauvegarder-une-vm-linux">Sauvegarder une VM Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#sauvegarder-une-vm-windows">Sauvegarder une VM Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="veeam.html#restaurer-dun-fichier">Restaurer d’un fichier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#restaurer-dun-fichier-dun-vm-linux">Restaurer d’un fichier d’un VM Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="veeam.html#restaurer-dun-fichier-dun-vm-windows">Restaurer d’un fichier d’un VM Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="veeam.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exchange.html"><strong>Serveur Exchange 2019</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exchange.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exchange.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exchange.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exchange.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exchange.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exchange.html#configuration-deuxieme-controleur-de-domaine">Configuration deuxième contrôleur de domaine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#fixer-ladresse-ip">Fixer l’adresse IP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#entrer-le-serveur-dans-le-domaine">Entrer le serveur dans le domaine</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exchange.html#installation-microsoft-exchange">Installation Microsoft Exchange</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#prerequis">Prérequis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#installation-microsoft-exchange-iso">Installation Microsoft Exchange ISO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#configuration-du-serveur">Configuration du serveur</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#configurer-outlook">Configurer Outlook</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#acces-a-webmail">Accès à Webmail</a></li>
+<li class="toctree-l4"><a class="reference internal" href="exchange.html#configuration-la-messagerie-avec-thunderbird">Configuration la messagerie avec Thunderbird</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exchange.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cups.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cups.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#configuration-cups">Configuration CUPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#ajouter-une-imprimante">Ajouter une imprimante</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#ajouter-une-imprimante-aux-clients">Ajouter une imprimante aux clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#integrer-le-serveur-dimpression-dans-active-directory">Intégrer le serveur d’impression dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cups.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glpi.html"><strong>Serveur GLPI</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="glpi.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="glpi.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#configuration-du-conteneur">Configuration du conteneur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#mise-a-jour-et-installation-des-paquets-necessaires">Mise à jour et installation des paquets nécessaires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#telechargement-du-paquet-glpi-9-5-6">Téléchargement du paquet GLPI 9.5.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#creation-de-la-base-de-donnees">Création de la base de données</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#installation-du-version-glpi-10-0-2">Installation du version GLPI 10.0.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#connecter-le-serveur-glpi-avec-une-active-directory">Connecter le serveur GLPI avec une Active Directory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="glpi.html#installation-plugin-fusioninventory-sur-glpi-9-5-6">Installation plugin fusioninventory sur GLPI 9.5.6</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#installation-fusioninventory-agent-sur-linux">Installation fusioninventory agent sur linux</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="glpi.html#forcer-la-synchronisation-du-lagent">Forcer la synchronisation du l’agent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#installation-fusioninventory-agent-sur-windows">Installation fusioninventory agent sur Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glpi.html#integrer-glpi-dans-active-directory">Intégrer GLPI dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="glpi.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="samba.html"><strong>Serveur SAMBA</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="samba.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="samba.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#installation-des-logiciels-dauthentification-sur-le-domaine">Installation des logiciels d’authentification sur le domaine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#creer-lespace-de-stockage-des-partages">Créer l’espace de stockage des partages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#joindre-la-machine-virtuelle-au-domaine">Joindre la machine virtuelle au domaine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#installer-kerberos">Installer Kerberos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#installation-samba">Installation SAMBA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#preparation-pam">Préparation PAM</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#montage-du-volume-logique">Montage du volume logique</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#definition-des-droits-dacces-avec-les-acl">Définition des droits d’accès avec les ACL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#modification-du-samba">Modification du Samba</a></li>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#test-partage-avec-un-client-debian">Test partage avec un client Debian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="samba.html#test-partage-avec-un-client-windows">Test partage avec un client Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="samba.html#integrer-samba-dans-active-directory">Intégrer Samba dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="samba.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix.html"><strong>Serveur Zabbix</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zabbix.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zabbix.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#installation-de-zabbix">Installation de Zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#ajouter-un-host">Ajouter un Host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#linstallation-de-lagent-zabbix-sous-windows">L’installation de l’agent Zabbix sous Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#le-tableau-de-bord">Le tableau de bord</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zabbix.html#integrer-zabbix-dans-active-directory">Intégrer Zabbix dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zabbix.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="truenas.html"><strong>TrueNAS</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="truenas.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#documentation">Documentation :</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="truenas.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#installation-de-truenas">Installation de trueNAS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#creation-dun-volume-de-stockage-dataset">Création d’un volume de stockage + dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#mise-en-place-du-partage-windows-smb">Mise en place du partage Windows (SMB)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#nas-et-ad">NAS et AD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#test-conclusion">TEST + Conclusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truenas.html#integrer-truenas-dans-active-directory">Intégrer TrueNAS dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="truenas.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lamp.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#documentation">Documentation :</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lamp.html#un-serveur-lamp-cest-quoi">Un serveur LAMP c’est quoi ?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lamp.html#fonctionnement-de-larborescence-dapache">Fonctionnement de l’arborescence d’apache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lamp.html#elements-a-prendre-en-compte-dans-etc-apache2">Eléments a prendre en compte dans /etc/apache2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lamp.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#installation-dapache-2">Installation d’Apache 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#installation-de-php">Installation de Php</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#installation-de-mariadb-optionnel">Installation de MariaDB (optionnel)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#rendre-disponible-une-page-web">Rendre disponible une page web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#verification-de-lactivation-du-site">Vérification de l’activation du site</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#integrer-le-serveur-web-dans-active-directory">Intégrer le serveur WEB dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lamp.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="freepbx.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="freepbx.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#installation-vm-freepbx">Installation VM FreePBX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#config-freepbx">Config FreePBX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#freepbx-administration">FreePBX Administration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#interagir-avec-le-firewall-en-ligne-de-commande">Interagir avec le firewall en ligne de commande</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#ajouter-des-utilisateurs-par-extension-non-liee-a-lactive-directory">Ajouter des utilisateurs par extension (non liée à l’Active Directory)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#relier-freepbx-avec-lactive-directory">Relier FreePBX avec l’Active Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#editer-les-comptes-utilisateurs">Editer les comptes utilisateurs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#voicemail">Voicemail</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freepbx.html#integrer-freepbx-dans-active-directory">Intégrer FreePBX dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="freepbx.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ocs.html"><strong>Serveur OCS</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ocs.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ocs.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-et-configuration-des-prerequis">Installation et configuration des prérequis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-apache2">Installation Apache2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-mariadb">Installation Mariadb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-ocs-inventory">Installation OCS Inventory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-du-serveur">Installation du serveur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#configuration-du-serveur-ocs">Configuration du serveur OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#activation-de-la-configuration-de-ocs">Activation de la configuration de OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#parametrer-ocs">Paramétrer OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#configuration-ocs-avec-glpi-10-0-2">Configuration OCS avec GLPI 10.0.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#ajout-serveur-ocs">Ajout serveur OCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#configuration-ssl">Configuration SSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-ocs-inventory-agent-sur-windows">Installation OCS Inventory agent sur Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#installation-ocs-inventory-agent-sur-linux">Installation OCS Inventory agent sur Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#importer-linventaire-dans-glpi-10-0-2">Importer l’inventaire dans GLPI 10.0.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocs.html#integrer-le-serveur-ocs-dans-active-directory">Intégrer le serveur OCS dans Active Directory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ocs.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>PingCastle</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
@@ -74,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#telechargement">Téléchargement</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#realisation-dun-audit-ad">Réalisation d’un audit AD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lecture-du-rapport-de-laudit-ad">Lecture du rapport de l’audit AD</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#planifier-un-audit-regulier-de-lad-avec-pingcastle">Planifier un audit régulier de l’AD avec PingCastle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#permettre-un-audit-regulier-de-lad-avec-pingcastle">Permettre un audit régulier de l’AD avec PingCastle</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
@@ -113,7 +476,8 @@
 <section id="objectif">
 <h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
 <ol class="arabic simple">
-<li><p>L’installation PingCastle pour auditer le serveur Active Directory.</p></li>
+<li><p>L’utilisation de PingCastle pour auditer le serveur Active Directory.</p></li>
+<li><p>Création d’un script pour permettre un audit régulier</p></li>
 </ol>
 </section>
 <section id="environnement">
@@ -136,7 +500,6 @@ Directory</p></li>
 <li><p><a class="reference external" href="https://techexpert.tips/fr/powershell-fr/powershell-renommer-un-fichier/">https://techexpert.tips/fr/powershell-fr/powershell-renommer-un-fichier/</a></p></li>
 <li><p><a class="reference external" href="https://docs.microsoft.com/fr-fr/powershell/module/microsoft.powershell.management/?view=powershell-7.2">https://docs.microsoft.com/fr-fr/powershell/module/microsoft.powershell.management/?view=powershell-7.2</a></p></li>
 <li><p><a class="reference external" href="https://techexpert.tips/fr/windows-fr/gpo-creer-une-tache-planifiee/">https://techexpert.tips/fr/windows-fr/gpo-creer-une-tache-planifiee/</a></p></li>
-<li></li>
 </ul>
 </section>
 </section>
@@ -203,8 +566,8 @@ et à prendre en compte.</p>
 <p>Il faut penser à sauvegarder les anciens audits.</p>
 </div></blockquote>
 </section>
-<section id="planifier-un-audit-regulier-de-lad-avec-pingcastle">
-<h3>Planifier un audit régulier de l’AD avec PingCastle<a class="headerlink" href="#planifier-un-audit-regulier-de-lad-avec-pingcastle" title="Lien permanent vers cette rubrique"></a></h3>
+<section id="permettre-un-audit-regulier-de-lad-avec-pingcastle">
+<h3>Permettre un audit régulier de l’AD avec PingCastle<a class="headerlink" href="#permettre-un-audit-regulier-de-lad-avec-pingcastle" title="Lien permanent vers cette rubrique"></a></h3>
 <p>J’ai créé un script PowerShell qui placé à la racine du Dossier de
 PingCastle permet de :</p>
 <p>Créer un dossier « <em><strong>auditBkp</strong></em> » s’il n’existe pas</p>
@@ -212,35 +575,73 @@ PingCastle permet de :</p>
 <p>Transférer les deux fichier html et xml dans le dossier <em><strong>auditBkp</strong></em>
 et de les renommés en y ajoutant la date et l’heure lors de l’exécution
 de l’audit AD.</p>
-<p>Le script :</p>
-<p><img alt="_images/image668.png" src="_images/image668.png" /></p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">\</span><span class="nv">$BkpPath</span> <span class="p">=</span> <span class="s2">&quot;.\auditBkp&quot;</span>  
-<span class="p">**</span><span class="k">If</span><span class="p">**(!(</span><span class="nb">Test-Path</span> <span class="p">\</span><span class="nv">$BkpPath</span><span class="p">)){</span>  
-<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="p">\</span><span class="nv">$BkpPath</span>  
+<p>Le script PowerShell :</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$BkpPath</span> <span class="p">=</span> <span class="s2">&quot;.\auditBkp&quot;</span>  
+<span class="k">If</span><span class="p">(!(</span><span class="nb">Test-Path</span> <span class="nv">$BkpPath</span><span class="p">)){</span>  
+<span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">-Path</span> <span class="nv">$BkpPath</span>  
 <span class="p">}</span>  
   
 <span class="p">.\</span><span class="n">PingCastle</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-server</span> <span class="n">SRV-W19-AD</span><span class="p">.</span><span class="n">t2sr</span><span class="p">.</span><span class="n">io</span> <span class="p">-</span><span class="n">-healthcheck</span>  
   
-<span class="p">\</span><span class="nv">$SourceFileHtmlPath</span> <span class="p">=</span> <span class="s2">&quot;.\ad_hc_t2sr.io.html&quot;</span>  
-<span class="p">\</span><span class="nv">$SourceFileXmlPath</span> <span class="p">=</span> <span class="s2">&quot;.\ad_hc_t2sr.io.xml&quot;</span>  
-<span class="p">\</span><span class="nv">$DateNow</span> <span class="p">=</span> <span class="nb">Get-Date</span> <span class="n">-Format</span> <span class="s2">&quot;ddMMyyyyHHmm&quot;</span>  
+<span class="nv">$SourceFileHtmlPath</span> <span class="p">=</span> <span class="s2">&quot;.\ad_hc_t2sr.io.html&quot;</span>  
+<span class="nv">$SourceFileXmlPath</span> <span class="p">=</span> <span class="s2">&quot;.\ad_hc_t2sr.io.xml&quot;</span>  
+<span class="nv">$DateNow</span> <span class="p">=</span> <span class="nb">Get-Date</span> <span class="n">-Format</span> <span class="s2">&quot;ddMMyyyyHHmm&quot;</span>  
   
-<span class="p">\</span><span class="nv">$FileHtml</span> <span class="p">=</span> <span class="s2">&quot;ad_hc_t2sr.io\_&quot;</span><span class="p">+\</span><span class="nv">$DateNow</span><span class="p">+</span><span class="s2">&quot;.html&quot;</span>  
-<span class="p">\</span><span class="nv">$FileXml</span> <span class="p">=</span> <span class="s2">&quot;ad_hc_t2sr.io\_&quot;</span><span class="p">+\</span><span class="nv">$DateNow</span><span class="p">+</span><span class="s2">&quot;.xml&quot;</span>  
+<span class="nv">$FileHtml</span> <span class="p">=</span> <span class="s2">&quot;ad_hc_t2sr.io\_&quot;</span><span class="p">+</span><span class="nv">$DateNow</span><span class="p">+</span><span class="s2">&quot;.html&quot;</span>  
+<span class="nv">$FileXml</span> <span class="p">=</span> <span class="s2">&quot;ad_hc_t2sr.io\_&quot;</span><span class="p">+</span><span class="nv">$DateNow</span><span class="p">+</span><span class="s2">&quot;.xml&quot;</span>  
   
-<span class="nb">Move-Item</span> <span class="n">-Path</span> <span class="p">\</span><span class="nv">$SourceFileHtmlPath</span>
-<span class="n">-Destination</span><span class="p">.\</span><span class="n">auditBkp</span><span class="p">\\\</span><span class="nv">$FileHtml</span>  
-<span class="nb">Move-Item</span> <span class="n">-Path</span> <span class="p">\</span><span class="nv">$SourceFileXmlPath</span> <span class="n">-Destination</span> <span class="p">.\</span><span class="n">auditBkp</span><span class="p">\\\</span><span class="nv">$FileXml</span>
+<span class="nb">Move-Item</span> <span class="n">-Path</span> <span class="nv">$SourceFileHtmlPath</span> <span class="n">-Destination</span><span class="p">.\</span><span class="n">auditBkp</span><span class="p">\</span><span class="nv">$FileHtml</span>  
+<span class="nb">Move-Item</span> <span class="n">-Path</span> <span class="nv">$SourceFileXmlPath</span> <span class="n">-Destination</span> <span class="p">.\</span><span class="n">auditBkp</span><span class="p">\</span><span class="nv">$FileXml</span>
 </pre></div>
 </div>
-<p>Ce script est propre au réseau sur lequel je travaille (il s’agit d’un
-script PowerShell : <strong>.ps1</strong>).</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Ce script est propre au réseau sur lequel je travaille (notamment pour le nom de serveur).</p>
+</div>
 <p>Pour m’aider j’ai consulté le « help » de PingCastle dans une invite de
-commande :</p>
+commande, en voici une partie :</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">PingCastle</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-help</span>
 </pre></div>
 </div>
-<p><img alt="_images/image669.png" src="_images/image669.png" /></p>
+<!-- <img src="./media/image669.png"
+style="width:5.90064in;height:4.05474in" /> -->
+<div class="admonition hint">
+<p class="admonition-title">–help</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><p>switch:
+–help              : display this message
+–interactive       : force the interactive mode
+–log               : generate a log file
+–log-console       : add log to the console
+–log-samba &lt;option&gt;: enable samba login (example: 10)
+Common options when connecting to the AD
+–server &lt;server&gt;   : use this server (default: current domain controller)
+the special value * or *.forest do the healthcheck for all domains
+–port &lt;port&gt;       : the port to use for ADWS or LDAP (default: 9389 or 389)
+–user &lt;user&gt;       : use this user (default: integrated authentication)
+–password &lt;pass&gt;   : use this password (default: asked on a secure prompt)
+–protocol &lt;proto&gt;  : selection the protocol to use among LDAP or ADWS (fastest)
+: ADWSThenLDAP (default), ADWSOnly, LDAPOnly, LDAPThenADWS
+–pagesize &lt;size&gt;   : change the default LDAP page size - default is 500
+–quota &lt;num&gt;       : Number of LDAP items per second that will be processed - default unlimited
+–carto             : perform a quick cartography with domains surrounding
+–healthcheck       : perform the healthcheck (step1)
+–api-endpoint &lt;&gt; : upload report via api call eg: http://server
+–api-key  &lt;key&gt;  : and using the api key as registered
+–explore-trust   : on domains of a forest, after the healthcheck, do the hc on all trusted domains except domains of the forest and forest trusts
+–explore-forest-trust : on root domain of a forest, after the healthcheck, do the hc on all forest trusts discovered
+–explore-trust and –explore-forest-trust can be run together
+–explore-exception &lt;domains&gt; : comma separated values of domains that will not be explored automatically                  
+--datefile        : insert the date into the report filename
+--encrypt         : use an RSA key stored in the .config file to crypt the content of the xml report
+--level &lt;level&gt;   : specify the amount of data found in the xml file
+                  : level: Full, Normal, Light
+--no-enum-limit   : remove the max 100 users limitation in html report
+--reachable       : add reachable domains to the list of discovered domains
+--sendXmlTo &lt;emails&gt;: send xml reports to a mailbox (comma separated email)
+--sendHtmlTo &lt;emails&gt;: send html reports to a mailbox
+--sendAllTo &lt;emails&gt;: send html reports to a mailbox
+                    [...]</p></pre></div></div>
+</div>
 </section>
 </section>
 <section id="conclusion">

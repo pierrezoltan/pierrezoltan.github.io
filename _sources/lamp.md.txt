@@ -20,13 +20,17 @@ Adressage des VMS :
 
 ### Documentation :
 
-Un serveur LAMP c’est quoi ?
+#### Un serveur LAMP c’est quoi ?
 
-<img src="./media/image549.png"
-style="width:1.632in;height:0.86203in" />
+<a href="https://doc.ubuntu-fr.org/lamp"><img src="./media/image549.png" style="width:1.632in;height:0.86203in"/></a>  
 
-Fonctionnement de l’arborescence d’apache
+C'est une pile logicielle comprenant le système d'exploitation, un serveur HTTP, un système de gestion de bases de données et un langage de programmation interprété, et qui permet de mettre en place un serveur web.
 
+#### Fonctionnement de l’arborescence d’apache
+
+<img src="./media/image550.png" style="width:2.02609in;height:2.50827in"/>
+
+Il y a deux arborescences à prendre en compte :
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -34,8 +38,7 @@ Fonctionnement de l’arborescence d’apache
 </colgroup>
 <thead>
 <tr class="header">
-<th><img src="./media/image550.png" style="width:2.02609in;height:2.50827in" /></th>
-<th><p>Il y a deux arborescences à prendre en compte :</p>
+<th>
 <ul>
 <li><p>/var/www/</p></li>
 </ul>
@@ -44,9 +47,9 @@ Fonctionnement de l’arborescence d’apache
 endroit. Celui par défaut d’apache est le dossier html, c’est le fichier
 index.html qui est visé et afficher lorsque je tape l’adresse du
 serveur.</p>
-<p>Pour le TP j’ai rajouté un second dossier avec les fichiers
-nécessaire pour un site internet.</p>
 </blockquote>
+</th>
+<th>
 <ul>
 <li><p>/etc/apache2 :</p></li>
 </ul>
@@ -67,9 +70,14 @@ href="#_Rendre_disponible_une">cf.</a>).</p>
 </tbody>
 </table>
 
-<img src="./media/image551.png" style="width:6.3in;height:2.46458in" />
+```{hint}
+Pour le TP j’ai rajouté un second dossier avec les fichiers
+nécessaire pour un site internet.
+```
 
-Illustration des éléments prendre en compte dans /etc/apache2
+#### Eléments a prendre en compte dans /etc/apache2
+
+<img src="./media/image551.png" style="width:6.3in;height:2.46458in" />
 
 Il y a dans apache une notion de fichier « **disponible** » et
 « **actif** », les fichiers conf dit *disponible* doivent être activé

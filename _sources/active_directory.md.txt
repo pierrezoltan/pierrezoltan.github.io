@@ -123,7 +123,7 @@ lors de la première connexion.
 <img src="./media/image88.png"
 style="width:2.42708in;height:2.10417in" />
 
-### Créer automatiquement les utilisateurs à partir d’un fichier csv.
+### Créer automatiquement les utilisateurs à partir d’un fichier csv
 
 J’ai créé avec Microsoft Excel un tableau csv avec les stagiaires
 
@@ -134,6 +134,7 @@ Ensuite j’ai créé un script PowerShell pour automatiser la création des
 utilisateurs.
 
 Le script :
+
 ```powershell
 \$CSVFile = "C:\Users\Administrateur\Desktop\Annuaire.csv"  
 \$CSVData = Import-CSV -Path \$CSVFile -Delimiter ";" -Encoding UTF8  
@@ -188,8 +189,10 @@ Foreach(\$Utilisateur in \$CSVData){
         Write-Output "Création de l'utilisateur : \$Login (\$Prenom)"  
     }  
 }
+
 ```
-Le résultat :
+
+Le résultat après l'exécution :
 
 <img src="./media/image90.png"
 style="width:4.09375in;height:2.14583in" />
@@ -198,8 +201,6 @@ style="width:4.09375in;height:2.14583in" />
 style="width:2.09172in;height:2.20833in" /><img src="./media/image92.png"
 style="width:2.07292in;height:2.17368in" /><img src="./media/image93.png"
 style="width:2.08625in;height:2.19761in" />
-
- 
 
 ### Installation du serveur DNS
 
@@ -247,27 +248,34 @@ style="width:6.27014in;height:1.01042in" />
 ### Joindre un client linux dans Active Directory
 
 #### Installation des package nécessaires sur des distributions basées sur Debian
+
 ```bash
-apt install realmd sssd sssd-tools libnss-sss libpam-sss adcli
-samba-common-bin oddjob oddjob-mkhomedir packagekit -y
+apt install -y realmd sssd sssd-tools libnss-sss libpam-sss adcli
+samba-common-bin oddjob oddjob-mkhomedir packagekit
 ```
+
 #### Installation des package nécessaires sur des distributions basées sur CentOS (FreePBX)
+
 ```bash
-yum install realmd sssd sssd-tools libnss-sss libpam-sss adcli
+yum install -y realmd sssd sssd-tools libnss-sss libpam-sss adcli
 samba-common-bin samba-common-tools oddjob oddjob-mkhomedir packagekit
--y
 ```
+
 Vérifier que le domaine est joignable
+
 ```bash
 realm discover t2sr.io
 ```
+
 <img src="./media/image104.png"
 style="width:3.01832in;height:2.0418in" />
 
 #### Joindre le serveur AD
+
 ```bash
 realm join --user=Administrateur t2sr.io
 ```
+
 Vérification sur l’AD l’ensemble des ordinateurs du domaine
 
 <img src="./media/image105.png"
@@ -292,5 +300,4 @@ style="width:3.83871in;height:1.84858in" />
 
 ## Conclusion
 
-L’installation s’est correctement déroulée. La mise en place de l’Active
-Directory doit être le premier serveur à configurer.
+L’installation s’est correctement déroulée. La mise en place de l’Active Directory doit être le premier serveur à configurer.

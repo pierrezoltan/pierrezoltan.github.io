@@ -64,26 +64,13 @@ suis les instructions.
 
 J’ai aussi configuré les routes statiques et l’adresse de DNS.
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><p><img src="./media/image527.png"
-style="width:2.025in;height:2.49653in" />Je tape l’adresse IP du serveur
+Je tape l’adresse IP du serveur
 NAS pour accéder à sa page web de gestion et je me connecte avec
-l’utilisateur root.</p>
-<p>Ci-dessous l’interface web.</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><img src="./media/image528.png"
-style="width:4.3748in;height:3.36405in" /></td>
-</tr>
-</tbody>
-</table>
+l’utilisateur root.
+
+<img src="./media/image527.png"
+style="width:2.025in;height:2.49653in" /><img src="./media/image528.png"
+style="width:4.3748in;height:3.36405in" />
 
 ### Création d’un volume de stockage + dataset
 

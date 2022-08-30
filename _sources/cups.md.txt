@@ -28,13 +28,18 @@ Pour l’installation nous avons utilisé le VM serveur de fichier ou SAMBA
 est déjà installé.
 
 ### Configuration CUPS
+
 ```bash
+apt update
 apt install cups cups-client
 ```
+
 Sauvegarder le fichier de configuration CUPS avant de le modifier :
+
 ```bash
 cp /etc.cups/cupsd.conf /etc.cups/cupsd.conf.bkp
 ```
+
 Le fichier cupsd.conf
 
 <img src="./media/image382.png"
@@ -44,16 +49,20 @@ style="width:4.47979in;height:1.17725in" />
 style="width:3.84429in;height:4.44854in" />
 
 Ajout du serveur d’impression dans SAMBA
+
 ```bash
 nano /etc/samba.smb.conf
 ```
+
 <img src="./media/image384.png"
 style="width:5.92791in;height:2.95875in" />
 
 Redémarrer les services
+
 ```bash
 systemctl restart cups smbd nmdb
 ```
+
 L’administration du CUPS est accessible sur le port 631.
 
 <img src="./media/image385.png"

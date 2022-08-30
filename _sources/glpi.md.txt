@@ -44,39 +44,52 @@ DNS
 style="width:2.96916in;height:0.80219in" />
 
 ### Mise à jour et installation des paquets nécessaires
+
 ```bash
 # Mise à jour
 apt update && apt upgrade -y  
 # Installation Apache2 Php et Mariadb  
 apt install apache2 perl php mariadb-server -y
 ```
+
 Autoriser le serveur apache et mariadb pour se lancer au démarrage du
 l’ordinateur
+
 ```bash
 systemctl enable apache2 mariadb
 ```
+
 Installation des paquets nécessaires pour glpi
+
 ```bash
 apt install
 php-{ldap,imap,apcu,xmlrpc,cas,mysqli,mbstring,curl,simplexml,xml,intl,zip,bz2} -y
 # Redémarrer le serveur apache
 systemctl restart apache2
 ```
+
 ### Téléchargement du paquet GLPI 9.5.6
+
 ```bash
 wget github.com/glpi-project/glpi/releases/download/9.5.6/glpi-9.5.6.tgz
 ```
+
 Décompression du fichier dans l’emplacement prévu
+
 ```bash
 tar -xvf glpi-9.5.6.tgz -C /var/www/html/
 ```
+
 J’ai ensuite changé le propriétaire du dossier téléchargé et ajouter des
 droits
+
 ```bash
 chown -R www-data:www-data /var/www/html/glpi  
 chmod -R 775 /var/www/html/glpi
 ```
+
 ### Création de la base de données
+
 ```bash
 mysql  
 create database glpi ;  
@@ -85,6 +98,7 @@ grant all privileges on glpi.\* to glpi@localhost;
 flush privileges ;
 exit ;
 ```
+
 Je suis allé sur la page internet <http://172.28.1.212/glpi>
 
 <img src="./media/image398.png"
@@ -130,9 +144,11 @@ style="width:6.27014in;height:2.68681in" />
 style="width:3.70885in;height:3.7922in" />
 
 ### Installation du version GLPI 10.0.2
+
 ```bash
 wget github.com/glpi-project/glpi/releases/download/10.0.2/glpi-10.0.2.tgz
 ```
+
 Les étapes restantes sont identiques à l’étape précédente.
 
 Je suis allé sur la page internet <http://127.0.0.1/glpi>
@@ -155,16 +171,18 @@ Une extension est absente
 style="width:6.27014in;height:0.53472in" />
 
 J’ai installé l'extension gd
+
 ```bash
 apt install php7.4-gd
 systemctl restart apache2
 ```
+
 J’ai réessayé la configuration
 
 <img src="./media/image415.png"
 style="width:6.27014in;height:0.92778in" />
 
-La configuration est correcte 
+La configuration est correcte.
 
 <img src="./media/image416.png"
 style="width:6.27014in;height:0.55833in" />
@@ -252,16 +270,20 @@ rédaction du document, fusioninventory n’est pas compatible avec GLPI
 10.0.2.
 
 Installation du plugin
+
 ```bash
 wget https://github.com/fusioninventory/fusioninventory-for-glpi/releases/download/glpi9.5%2B4.2
 ```
+
 J’ai décompressé le fichier dans /var/www/html/plugins
 
 Puis installé avec la commande suivante :
+
 ```bash
 php bin/console glpi:plugin:install --username=glpi fusioninventory  
 php bin/console glpi:plugin:activate fusioninventory
 ```
+
 Accueil \> Configuration \> Plugins
 
 <img src="./media/image435.png"
@@ -273,9 +295,11 @@ Accueil \> Administration \> Entités \> Entité racine \> Fusioninventory
 style="width:6.27014in;height:3.06944in" />
 
 ### Installation fusioninventory agent sur linux
+
 ```bash
 apt install -y fusioninventory-agent
 ```
+
 J’ai modifié le fichier **/etc/fusioninventory/agent.cfg**
 
 ```console
@@ -286,6 +310,7 @@ server = http://127.0.0.1/glpi/plugins/fusioninvnetory/
 ```bash
 systemctl restart fusioninventory-agent.service
 ```
+
 #### Forcer la synchronisation du l’agent
 
 Pour vérifier que le plugin fonctionne correctement, on peut se rendre
@@ -315,6 +340,7 @@ httpd-trust = 127.0.0.1,localhost
 ```bash
 systemctl restart fusioninventory-agent.service
 ```
+
 <img src="./media/image441.png"
 style="width:4.45252in;height:0.90166in" />
 
@@ -371,6 +397,7 @@ style="width:6.27014in;height:1.91111in" />
 style="width:3.27764in;height:1.64777in" />
 
 NB : le procédé d’intégration est expliqué dans le chapitre [Active Directory](active_directory.md).
+
 ## Conclusion
 
 L’installation du serveur GLPI est correctement déroulée sur un

@@ -18,12 +18,11 @@ Adressage des VMS :
 
 - Réseaux VLAN 200 switch2 : 172.28.1.249/16
 
-### Documentation 
+### Documentation
 
 - <https://www.youtube.com/watch?v=DR5Ov2XgkAc>
 
 - <https://www.manualslib.com/manual/232384/3com-5500g-Ei.html?page=19#manual>
-
 
 ## Processus
 
@@ -49,7 +48,7 @@ style="width:6.27014in;height:0.98264in" />
 
 ### Création d’un VLAN
 
-```
+```console
 # Passage en mode system
 system-view ou sys  
   
@@ -72,7 +71,7 @@ port Eth1/0/10
 
 Afficher la configuration de VLAN’s
 
-```
+```console
 display vlan all
 ```
 
@@ -87,7 +86,7 @@ style="width:5.59453in;height:5.01112in" />
 
 ### Supprimer un VLAN
 
-```
+```console
 # Mode system  
 system-view ou sys  
 # Supprimer le VLAN 200  
@@ -141,7 +140,7 @@ VLAN
 
 Switch 1
 
-```
+```console
 # Choix de l’interface  
 Interface GigabitEthernet1/0/28  
 # Changer le type de link  
@@ -155,12 +154,12 @@ Configuration des ports actuel
 <img src="./media/image64.png"
 style="width:5.61537in;height:5.33408in" />
 
-### Tagger un port 
+### Tagger un port
 
 Pour interconnecter les deux switches, nous avons tagué les ports 28 sur
 chacun
 
-```
+```console
 interface GigabitEthernet1/0/28
 port link-type hybrid  
 port hybrid vlan 1 200 tagged
@@ -177,7 +176,7 @@ style="width:3.74555in;height:4.00044in" />
 
 Nous avons exécuté les commandes suivantes pour créer le VLAN 200
 
-```
+```console
 # Entrer dans mode Privileged EXEC  
 enable  
 
@@ -208,15 +207,18 @@ style="width:5.93833in;height:1.77108in" />
 
 Nous avons effectué les mêmes commandes pour les ports 8 à 10, puis nous
 avons vérifié la configuration des ports avec la commande
-```
+
+```console
 sh run
 ```
+
 <img src="./media/image67.png"
 style="width:2.13572in;height:1.6669in" />
 
 Nous avons créé un trunk entre vlan 1 et 200 sur le port
 GigabitEthernet2
-```
+
+```console
 enable
 
 config (choisir terminal)
@@ -227,12 +229,13 @@ switchport mode trunk
 
 sh run
 ```
+
 <img src="./media/image68.png"
 style="width:2.42742in;height:0.59383in" />
 
 Nous pouvons obtenir les mêmes résultats en mode GUI
 
-**Menu Config**
+### Menu Config
 
 <img src="./media/image69.png"
 style="width:5.68192in;height:1.77714in" />
@@ -240,7 +243,8 @@ style="width:5.68192in;height:1.77714in" />
 ### Configuration du Switch2 (T2SR2)
 
 Nous avons exécuté les commandes suivantes pour créer le VLAN 200
-```
+
+```console
 # Entrer dans mode Privileged EXEC  
 enable 
 
@@ -253,9 +257,11 @@ terminal
 # Configuration du VLAN 
 vlan 200
 ```
+
 Nous avons créé un trunk pour faire passer le VLAN 200 sur le port
 FastEthernet1 et 2
-```
+
+```console
 enable
 
 config (choisir terminal)
@@ -270,12 +276,14 @@ switchport mode trunk
 
 sh run
 ```
+
 <img src="./media/image70.png"
 style="width:2.19822in;height:0.88554in" />
 
 Nous avons créé un trunk entre vlan 1 et 200 sur le port
 GigabitEthernet2
-```
+
+```console
 enable
 
 config (choisir terminal)
@@ -286,10 +294,11 @@ switchport mode trunk
 
 sh run
 ```
+
 <img src="./media/image68.png"
 style="width:2.42742in;height:0.59383in" />
 
-##  Conclusion
+## Conclusion
 
 La configuration des switches est correctement déroulée. Nombreuses
 tâches sont plus aisées à faire en GUI, d’autres en CLI. La
