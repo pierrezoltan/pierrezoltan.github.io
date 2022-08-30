@@ -188,7 +188,7 @@ Foreach(\$Utilisateur in \$CSVData){
         Write-Output "Création de l'utilisateur : \$Login (\$Prenom)"  
     }  
 }
-
+```
 Le résultat :
 
 <img src="./media/image90.png"
@@ -198,7 +198,7 @@ style="width:4.09375in;height:2.14583in" />
 style="width:2.09172in;height:2.20833in" /><img src="./media/image92.png"
 style="width:2.07292in;height:2.17368in" /><img src="./media/image93.png"
 style="width:2.08625in;height:2.19761in" />
-```
+
  
 
 ### Installation du serveur DNS
