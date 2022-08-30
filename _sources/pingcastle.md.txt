@@ -1,0 +1,216 @@
+# **PingCastle**
+
+## Objectif et environnement
+
+### Objectif
+
+1. L’utilisation de PingCastle pour auditer le serveur Active Directory.
+2. Création d'un script pour permettre un audit régulier
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.16.0.0/16
+
+- Le logiciel PingCastle est installé directement sur la VM du l’Active
+  Directory
+
+### Documentation
+
+- <https://www.it-connect.fr/comment-auditer-lactive-directory-avec-pingcastle/>
+
+- <https://techexpert.tips/fr/powershell-fr/powershell-renommer-un-fichier/>
+
+- <https://docs.microsoft.com/fr-fr/powershell/module/microsoft.powershell.management/?view=powershell-7.2>
+
+- <https://techexpert.tips/fr/windows-fr/gpo-creer-une-tache-planifiee/>
+
+## Processus
+
+### Téléchargement
+
+Lien de téléchargement :
+
+<https://www.pingcastle.com/download/>
+
+J’ai téléchargé l’archive et je l’ai extrait.
+
+<img src="./media/image659.png"
+style="width:4.75475in;height:2.45636in" />
+
+### Réalisation d’un audit AD
+
+J’exécute l’application *PingCastle.exe*
+
+<img src="./media/image660.png"
+style="width:5.12509in;height:1.97558in" />
+
+Je me place sur le premier choix et j’appuie sur la touche *Entrer*
+
+<img src="./media/image661.png"
+style="width:5.09184in;height:1.69443in" />
+
+PingCastle a reconnu le domaine t2sr.io, j’appuie donc de nouveau sur
+*Entrer* car il s’agit du choix par défaut.
+
+<img src="./media/image662.png"
+style="width:6.47919in;height:4.70227in" />
+
+L’audit prend quelques secondes à s’effectuer, une fois fini j’appuie
+sur *Entrer* et PingCastle se ferme.
+
+Deux fichiers ont été généré à la racine du dossier de PingCastle.
+
+<img src="./media/image663.png"
+style="width:5.77683in;height:1.19636in" />
+
+### Lecture du rapport de l’audit AD
+
+J’ouvre dans un navigateur le fichier *ad_hc_t2sr.io.html*
+
+<img src="./media/image664.png"
+style="width:4.89842in;height:3.16303in" />
+
+L’indicateur est élevé ce qui veux dire que l’AD n’est sécurisé comme il
+le devrait, cette note est normale étant donné que l’AD est proche d’une
+configuration par défaut, peut de sécurisation ont été fait dessus.
+
+Attention !  
+Ce compteur correspond à la note la plus élevé sur 4 catégories, dans
+notre cas il fait référence au compteur d’anomalies.
+
+<img src="./media/image665.png"
+style="width:4.92933in;height:2.77547in" />
+
+Grace au 4 compteur je peux situer les points de sécurité et les
+modifications à effectuer pour renforcer la sécurité générale de l’AD.
+
+- **Stale Object** : points de sécurité liés aux utilisateurs ou aux
+  ordinateurs
+
+- **Privileged Accounts** : points de sécurité liés aux comptes avec des
+  privilèges élevés (Administrateurs) du domaine Active Directory
+
+- **Trusts** : points de sécurité liés aux relations d'approbations
+  entre les domaines Active Directory
+
+- **Anomalies** : points de sécurité liés à d'autres aspects de la
+  configuration qui peuvent impacter la sécurité de votre annuaire
+
+> Juste en dessous des compteurs vient le tableau « **Risk Model** », il
+> permet de cerner les configurations auquel il faut porter attention.
+>
+> <img src="./media/image666.png"
+> style="width:4.81736in;height:3.74205in" />
+>
+> Ce qui est en blanc n’est pas dans la légende, cela veut dire :
+>
+> **Pas de problèmes tout est bon !**
+
+Ensuite vient les règles spécifiques catégories par catégories a modifié
+et à prendre en compte.
+
+> <img src="./media/image667.png"
+> style="width:4.08378in;height:3.6935in" />
+>
+> A savoir :
+>
+> Lorsque l’on exécute un audit AD avec PingCastle l’audit précédent est
+> écrasé !
+>
+> Il faut penser à sauvegarder les anciens audits.
+
+### Permettre un audit régulier de l’AD avec PingCastle
+
+J’ai créé un script PowerShell qui placé à la racine du Dossier de
+PingCastle permet de :
+
+Créer un dossier « ***auditBkp*** » s’il n’existe pas
+
+Exécuter un audit AD par le biais du PingCastle.exe
+
+Transférer les deux fichier html et xml dans le dossier ***auditBkp***
+et de les renommés en y ajoutant la date et l’heure lors de l’exécution
+de l’audit AD.
+
+Le script PowerShell :
+
+```powershell
+$BkpPath = ".\auditBkp"  
+If(!(Test-Path $BkpPath)){  
+New-Item -ItemType Directory -Force -Path $BkpPath  
+}  
+  
+.\PingCastle.exe --server SRV-W19-AD.t2sr.io --healthcheck  
+  
+$SourceFileHtmlPath = ".\ad_hc_t2sr.io.html"  
+$SourceFileXmlPath = ".\ad_hc_t2sr.io.xml"  
+$DateNow = Get-Date -Format "ddMMyyyyHHmm"  
+  
+$FileHtml = "ad_hc_t2sr.io\_"+$DateNow+".html"  
+$FileXml = "ad_hc_t2sr.io\_"+$DateNow+".xml"  
+  
+Move-Item -Path $SourceFileHtmlPath -Destination.\auditBkp\$FileHtml  
+Move-Item -Path $SourceFileXmlPath -Destination .\auditBkp\$FileXml
+```
+
+```{warning}
+Ce script est propre au réseau sur lequel je travaille (notamment pour le nom de serveur).
+```
+
+Pour m’aider j’ai consulté le « help » de PingCastle dans une invite de
+commande, en voici une partie :
+
+```powershell
+.\PingCastle.exe --help
+```
+<!-- <img src="./media/image669.png"
+style="width:5.90064in;height:4.05474in" /> -->
+
+<div class="admonition hint">
+<p class="admonition-title">--help</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><p>switch:
+–help              : display this message
+–interactive       : force the interactive mode
+–log               : generate a log file
+–log-console       : add log to the console
+–log-samba &lt;option&gt;: enable samba login (example: 10)
+Common options when connecting to the AD
+–server &lt;server&gt;   : use this server (default: current domain controller)
+the special value *or*.forest do the healthcheck for all domains
+–port &lt;port&gt;       : the port to use for ADWS or LDAP (default: 9389 or 389)
+–user &lt;user&gt;       : use this user (default: integrated authentication)
+–password &lt;pass&gt;   : use this password (default: asked on a secure prompt)
+–protocol &lt;proto&gt;  : selection the protocol to use among LDAP or ADWS (fastest)
+: ADWSThenLDAP (default), ADWSOnly, LDAPOnly, LDAPThenADWS
+–pagesize &lt;size&gt;   : change the default LDAP page size - default is 500
+–quota &lt;num&gt;       : Number of LDAP items per second that will be processed - default unlimited
+–carto             : perform a quick cartography with domains surrounding
+–healthcheck       : perform the healthcheck (step1)
+–api-endpoint &lt;&gt; : upload report via api call eg: http://server
+–api-key  &lt;key&gt;  : and using the api key as registered
+–explore-trust   : on domains of a forest, after the healthcheck, do the hc on all trusted domains except domains of the forest and forest trusts
+–explore-forest-trust : on root domain of a forest, after the healthcheck, do the hc on all forest trusts discovered
+–explore-trust and –explore-forest-trust can be run together
+–explore-exception &lt;domains&gt; : comma separated values of domains that will not be explored automatically
+--datefile        : insert the date into the report filename
+--encrypt         : use an RSA key stored in the .config file to crypt the content of the xml report
+--level &lt;level&gt;   : specify the amount of data found in the xml file
+                  : level: Full, Normal, Light
+--no-enum-limit   : remove the max 100 users limitation in html report
+--reachable       : add reachable domains to the list of discovered domains
+--sendXmlTo &lt;emails&gt;: send xml reports to a mailbox (comma separated email)
+--sendHtmlTo &lt;emails&gt;: send html reports to a mailbox
+--sendAllTo &lt;emails&gt;: send html reports to a mailbox
+                    [...]</p></pre></div></div>
+</div>
+
+## Conclusion
+
+PingCastle est un outil très intéressant pour auditer l’Active Directory
+avant de sa mise en production.

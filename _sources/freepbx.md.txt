@@ -1,0 +1,243 @@
+# **FreePBX**
+
+## Objectif et environnement
+
+### Objectif
+
+L’installation et configuration d’un serveur FreePBX
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+- Routeur WIFI TP-LINK TL-WA801ND
+
+- 2 x tablettes sous LENOVO tab 7 essential sous Android
+
+Adressage des VMS :
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur FreePBX : SRV-PBX-VOIP 172.28.1.208/16
+
+### Documentation
+
+- <https://www.freepbx.org/>
+
+- <https://www.youtube.com/watch?v=Ef-ZNHMJ78k>
+
+## Processus
+
+### Installation VM FreePBX
+
+Je choisis l’installation recommandé
+
+<img src="./media/image564.png"
+style="width:5in;height:1.875in" />
+
+Je choisis le “graphic install – output to VGA” puis “FreePBX standard”
+
+<img src="./media/image565.png"
+style="width:5in;height:1.875in" />
+
+<img src="./media/image566.png"
+style="width:5in;height:1.85417in" />
+
+Pendant l’installation je configure le mdp root : “**azerty123+**”
+
+<img src="./media/image567.png"
+style="width:5in;height:1.29167in" />
+
+<img src="./media/image568.png"
+style="width:5in;height:1.39583in" />
+
+J'ai redémarré à la fin de l’installation
+
+Je me connecte
+
+<img src="./media/image569.png"
+style="width:2.92413in;height:0.8555in" />
+
+<img src="./media/image570.png"
+style="width:5.53202in;height:5.27157in" />
+
+J’ai ensuite modifié la langue du clavier en AZERTY :
+
+```bash
+system-config-keyboard
+```
+
+<img src="./media/image571.png"
+style="width:2.26791in;height:1.69286in" />
+
+Puis j’ai fixé l’adresse IP de la façon suivante :
+
+```bash
+nano /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+
+<img src="./media/image572.png"
+style="width:5.89666in;height:3.30254in" />
+
+Redémarrage du service réseau
+
+```bash
+systemctl restart network
+```
+
+### Config FreePBX
+
+J’accède à la page de configuration sur l’adresse <http://172.28.1.208>
+
+Initial Setup
+
+<img src="./media/image573.png"
+style="width:5.51378in;height:3.18894in" />
+
+<img src="./media/image574.png"
+style="width:6.27014in;height:2.15in" />
+
+### FreePBX Administration
+
+Choix du langage (laissé en anglais)
+
+<img src="./media/image575.png"
+style="width:6.27014in;height:1.31736in" />
+
+Pour la configuration pare-feu j'ai laissé les paramètres par défaut.
+
+<img src="./media/image576.png"
+style="width:6.19375in;height:2.91667in" />
+
+<img src="./media/image577.png"
+style="width:5in;height:1.07292in" />
+
+Le pare feu passe en vert
+
+<img src="./media/image578.png"
+style="width:3.47917in;height:2.71806in" />
+
+### Interagir avec le firewall en ligne de commande
+
+Arrêter
+
+```bash
+fwconsole firewall stop
+```
+
+Démarrer
+
+```bash
+fwconsole firewall start
+```
+
+Ajouter une zone de confiance
+
+```bash
+fwconsole firewall trust 172.28.0.0/16
+```
+
+Retirer une adresse de confiance
+
+```bash
+fwconsole firewall untrust 172.28.2.3/32
+```
+
+Lister les adresses de confiance
+
+```bash
+fwconsole firewall list trusted
+```
+
+### Ajouter des utilisateurs par extension (non liée à l’Active Directory)
+
+Menu Application \> Extension \> Add Extention
+
+<img src="./media/image579.png"
+style="width:6.27014in;height:1.28403in" />
+
+Add new SIP
+
+<img src="./media/image580.png"
+style="width:2.68317in;height:1.54593in" />
+
+J’ai ajout user extension 1001 puis cliqué sur **Submit**. (Répéter la
+manipulation par utilisateur)
+
+<img src="./media/image581.png"
+style="width:6.27014in;height:4.38819in" />
+
+Les deux utilisateurs peuvent désormais communiquer
+
+<img src="./media/image582.png"
+style="width:6.27014in;height:1.38542in" />
+
+### Relier FreePBX avec l’Active Directory
+
+Menu \> User Manager \> Directory \> Add
+
+<img src="./media/image583.png"
+style="width:6.27014in;height:3.1875in" />
+
+<img src="./media/image584.png"
+style="width:6.27014in;height:0.82014in" />
+
+<img src="./media/image585.png"
+style="width:6.27014in;height:2.64722in" />
+
+Dans l’exemple, les numéros d’appels sont automatiquement récupérés
+depuis l’AD.
+
+<img src="./media/image586.png"
+style="width:3.75636in;height:3.96305in" />
+
+Les postes sont automatiquement créés
+
+<img src="./media/image587.png"
+style="width:6.27014in;height:1.62708in" />
+
+Mettre l’Active Directory par défaut
+
+Menu > User Manager choix par défaut
+
+<img src="./media/image588.png"
+style="width:6.27014in;height:2.39792in" />
+
+### Editer les comptes utilisateurs
+
+Menu Applications \> Extentions \> Choix Utilisteur
+
+<img src="./media/image589.png"
+style="width:5.84571in;height:3.88592in" />
+
+On peut attribuer un mot de passe par défaut ou changer la langue dans
+le menu général.
+
+### Voicemail
+
+Accéder sur le téléphone par le bouton enveloppe ou sur une application
+en composant **\*97.**
+
+Pour appeler depuis un autre téléphone, appeler **\*98** et suivez les
+instructions.
+
+<img src="./media/image590.png"
+style="width:6.27014in;height:1.90347in" />
+
+Mot de passe pour le répondeur : **1234**
+
+NB : Il faut configurer le répondeur du premier appel.
+
+### Intégrer FreePBX dans Active Directory
+
+<img src="./media/image148.png"
+style="width:3.27764in;height:1.64777in" />
+
+NB : le procédé d’intégration est expliqué dans le chapitre [Active Directory](active_directory.md).
+
+## Conclusion
+
+L’installation et la configuration basique du serveur FreePBX s’est bien
+déroulée.

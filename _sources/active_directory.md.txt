@@ -1,0 +1,303 @@
+# **Serveur Active Directory**
+
+## Objectif et environnement
+
+### Objectif
+
+L’installation d’un Active Directory sur Windows Server 2019.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.28.0.0/16
+
+- Active Directory sur Windows serveur 2019 : 172.28.1.200/16
+
+## Processus
+
+### Fixer l’adresse IP
+
+Avant d’installer Active Directory, j’ai fixé l’adresse IP du serveur
+somme suite
+
+<img src="./media/image71.png"
+style="width:2.25601in;height:2.54437in" />
+
+### L’installation Active Directory
+
+Dans la Gestion de serveur / Tableau de bord / Gérer / Ajouter des rôles
+et fonctionnalités
+
+<img src="./media/image72.png"
+style="width:3.12544in;height:1.57314in" />
+
+J’ai choisi installation basée sur un rôle
+
+<img src="./media/image73.png"
+style="width:4.20966in;height:2.99791in" />
+
+Choix du serveur
+
+<img src="./media/image74.png"
+style="width:3.79691in;height:2.71238in" />
+
+Choix rôle AD DS (Active Directory Domain Service)
+
+<img src="./media/image75.png"
+style="width:2.71241in;height:2.87531in" />
+
+J’ai validé l’ajout du rôle
+
+<img src="./media/image76.png"
+style="width:2.39197in;height:2.50669in" />
+
+<img src="./media/image77.png"
+style="width:2.88996in;height:3.10824in" />
+
+J’ai laissé par défaut le choix des fonctionnalités
+
+<img src="./media/image78.png"
+style="width:2.1726in;height:2.32966in" />
+
+Début de l’installation
+
+<img src="./media/image79.png"
+style="width:3.63562in;height:1.79156in" />
+
+### Promouvoir le serveur en contrôleur de domaine
+
+Une fois installé, j’ai promu le serveur en contrôleur de domaine
+
+<img src="./media/image80.png"
+style="width:2.34083in;height:2.14464in" />
+
+Le nom du domaine racine est **t2sr.io**
+
+<img src="./media/image81.png"
+style="width:3.78873in;height:2.79675in" />
+
+J’ai décoché serveur DNS (n’est pas encore configuré) et renseigné le
+mot de passe DSRM.
+
+<img src="./media/image82.png"
+style="width:4.0016in;height:2.95256in" />
+
+Le nom de domaine NetBIOS renseigné automatiquement
+
+<img src="./media/image83.png"
+style="width:4.76108in;height:0.72927in" />
+
+J’ai laissé par défaut l’emplacement de la base de données AD DS
+
+<img src="./media/image84.png"
+style="width:5.58411in;height:1.17725in" />
+
+Après vérification, j’ai lancé l’installation
+
+<img src="./media/image85.png"
+style="width:3.68788in;height:2.70924in" />
+
+A la fin de l’installation le serveur redémarre.
+
+### Création des utilisateurs
+
+#### Créer les utilisateurs manuellement
+
+Outils d’administration / Utilisateurs et ordinateurs Active Directory /
+Users / Nouveau / Utilisateur
+
+<img src="./media/image86.png"
+style="width:6.27014in;height:3.16389in" />
+
+<img src="./media/image87.png"
+style="width:2.40625in;height:2.09375in" />
+
+J’ai renseigné un mot de passe par défaut que l’utilisateur doit changer
+lors de la première connexion.
+
+<img src="./media/image88.png"
+style="width:2.42708in;height:2.10417in" />
+
+### Créer automatiquement les utilisateurs à partir d’un fichier csv
+
+J’ai créé avec Microsoft Excel un tableau csv avec les stagiaires
+
+<img src="./media/image89.png"
+style="width:6.27014in;height:2.46875in" />
+
+Ensuite j’ai créé un script PowerShell pour automatiser la création des
+utilisateurs.
+
+Le script :
+
+```powershell
+\$CSVFile = "C:\Users\Administrateur\Desktop\Annuaire.csv"  
+\$CSVData = Import-CSV -Path \$CSVFile -Delimiter ";" -Encoding UTF8  
+  
+Foreach(\$Utilisateur in \$CSVData){  
+  
+    \$Prenom = \$Utilisateur.Prenom  
+    \$Initiales = \$Utilisateur.Initiales  
+    \$Nom = \$Utilisateur.Nom  
+    \$NomComplet = \$Utilisateur.NomComplet  
+    \$Description = \$Utilisateur.Description  
+    \$Telephone = \$Utilisateur.Telephone  
+    \$Adresse = \$Utilisateur.Adresse  
+    \$Ville = \$Utilisateur.Ville  
+    \$Departement = \$Utilisateur.Departement  
+    \$CodePostale = \$Utilisateur.CodePostale  
+    \$Login = (\$Prenom).Substring(0,1) + "." + \$Nom  
+    \$Email = "\$Login@t2sr.net"  
+    \$MotDePasse = "Azerty123+"  
+    \$Bureau = "T2SR"  
+    \$Pays = "FR"  
+  
+    *\# Vérifier la présence de l'utilisateur dans l'AD*  
+    if (Get-ADUser -Filter {SamAccountName -eq \$Login})  
+    {  
+        Write-Warning "L'identifiant \$Login existe déjà dans l'AD"  
+    }  
+    else  
+    {  
+        New-ADUser  -Name "\$Prenom" \`  
+                    -GivenName "\$Prenom" \`  
+                    -Initials "\$Initiales" \`  
+                    -Surname "\$Nom" \`  
+                    -DisplayName "\$Prenom \$Nom" \`  
+                    -Description "\$Description" \`  
+                    -StreetAddress "\$Adresse" \`  
+                    -City "\$Ville" \`  
+                    -Country "\$Pays" \`  
+                    -OfficePhone "\$Telephone" \`  
+                    -PostalCode "\$CodePostale" \`  
+                    -SamAccountName "\$Login" \`  
+                    -UserPrincipalName "\$Login@t2sr.net" \`  
+                    -EmailAddress \$Email \`  
+                    -Office \$Bureau \`  
+                    -State \$Departement \`  
+                    -Path "OU=Utilisateurs,DC=t2sr,DC=net" \`  
+                    -AccountPassword(ConvertTo-SecureString \$MotDePasse
+-AsPlainText -Force) \`  
+                    -ChangePasswordAtLogon \$true \`  
+                    -Enabled \$true  
+  
+        Write-Output "Création de l'utilisateur : \$Login (\$Prenom)"  
+    }  
+}
+
+```
+
+Le résultat après l'exécution :
+
+<img src="./media/image90.png"
+style="width:4.09375in;height:2.14583in" />
+
+<img src="./media/image91.png"
+style="width:2.09172in;height:2.20833in" /><img src="./media/image92.png"
+style="width:2.07292in;height:2.17368in" /><img src="./media/image93.png"
+style="width:2.08625in;height:2.19761in" />
+
+### Installation du serveur DNS
+
+Gestionnaire de serveur / Tableau de bord / Gérer / Ajouter des rôles et
+fonctionnalités
+
+<img src="./media/image94.png"
+style="width:2.73958in;height:1.2744in" />
+
+J’ai choisi serveur DNS puis installation
+
+<img src="./media/image95.png"
+style="width:3.44792in;height:1.65625in" />
+
+Une fois installé, j’ai configuré dans
+
+Gestionnaire DNS \> Zonz de recherche inversée \> Nouvelle Zone
+
+<img src="./media/image96.png"
+style="width:2.90484in;height:2.41611in" />
+
+<img src="./media/image97.png"
+style="width:3.45202in;height:2.85768in" />
+
+<img src="./media/image98.png"
+style="width:3.49861in;height:2.92237in" />
+
+<img src="./media/image99.png"
+style="width:3.56392in;height:2.98531in" />
+
+<img src="./media/image100.png"
+style="width:2.89922in;height:2.43425in" />
+
+<img src="./media/image101.png"
+style="width:2.88523in;height:2.42931in" />
+
+<img src="./media/image102.png"
+style="width:2.9163in;height:2.43597in" />
+
+J’ai répété la manipulation deux fois pour les plages 2 et 3
+
+<img src="./media/image103.png"
+style="width:6.27014in;height:1.01042in" />
+
+### Joindre un client linux dans Active Directory
+
+#### Installation des package nécessaires sur des distributions basées sur Debian
+
+```bash
+apt install -y realmd sssd sssd-tools libnss-sss libpam-sss adcli
+samba-common-bin oddjob oddjob-mkhomedir packagekit
+```
+
+#### Installation des package nécessaires sur des distributions basées sur CentOS (FreePBX)
+
+```bash
+yum install -y realmd sssd sssd-tools libnss-sss libpam-sss adcli
+samba-common-bin samba-common-tools oddjob oddjob-mkhomedir packagekit
+```
+
+Vérifier que le domaine est joignable
+
+```bash
+realm discover t2sr.io
+```
+
+<img src="./media/image104.png"
+style="width:3.01832in;height:2.0418in" />
+
+#### Joindre le serveur AD
+
+```bash
+realm join --user=Administrateur t2sr.io
+```
+
+Vérification sur l’AD l’ensemble des ordinateurs du domaine
+
+<img src="./media/image105.png"
+style="width:4.42971in;height:2.89927in" />
+
+J’ai séparé dans deux UO les serveurs et les clients.
+
+Serveurs
+
+<img src="./media/image106.png"
+style="width:4.13475in;height:2.58704in" />
+
+Clients
+
+<img src="./media/image107.png"
+style="width:3.46606in;height:2.01869in" />
+
+Groupes et utilisateurs
+
+<img src="./media/image108.png"
+style="width:3.83871in;height:1.84858in" />
+
+## Conclusion
+
+L’installation s’est correctement déroulée. La mise en place de l’Active Directory doit être le premier serveur à configurer.
