@@ -240,17 +240,26 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cups.html"><strong>Serveur CUPS (impression)</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cups.html#objectif-et-environnement">Objectif et environnement</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cups.html#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cups.html#objectif-et-environnement">Objectif et environnement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cups.html#objectif">Objectif</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cups.html#environnement">Environnement</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cups.html#documentation">Documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cups.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#installation-des-logiciels-dauthentification-sur-le-domaine">Installation des logiciels d’authentification sur le domaine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#joindre-la-machine-virtuelle-au-domaine">Joindre la machine virtuelle au domaine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cups.html#installer-kerberos">Installer Kerberos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cups.html#installation-samba">Installation SAMBA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cups.html#configurer-nss">Configurer NSS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cups.html#preparation-pam">Préparation PAM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cups.html#modification-du-samba">Modification du Samba</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="cups.html#configuration-cups">Configuration CUPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cups.html#installation-avahi-daemon">Installation Avahi-daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cups.html#ajouter-une-imprimante">Ajouter une imprimante</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cups.html#ajouter-une-imprimante-aux-clients">Ajouter une imprimante aux clients</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cups.html#integrer-le-serveur-dimpression-dans-active-directory">Intégrer le serveur d’impression dans Active Directory</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cups.html#conclusion">Conclusion</a></li>
@@ -559,18 +568,28 @@ sudo apt install -y samba
 </pre></div>
 </div>
 <p>On a modifié le fichier /etc/ntp.conf comme suite :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#pool 0.ubuntu.pool.ntp.org iburst</span>
+<span class="c1">#pool 1.ubuntu.pool.ntp.org iburst</span>
+<span class="c1">#pool 2.ubuntu.pool.ntp.org iburst</span>
+<span class="c1">#pool 3.ubuntu.pool.ntp.org iburst</span>
+
+<span class="c1"># Use Ubuntu&#39;s ntp server as a fallback.</span>
+<span class="c1">#pool ntp.ubuntu.com</span>
+
+<span class="nv">NTPSERVERS</span><span class="o">=</span><span class="s2">&quot;SRV-W19-AD.t2sr.io&quot;</span>
+<span class="nv">NTPOPTIONS</span><span class="o">=</span><span class="s2">&quot;-u&quot;</span>
+</pre></div>
+</div>
 <p>Redémarrer ntp et smbd</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>service ntp restart  
-service smbd restart
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart ntp smbd 
 </pre></div>
 </div>
 <p>Nous avons rentré notre serveur samba dans le domaine</p>
-<!--root@srv-ubu-smb:~#-->
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io</span>
+<span class="go">systemctl restart winbind</span>
 </pre></div>
 </div>
 <p>Configurer NSS</p>
-<p>service winbind restart</p>
 <p>Nous avons modifié le fichier /etc/nsswitch.conf</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">passwd:     files systemd winbind</span>
 <span class="go">group:      files systemd winbind</span>
@@ -583,7 +602,9 @@ service smbd restart
 <section id="preparation-pam">
 <h4>Préparation PAM<a class="headerlink" href="#preparation-pam" title="Lien permanent vers cette rubrique"></a></h4>
 <p><img alt="_images/image475.png" src="_images/image475.png" /></p>
-<p>pam-auth-update</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pam-auth-update
+</pre></div>
+</div>
 <p><img alt="_images/image476.png" src="_images/image476.png" /></p>
 <p>Nous avons sélectionné <strong>Non</strong>.</p>
 <p>Nous avons modifié le fichier /etc/pam.d/common-auth</p>

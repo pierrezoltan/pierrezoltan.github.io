@@ -240,17 +240,26 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur CUPS (impression)</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objectif">Objectif</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-des-logiciels-dauthentification-sur-le-domaine">Installation des logiciels d’authentification sur le domaine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joindre-la-machine-virtuelle-au-domaine">Joindre la machine virtuelle au domaine</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installer-kerberos">Installer Kerberos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation-samba">Installation SAMBA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configurer-nss">Configurer NSS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#preparation-pam">Préparation PAM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modification-du-samba">Modification du Samba</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-cups">Configuration CUPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-avahi-daemon">Installation Avahi-daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ajouter-une-imprimante">Ajouter une imprimante</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ajouter-une-imprimante-aux-clients">Ajouter une imprimante aux clients</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#integrer-le-serveur-dimpression-dans-active-directory">Intégrer le serveur d’impression dans Active Directory</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
@@ -475,10 +484,10 @@
 <h1><strong>Serveur CUPS (impression)</strong><a class="headerlink" href="#serveur-cups-impression" title="Lien permanent vers cette rubrique"></a></h1>
 <section id="objectif-et-environnement">
 <h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
-<section id="objectif">
-<h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
-<p>L’installation d’un serveur d’impression sur linux (SAMBA). Ce serveur est colocalisé avec le serveur de fichier.</p>
 </section>
+<section id="objectif">
+<h2>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h2>
+<p>L’installation d’un serveur d’impression sur linux avec CUPS et SAMBA sur un conteneur Linux.</p>
 <section id="environnement">
 <h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
 <p>Matériels :</p>
@@ -488,73 +497,170 @@
 <p>Adressage des VMS :</p>
 <ul class="simple">
 <li><p>Réseaux : 172.28.0.0/16</p></li>
-<li><p>Serveur SRV-UBU-SMB(SAMBA) : 172.28.1.202</p></li>
+<li><p>Serveur CT-SRV-CUPS : 172.28.1.213</p></li>
 </ul>
 </section>
 <section id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d%27impression#:~:text=sur%20le%20serveur-,Principe,connect%C3%A9es%20en%20direct%20au%20serveur">http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d’impression#:~:text=sur le serveur-,Principe,connectées en direct au serveur</a>).</p></li>
+<li><p><a class="reference external" href="http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d%27impression#:~:text=sur%20le%20serveur-,Principe,connect%C3%A9es%20en%20direct%20au%20serveur">http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d’impression#:~:text=sur le serveur-,Principe,connectées en direct au serveur</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=eDT1A6q_RFk">https://www.youtube.com/watch?v=eDT1A6q_RFk</a></p></li>
 </ul>
 </section>
 </section>
 <section id="processus">
 <h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Pour l’installation nous avons utilisé le VM serveur de fichier ou SAMBA
-est déjà installé.</p>
+<section id="installation-des-logiciels-dauthentification-sur-le-domaine">
+<h3>Installation des logiciels d’authentification sur le domaine<a class="headerlink" href="#installation-des-logiciels-dauthentification-sur-le-domaine" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install acl realmd libnss-winbind winbind
+</pre></div>
+</div>
+</section>
+<section id="joindre-la-machine-virtuelle-au-domaine">
+<h3>Joindre la machine virtuelle au domaine<a class="headerlink" href="#joindre-la-machine-virtuelle-au-domaine" title="Lien permanent vers cette rubrique"></a></h3>
+<section id="installer-kerberos">
+<h4>Installer Kerberos<a class="headerlink" href="#installer-kerberos" title="Lien permanent vers cette rubrique"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install krb5-user
+</pre></div>
+</div>
+<p><img alt="_images/image464.png" src="_images/image464.png" /></p>
+<p>On a édité le fichier /etc/krb5.conf</p>
+<p><img alt="_images/image467.png" src="_images/image467.png" /></p>
+<p><img alt="_images/image468.png" src="_images/image468.png" /></p>
+<p><img alt="_images/image469.png" src="_images/image469.png" /></p>
+</section>
+<section id="installation-samba">
+<h4>Installation SAMBA<a class="headerlink" href="#installation-samba" title="Lien permanent vers cette rubrique"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade -y
+sudo apt install -y samba
+</pre></div>
+</div>
+<p>Modifier le fichier /etc/samba/smb.conf</p>
+<p><img alt="_images/image470.png" src="_images/image470.png" /></p>
+<p><img alt="_images/image471.png" src="_images/image471.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install -y ntp
+</pre></div>
+</div>
+<p>On a modifié le fichier /etc/ntp.conf comme suite :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#pool 0.ubuntu.pool.ntp.org iburst</span>
+<span class="c1">#pool 1.ubuntu.pool.ntp.org iburst</span>
+<span class="c1">#pool 2.ubuntu.pool.ntp.org iburst</span>
+<span class="c1">#pool 3.ubuntu.pool.ntp.org iburst</span>
+
+<span class="c1"># Use Ubuntu&#39;s ntp server as a fallback.</span>
+<span class="c1">#pool ntp.ubuntu.com</span>
+
+<span class="nv">NTPSERVERS</span><span class="o">=</span><span class="s2">&quot;SRV-W19-AD.t2sr.io&quot;</span>
+NTPOPT
+</pre></div>
+</div>
+<p>Redémarrer ntp et smbd</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart smbd ntp
+</pre></div>
+</div>
+<p>Nous avons rentré notre serveur samba dans le domaine</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io</span>
+<span class="go">systemctl restart winbind</span>
+</pre></div>
+</div>
+<p>service winbind restart</p>
+</section>
+<section id="configurer-nss">
+<h4>Configurer NSS<a class="headerlink" href="#configurer-nss" title="Lien permanent vers cette rubrique"></a></h4>
+<p>Nous avons modifié le fichier /etc/nsswitch.conf</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">passwd:     files systemd winbind</span>
+<span class="go">group:      files systemd winbind</span>
+<span class="go">shadow:     files winbind</span>
+</pre></div>
+</div>
+<p>Pour vérifier si tout est fonctionnel jusqu’au présent</p>
+<p><img alt="_images/image679.png" src="_images/image679.png" /></p>
+</section>
+<section id="preparation-pam">
+<h4>Préparation PAM<a class="headerlink" href="#preparation-pam" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image680.png" src="_images/image680.png" /></p>
+<p>pam-auth-update</p>
+<p><img alt="_images/image681.png" src="_images/image681.png" /></p>
+<p>Nous avons sélectionné <strong>Non</strong>.</p>
+<p>Nous avons modifié le fichier /etc/pam.d/common-auth</p>
+<p><img alt="_images/image682.png" src="_images/image682.png" /></p>
+<p>Nous avons modifié le fichier /etc/pam.d/common-password</p>
+<p><img alt="_images/image683.png" src="_images/image683.png" /></p>
+<p>Nous avons modifié le fichier /etc/pam.d/common-session</p>
+<p><img alt="_images/image684.png" src="_images/image684.png" /></p>
+<p>Configuration du fuseau horaire (choix France/Paris)</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">dpkg-reconfigure tzdata</span>
+</pre></div>
+</div>
+</section>
+<section id="modification-du-samba">
+<h4>Modification du Samba<a class="headerlink" href="#modification-du-samba" title="Lien permanent vers cette rubrique"></a></h4>
+<p><img alt="_images/image685.png" src="_images/image685.png" /></p>
+<p>Redémarrage le service Samba</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo systemctl restart smbd</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="configuration-cups">
 <h3>Configuration CUPS<a class="headerlink" href="#configuration-cups" title="Lien permanent vers cette rubrique"></a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt update
-apt install cups cups-client
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">apt install cups</span>
+<span class="go">systemctl enable cups</span>
+<span class="go">systemctl start cups</span>
 </pre></div>
 </div>
 <p>Sauvegarder le fichier de configuration CUPS avant de le modifier :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp /etc/cups/cupsd.conf /etc.cups/cupsd.conf.bkp
+<p>cp /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bkp</p>
+<p>Le fichier <strong>cupsd.conf</strong></p>
+<p><img alt="_images/image686.png" src="_images/image686.png" /></p>
+<p><img alt="_images/image687.png" src="_images/image687.png" /></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">systemctl restart cups</span>
 </pre></div>
 </div>
-<p>Le fichier cupsd.conf</p>
-<p><img alt="_images/image382.png" src="_images/image382.png" /></p>
-<p><img alt="_images/image383.png" src="_images/image383.png" /></p>
-<p>Ajout du serveur d’impression dans SAMBA</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/samba/smb.conf
+</section>
+<section id="installation-avahi-daemon">
+<h3>Installation Avahi-daemon<a class="headerlink" href="#installation-avahi-daemon" title="Lien permanent vers cette rubrique"></a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">apt install -y avahi-daemon</span>
+<span class="go">systemctl enable avahi-daemon</span>
+<span class="go">systemctl start avahi-daemon</span>
 </pre></div>
 </div>
-<p><img alt="_images/image384.png" src="_images/image384.png" /></p>
-<p>Redémarrer les services</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl restart cups smbd nmdb
-</pre></div>
-</div>
-<p>L’administration du CUPS est accessible sur le port 631.</p>
-<p><img alt="_images/image385.png" src="_images/image385.png" /></p>
+<p><img alt="_images/image688.png" src="_images/image688.png" /></p>
+<p>Accès à l’interface d’administration</p>
+<p><a class="reference external" href="https://172.28.1.213:631/admin">https://172.28.1.213:631/admin</a></p>
+<p>(J’ai accepté les risques liés à la certificat SSL utilisé par CUPS)</p>
+<p>J’ai renseigné mes identifiant</p>
+<p><img alt="_images/image689.png" src="_images/image689.png" /></p>
+<p>J’ai accédé à la page d’administration de mon serveur CUPS.</p>
+<p><img alt="_images/image690.png" src="_images/image690.png" /></p>
 </section>
 <section id="ajouter-une-imprimante">
 <h3>Ajouter une imprimante<a class="headerlink" href="#ajouter-une-imprimante" title="Lien permanent vers cette rubrique"></a></h3>
-<p>Pour pouvoir tester l’imprimante du PEI, nous avons ajouté
-temporairement une carte réseau au VM dans le réseau 192.168.10.0/24 en
-dhcp.</p>
-<p><img alt="_images/image386.png" src="_images/image386.png" /></p>
-<p><img alt="_images/image387.png" src="_images/image387.png" /></p>
-<p><img alt="_images/image388.png" src="_images/image388.png" /></p>
-<p>J’ai choisi une pilote générique, puis continuer</p>
-<p><img alt="_images/image389.png" src="_images/image389.png" /></p>
-<p>Choix PCL laser printer, puis ajouter une imprimante</p>
-<p><img alt="_images/image390.png" src="_images/image390.png" /></p>
-<p><img alt="_images/image391.png" src="_images/image391.png" /></p>
-<p>Pour tester, il suffit d’imprimer une page de test</p>
-<p><img alt="_images/image392.png" src="_images/image392.png" /></p>
+<p>Administration &gt; Imprimantes &gt; Ajouter une imprimante</p>
+<p><img alt="_images/image691.png" src="_images/image691.png" /></p>
+<p><img alt="_images/image692.png" src="_images/image692.png" /></p>
+<p><img alt="_images/image693.png" src="_images/image693.png" /></p>
+<p><img alt="_images/image694.png" src="_images/image694.png" /></p>
+<p><img alt="_images/image695.png" src="_images/image695.png" /></p>
+<p><img alt="_images/image696.png" src="_images/image696.png" /></p>
+<p><img alt="_images/image697.png" src="_images/image697.png" /></p>
+<p>L’imprimante Imp_PEI a été jouté avec succès.</p>
 </section>
 <section id="ajouter-une-imprimante-aux-clients">
 <h3>Ajouter une imprimante aux clients<a class="headerlink" href="#ajouter-une-imprimante-aux-clients" title="Lien permanent vers cette rubrique"></a></h3>
-<p>L’imprimante partagée est automatiquement reconnue sur le réseau :</p>
-<p>Linux</p>
-<p><img alt="_images/image393.png" src="_images/image393.png" /></p>
-<p>Windows</p>
-<p><img alt="_images/image394.png" src="_images/image394.png" /></p>
-</section>
-<section id="integrer-le-serveur-dimpression-dans-active-directory">
-<h3>Intégrer le serveur d’impression dans Active Directory<a class="headerlink" href="#integrer-le-serveur-dimpression-dans-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
-<p><img alt="_images/image148.png" src="_images/image148.png" /></p>
-<p>NB : le procédé d’intégration est expliqué dans le chapitre <a class="reference internal" href="active_directory.html"><span class="doc std std-doc">Active Directory</span></a>.</p>
+<p>Sous Linux (Debian)</p>
+<p>Paramètres &gt; Imprimantes</p>
+<p><img alt="_images/image698.png" src="_images/image698.png" /></p>
+<p><img alt="_images/image699.png" src="_images/image699.png" /></p>
+<p>Sous Windows 10</p>
+<p>Menu Paramètres &gt; Périphériques &gt; Imprimantes et scanners &gt; Ajout une
+imprimante</p>
+<p><img alt="_images/image700.png" src="_images/image700.png" /></p>
+<p><img alt="_images/image701.png" src="_images/image701.png" /></p>
+<p>Nous avons la possibilité choisir le pilot d’imprimante</p>
+<p><img alt="_images/image702.png" src="_images/image702.png" /></p>
+<p><img alt="_images/image703.png" src="_images/image703.png" /></p>
+<p><img alt="_images/image704.png" src="_images/image704.png" /></p>
 </section>
 </section>
 <section id="conclusion">

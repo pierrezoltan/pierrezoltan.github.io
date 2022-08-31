@@ -118,24 +118,33 @@ sudo apt install -y ntp
 
 On a modifié le fichier /etc/ntp.conf comme suite :
 
+```bash
+#pool 0.ubuntu.pool.ntp.org iburst
+#pool 1.ubuntu.pool.ntp.org iburst
+#pool 2.ubuntu.pool.ntp.org iburst
+#pool 3.ubuntu.pool.ntp.org iburst
+
+# Use Ubuntu's ntp server as a fallback.
+#pool ntp.ubuntu.com
+
+NTPSERVERS="SRV-W19-AD.t2sr.io"
+NTPOPTIONS="-u"
+```
+
 Redémarrer ntp et smbd
 
 ```bash
-service ntp restart  
-service smbd restart
+systemctl restart ntp smbd 
 ```
 
 Nous avons rentré notre serveur samba dans le domaine
 
-<!--root@srv-ubu-smb:~#-->
-
 ```console
 net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io
+systemctl restart winbind
 ```
 
 Configurer NSS
-
-service winbind restart
 
 Nous avons modifié le fichier /etc/nsswitch.conf
 
@@ -155,7 +164,9 @@ style="width:3.81182in;height:2.66828in" />
 <img src="./media/image475.png"
 style="width:5.90707in;height:0.73969in" />
 
+```bash
 pam-auth-update
+```
 
 <img src="./media/image476.png"
 style="width:6.27014in;height:1.62083in" />
