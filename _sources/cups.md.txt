@@ -1,0 +1,360 @@
+# **Serveur CUPS (impression)**
+
+## Objectif et environnement
+
+## Objectif
+
+L’installation d’un serveur d’impression sur linux avec CUPS et SAMBA sur un conteneur Linux.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.28.0.0/16
+
+- Serveur CT-SRV-CUPS : 172.28.1.213
+
+### Documentation
+
+- <http://www.unixmaniax.fr/wiki/index.php?title=Samba_-_serveur_d%27impression#:~:text=sur%20le%20serveur-,Principe,connect%C3%A9es%20en%20direct%20au%20serveur>
+
+- <https://www.youtube.com/watch?v=eDT1A6q_RFk>
+
+## Processus
+
+### Installation des logiciels d’authentification sur le domaine
+
+```bash
+sudo apt install acl realmd libnss-winbind winbind
+```
+
+### Joindre la machine virtuelle au domaine
+
+#### Installer Kerberos
+
+```bash
+sudo apt install krb5-user
+```
+
+<img src="./media/image464.png"
+style="width:6.27014in;height:1.82569in" />
+
+On a édité le fichier /etc/krb5.conf
+
+```bash
+[libdefaults]
+        default_realm = T2SR.IO
+
+[realms]
+        T2SR.IO = {
+                kdc = srv-w19-ad.t2sr.io
+                admin_server = srv-w19-ad.t2sr.io
+                default_domain = t2sr.io
+        }
+
+[domain_realm]
+        .t2sr.io = .T2SR.IO
+        t2sr.io = T2SR.IO
+
+[login]
+        krb4_convert = true
+        krb4_get_tickets = false
+```
+
+#### Installation SAMBA
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y samba
+```
+
+Modifier le fichier /etc/samba/smb.conf
+
+```bash
+# Change this to the workgroup/NT-domain name your Samba server will part of
+   workgroup = T2SR
+
+# Hide lost+found
+hide files = /lost+found/
+
+# Most people will want "standalone server" or "member server".
+# Running as "active directory domain controller" will require first
+# running "samba-tool domain provision" to wipe databases and create a
+# new domain.
+   server role = member server
+
+# This option controls how unsuccessful authentication attempts are mapped
+# to anonymous connections
+   map to guest = bad user
+
+# Ajout ACL
+nt acl support = yes
+inherit acls = yes
+username map = /etc/samba/user.map
+map acl inherit = yes
+map archive = no
+map hidden = no
+map read only = no
+map system = no
+store dos attributes = yes
+inherit permissions = yes
+security = ADS
+realm = T2SR.io
+
+template shell = /bin/bash
+
+# Ajout parametres
+idmap config example : schema_mode = rfc2307
+idmap config example : range = 10000000-29999999
+idmap config example : default = yes
+idmap congig example : backend = rid
+idmap config * : range = 20000-29999
+idmap config * : backend = tdb
+winbind use default domain = true
+```
+
+```bash
+sudo apt install -y ntp
+```
+
+On a modifié le fichier /etc/ntp.conf comme suite :
+
+```sh
+#pool 0.ubuntu.pool.ntp.org iburst
+#pool 1.ubuntu.pool.ntp.org iburst
+#pool 2.ubuntu.pool.ntp.org iburst
+#pool 3.ubuntu.pool.ntp.org iburst
+
+# Use Ubuntu's ntp server as a fallback.
+#pool ntp.ubuntu.com
+
+NTPSERVERS="SRV-W19-AD.t2sr.io"
+NTPOPTIONS="-u"
+```
+
+Redémarrer ntp et smbd
+
+```bash
+systemctl restart smbd ntp
+```
+
+Nous avons rentré notre serveur samba dans le domaine
+
+```console
+net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io
+# Redémarrer winbind
+systemctl restart winbind
+```
+
+#### Configurer NSS
+
+Nous avons modifié le fichier /etc/nsswitch.conf
+
+```console
+passwd:     files systemd winbind
+group:      files systemd winbind
+shadow:     files winbind
+```
+
+Pour vérifier si tout est fonctionnel jusqu’au présent
+
+```bash
+root@CT-DEB-CUPS:~# realm discover -v t2sr.io
+ * Resolving: _ldap._tcp.t2sr.io
+ * Performing LDAP DSE lookup on: 172.28.1.200
+ * Successfully discovered: t2sr.io
+t2sr.io
+  type: kerberos
+  realm-name: T2SR.IO
+  domain-name: t2sr.io
+  configured: no
+  server-software: active-directory
+  client-software: sssd
+  required-package: sssd-tools
+  required-package: sssd
+  required-package: libnss-sss
+  required-package: libpam-sss
+  required-package: adcli
+  required-package: samba-common-bin
+```
+
+#### Préparation PAM
+
+```bash
+# here are the per-package modules (the "Primary" block)
+account [success=2 new_authtok_reqd=done default=ignore]        pam_unix.so
+account [success=1 new_authtok_reqd=done default=ignore]        pam_winbind.so
+```
+
+pam-auth-update
+
+<img src="./media/image681.png"
+style="width:6.27014in;height:1.62083in" />
+
+Nous avons sélectionné **Non**.
+
+Nous avons modifié le fichier /etc/pam.d/common-auth
+
+```bash
+# here are the per-package modules (the "Primary" block)
+auth    [success=2 default=ignore]      pam_unix.so nullok_secure
+auth    [success=1 default=ignore]      pam_winbind.so krb5_auth krb5_ccache_type=FILE cached_login try_first_pass
+```
+
+Nous avons modifié le fichier /etc/pam.d/common-password
+
+```bash
+# here are the per-package modules (the "Primary" block)
+password        [success=2 default=ignore]      pam_unix.so obscure sha512
+password        [success=1 default=ignore]      pam_winbind.so use_authtok try_first_pass
+```
+
+Nous avons modifié le fichier /etc/pam.d/common-session
+
+```bash
+# and here are more per-package modules (the "Additional" block)
+session required        pam_unix.so
+session optional        pam_systemd.so
+session optional        pam_winbind.so
+session optional        pam_mkhomedir.so
+session required        pam_mkhomedir.so skel=/etc/skel
+```
+
+Configuration du fuseau horaire (choix France/Paris)
+
+```console
+dpkg-reconfigure tzdata
+```
+
+### Configuration CUPS
+
+```console
+apt install cups
+systemctl enable cups
+systemctl start cups
+```
+
+Sauvegarder le fichier de configuration CUPS avant de le modifier :
+
+cp /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bkp
+
+Le fichier **cupsd.conf**
+
+```console
+# Only listen for connections from the local machine.
+Port 631
+Listen /run/cups/cups.sock
+```
+
+```console
+# Restrict access to the server...
+<Location />
+  Order allow,deny
+  Allow @local
+</Location>
+
+# Restrict access to the admin pages...
+<Location /admin>
+  AuthType Default
+  Require valid-user
+  Order allow,deny
+  Allow @local
+```
+
+```console
+systemctl restart cups
+```
+
+### Installation Avahi-daemon
+
+```console
+apt install -y avahi-daemon
+systemctl enable avahi-daemon
+systemctl start avahi-daemon
+```
+
+### Accès à l’interface d’administration
+
+<https://172.28.1.213:631/admin>
+
+(J’ai accepté les risques liés à la certificat SSL utilisé par CUPS)
+
+J’ai renseigné mes identifiant
+
+<img src="./media/image689.png"
+style="width:6.27014in;height:3.1875in" />
+
+J’ai accédé à la page d’administration de mon serveur CUPS.
+
+<img src="./media/image690.png"
+style="width:6.27014in;height:2.57361in" />
+
+### Ajouter une imprimante
+
+Administration \> Imprimantes \> Ajouter une imprimante
+
+<img src="./media/image691.png"
+style="width:3.62389in;height:1.86877in" />
+
+<img src="./media/image692.png"
+style="width:3.77639in;height:1.99924in" />
+
+<img src="./media/image693.png"
+style="width:3.76902in;height:2.05316in" />
+
+<img src="./media/image694.png"
+style="width:2.30407in;height:2.34734in" />
+
+<img src="./media/image695.png"
+style="width:2.4989in;height:2.67935in" />
+
+<img src="./media/image696.png"
+style="width:3.65614in;height:1.74283in" />
+
+<img src="./media/image697.png"
+style="width:6.27014in;height:2.91181in" />
+
+L’imprimante Imp_PEI a été jouté avec succès.
+
+### Ajouter une imprimante aux clients
+
+Sous Linux (Debian)
+
+Paramètres \> Imprimantes
+
+<img src="./media/image698.png"
+style="width:3.02341in;height:1.03713in" />
+
+<img src="./media/image699.png"
+style="width:4.72272in;height:0.84527in" />
+
+Sous Windows 10
+
+Menu Paramètres \> Périphériques \> Imprimantes et scanners \> Ajout une
+imprimante
+
+<img src="./media/image700.png"
+style="width:3.55059in;height:1.42462in" />
+
+<img src="./media/image701.png"
+style="width:2.29986in;height:1.3641in" />
+
+Nous avons la possibilité choisir le pilot d’imprimante
+
+<img src="./media/image702.png"
+style="width:2.79227in;height:2.10871in" />
+
+<img src="./media/image703.png"
+style="width:3.2319in;height:2.37354in" />
+
+<img src="./media/image704.png"
+style="width:3.22975in;height:2.37447in" />
+
+## Conclusion
+
+CUPS est un outil léger pour ajouter une imprimante en réseaux,
+néanmoins l’ajout de pilotes propriétaires peut être fastidieux.

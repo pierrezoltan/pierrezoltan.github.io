@@ -1,0 +1,305 @@
+# **Switch 3COM**
+
+## Objectif et environnement
+
+### Objectif
+
+Configurer un VLAN, ports trunk et tagg sur switch 3COM.
+
+### Environnement
+
+Matériels :
+
+- 2 x Switch 3COM SuperStack 3 4500 26-port
+
+Adressage des VMS :
+
+- Réseaux VLAN 200 switch1 : 172.28.1.253/16
+
+- Réseaux VLAN 200 switch2 : 172.28.1.249/16
+
+### Documentation
+
+- <https://www.youtube.com/watch?v=DR5Ov2XgkAc>
+
+- <https://www.manualslib.com/manual/232384/3com-5500g-Ei.html?page=19#manual>
+
+## Processus
+
+Nous sommes connectés sur le port série d’un ordinateur d’un côté et sur
+le port Console du switch de l’autre.
+
+Nous avons configuré PuTTY comme suite dans Connection / Serial :
+
+<img src="./media/image53.png"
+style="width:3.18045in;height:3.10962in" />
+
+Ensuite Session \> Open
+
+<img src="./media/image54.png"
+style="width:3.20636in;height:3.1491in" />
+
+Nous avons accédé à la console du switch
+
+<img src="./media/image55.png"
+style="width:6.27014in;height:0.98264in" />
+
+### Administration VLAN en CLI
+
+### Création d’un VLAN
+
+```console
+# Passage en mode system
+system-view ou sys  
+  
+# Création du VLAN 200
+vlan 200  
+  
+# Définition l’adresse IP/Sous-masque pour le VLAN 200
+# Choix VLAN
+interface vlan 200 ou int vlan 200
+
+# Renseigner l’adresse IP ainsi que le sous-masque
+ip address 172.28.1.253 255.255.0.0  
+  
+# Ajout d’un port dans le VLAN, ici du 7 à 10
+port Eth1/0/7  
+port Eth1/0/8  
+port Eth1/0/9  
+port Eth1/0/10
+```
+
+Afficher la configuration de VLAN’s
+
+```console
+display vlan all
+```
+
+<img src="./media/image56.png"
+style="width:6.27014in;height:4.52778in" />
+
+Une autre méthode pour afficher la configuration de ports en utilisant
+la commande display brief interface
+
+<img src="./media/image57.png"
+style="width:5.59453in;height:5.01112in" />
+
+### Supprimer un VLAN
+
+```console
+# Mode system  
+system-view ou sys  
+# Supprimer le VLAN 200  
+undo VLAN 200
+```
+
+### Administration VLAN par interface Web
+
+J’accède à l’interface web sur l’adresse 172.28.1.253/16
+
+<img src="./media/image58.png"
+style="width:4.15449in;height:2.22242in" />
+
+Menu \> Device \> VLAN \> Setup
+
+<img src="./media/image59.png"
+style="width:4.17758in;height:1.76882in" />
+
+Création d’un VLAN
+
+Modify VLAN
+
+VLAN 200 avec ses ports actifs
+
+<img src="./media/image60.png"
+style="width:4.4318in;height:2.86356in" />
+
+### Configurer d’une adresse IP en GUI
+
+Administration \> IP setup
+
+<img src="./media/image61.png"
+style="width:2.92554in;height:2.35592in" />
+
+VLAN1
+
+Nous avons laissé en mode DHCP
+
+<img src="./media/image62.png"
+style="width:3.31232in;height:2.68427in" />
+
+VLAN 200
+
+<img src="./media/image63.png"
+style="width:3.50511in;height:2.83507in" />
+
+### Créer un Trunk sur un port
+
+Cela permet de faire communiquer deux switches et faire passer plusieurs
+VLAN
+
+Switch 1
+
+```console
+# Choix de l’interface  
+Interface GigabitEthernet1/0/28  
+# Changer le type de link  
+port link-type trunk  
+# Ajouter dans les VLAN souhaités  
+port trunk permit vlan 1 200
+```
+
+Configuration des ports actuel
+
+<img src="./media/image64.png"
+style="width:5.61537in;height:5.33408in" />
+
+### Tagger un port
+
+Pour interconnecter les deux switches, nous avons tagué les ports 28 sur
+chacun
+
+```console
+interface GigabitEthernet1/0/28
+port link-type hybrid  
+port hybrid vlan 1 200 tagged
+```
+
+### Cisco Packet Tracer
+
+### Schéma du réseau
+
+<img src="./media/image65.png"
+style="width:3.74555in;height:4.00044in" />
+
+### Configuration du Switch1 (T2SR)
+
+Nous avons exécuté les commandes suivantes pour créer le VLAN 200
+
+```console
+# Entrer dans mode Privileged EXEC  
+enable  
+
+# Entrer dans le mode configuration  
+config  
+
+# Choix terminal 
+terminal  
+
+# Configuration du VLAN 
+vlan 200  
+
+# Ajouter le port 0/7 dans le VLAN 200 
+interface FastEthernet0/7 
+
+# Mettre en mode accesible
+switchport mode access 
+
+# Donner accès au port pour le VLAN 200 
+switchport access vlan 200 
+
+# Quitter la configuration
+end
+```
+
+<img src="./media/image66.png"
+style="width:5.93833in;height:1.77108in" />
+
+Nous avons effectué les mêmes commandes pour les ports 8 à 10, puis nous
+avons vérifié la configuration des ports avec la commande
+
+```console
+sh run
+```
+
+<img src="./media/image67.png"
+style="width:2.13572in;height:1.6669in" />
+
+Nous avons créé un trunk entre vlan 1 et 200 sur le port
+GigabitEthernet2
+
+```console
+enable
+
+config (choisir terminal)
+
+interface GigabitEthernet0/2  
+switchport access vlan 200  
+switchport mode trunk
+
+sh run
+```
+
+<img src="./media/image68.png"
+style="width:2.42742in;height:0.59383in" />
+
+Nous pouvons obtenir les mêmes résultats en mode GUI
+
+### Menu Config
+
+<img src="./media/image69.png"
+style="width:5.68192in;height:1.77714in" />
+
+### Configuration du Switch2 (T2SR2)
+
+Nous avons exécuté les commandes suivantes pour créer le VLAN 200
+
+```console
+# Entrer dans mode Privileged EXEC  
+enable 
+
+# Entrer dans le mode configuration  
+config  
+
+# Choix terminal
+terminal
+
+# Configuration du VLAN 
+vlan 200
+```
+
+Nous avons créé un trunk pour faire passer le VLAN 200 sur le port
+FastEthernet1 et 2
+
+```console
+enable
+
+config (choisir terminal)
+
+interface FastEthernet0/1  
+switchport access vlan 200  
+switchport mode trunk
+
+interface FastEthernet0/2  
+switchport access vlan 200  
+switchport mode trunk
+
+sh run
+```
+
+<img src="./media/image70.png"
+style="width:2.19822in;height:0.88554in" />
+
+Nous avons créé un trunk entre vlan 1 et 200 sur le port
+GigabitEthernet2
+
+```console
+enable
+
+config (choisir terminal)
+
+interface GigabitEthernet0/2  
+switchport access vlan 200  
+switchport mode trunk
+
+sh run
+```
+
+<img src="./media/image68.png"
+style="width:2.42742in;height:0.59383in" />
+
+## Conclusion
+
+La configuration des switches est correctement déroulée. Nombreuses
+tâches sont plus aisées à faire en GUI, d’autres en CLI. La
+configuration en CLI est privilégiée.

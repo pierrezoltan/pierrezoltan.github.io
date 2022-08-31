@@ -1,0 +1,430 @@
+# **Serveur SAMBA**
+
+## Objectif et environnement
+
+### Objectif
+
+L’installation et configuration un serveur de partage de fichier SAMBA et impression sur Ubuntu serveur.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.16.0.0/16
+
+- Serveur Samba et impression : SRV-UBU-SMB 172.28.1.202/16
+
+- Client Debian 1 : clideb1 172.28.2.1/16
+
+### Documentation
+
+- <https://linuxfr.org/news/creation-d-un-serveur-de-fichiers-sous-ubuntu#toc-introduction>
+
+## Processus
+
+### Installation
+
+J’ai créé une sauvegarde en faisant :
+
+```bash
+sudo cp /etc/netplan/00-installer-config.yaml
+/etc/netplan//00-installer-config.yaml.bkp
+```
+
+Dans le fichier /etc/netplan/00-installer-config.yaml
+
+<img src="./media/image460.png"
+style="width:3.69843in;height:1.88568in" />
+
+```bash
+sudo netplan apply
+```
+
+#### Installation des logiciels d’authentification sur le domaine
+
+```bash
+sudo apt install acl realmd libnss-winbind winbind
+```
+
+#### Créer l’espace de stockage des partages
+
+<img src="./media/image461.png"
+style="width:6.27083in;height:1.89583in" />
+
+Création nouvelle partition
+
+<img src="./media/image462.png"
+style="width:6.27083in;height:2.80208in" />
+
+Créer le groupe de volumes LVM
+
+```bash
+vgcreate samba /dev/sdb1
+```
+
+<img src="./media/image463.png"
+style="width:6.26042in;height:1.01042in" />
+
+### Joindre la machine virtuelle au domaine
+
+#### Installer Kerberos
+
+```bash
+sudo apt install krb5-user
+```
+
+<img src="./media/image464.png"
+style="width:6.27014in;height:1.82569in" />
+
+<img src="./media/image465.png"
+style="width:6.26042in;height:1.42708in" />
+
+<img src="./media/image466.png"
+style="width:6.26042in;height:1.46875in" />
+
+On a édité le fichier /etc/krb5.conf
+
+```bash
+[libdefaults]
+        default_realm = T2SR.IO
+
+[realms]
+        T2SR.IO = {
+                kdc = srv-w19-ad.t2sr.io
+                admin_server = srv-w19-ad.t2sr.io
+                default_domain = t2sr.io
+        }
+
+[domain_realm]
+        .t2sr.io = .T2SR.IO
+        t2sr.io = T2SR.IO
+
+[login]
+        krb4_convert = true
+        krb4_get_tickets = false
+```
+
+#### Installation SAMBA
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y samba
+```
+
+Modifier le fichier /etc/samba/smb.conf
+
+```bash
+# Change this to the workgroup/NT-domain name your Samba server will part of
+   workgroup = T2SR
+
+# Hide lost+found
+hide files = /lost+found/
+
+# Most people will want "standalone server" or "member server".
+# Running as "active directory domain controller" will require first
+# running "samba-tool domain provision" to wipe databases and create a
+# new domain.
+   server role = member server
+
+# This option controls how unsuccessful authentication attempts are mapped
+# to anonymous connections
+   map to guest = bad user
+
+# Ajout ACL
+nt acl support = yes
+inherit acls = yes
+username map = /etc/samba/user.map
+map acl inherit = yes
+map archive = no
+map hidden = no
+map read only = no
+map system = no
+store dos attributes = yes
+inherit permissions = yes
+security = ADS
+realm = T2SR.io
+
+template shell = /bin/bash
+
+# Ajout parametres
+idmap config example : schema_mode = rfc2307
+idmap config example : range = 10000000-29999999
+idmap config example : default = yes
+idmap congig example : backend = rid
+idmap config * : range = 20000-29999
+idmap config * : backend = tdb
+winbind use default domain = true
+```
+
+```bash
+sudo apt install -y ntp
+```
+
+On a modifié le fichier /etc/ntp.conf comme suite :
+
+```bash
+#pool 0.ubuntu.pool.ntp.org iburst
+#pool 1.ubuntu.pool.ntp.org iburst
+#pool 2.ubuntu.pool.ntp.org iburst
+#pool 3.ubuntu.pool.ntp.org iburst
+
+# Use Ubuntu's ntp server as a fallback.
+#pool ntp.ubuntu.com
+
+NTPSERVERS="SRV-W19-AD.t2sr.io"
+NTPOPTIONS="-u"
+```
+
+Redémarrer ntp et smbd
+
+```bash
+systemctl restart ntp smbd 
+```
+
+Nous avons rentré notre serveur samba dans le domaine
+
+```console
+net ads join -S SRV-W19-AD -U Administrateur joined srv-ubu-smb to realm t2sr.io
+systemctl restart winbind
+```
+
+Configurer NSS
+
+Nous avons modifié le fichier /etc/nsswitch.conf
+
+```console
+passwd:     files systemd winbind
+group:      files systemd winbind
+shadow:     files winbind
+```
+
+Pour vérifier si tout est fonctionnel jusqu’au présent
+
+```bash
+root@CT-DEB-CUPS:~# realm discover -v t2sr.io
+ * Resolving: _ldap._tcp.t2sr.io
+ * Performing LDAP DSE lookup on: 172.28.1.200
+ * Successfully discovered: t2sr.io
+t2sr.io
+  type: kerberos
+  realm-name: T2SR.IO
+  domain-name: t2sr.io
+  configured: no
+  server-software: active-directory
+  client-software: sssd
+  required-package: sssd-tools
+  required-package: sssd
+  required-package: libnss-sss
+  required-package: libpam-sss
+  required-package: adcli
+  required-package: samba-common-bin
+```
+
+#### Préparation PAM
+
+```bash
+# here are the per-package modules (the "Primary" block)
+account [success=2 new_authtok_reqd=done default=ignore]        pam_unix.so
+account [success=1 new_authtok_reqd=done default=ignore]        pam_winbind.so
+```
+
+```bash
+pam-auth-update
+```
+
+<img src="./media/image476.png"
+style="width:6.27014in;height:1.62083in" />
+
+Nous avons sélectionné **Non**.
+
+Nous avons modifié le fichier /etc/pam.d/common-auth
+
+```bash
+# here are the per-package modules (the "Primary" block)
+auth    [success=2 default=ignore]      pam_unix.so nullok_secure
+auth    [success=1 default=ignore]      pam_winbind.so krb5_auth krb5_ccache_type=FILE cached_login try_first_pass
+```
+
+Nous avons modifié le fichier /etc/pam.d/common-password
+
+```bash
+# here are the per-package modules (the "Primary" block)
+password        [success=2 default=ignore]      pam_unix.so obscure sha512
+password        [success=1 default=ignore]      pam_winbind.so use_authtok try_first_pass
+```
+
+Nous avons modifié le fichier /etc/pam.d/common-session
+
+```bash
+# and here are more per-package modules (the "Additional" block)
+session required        pam_unix.so
+session optional        pam_systemd.so
+session optional        pam_winbind.so
+session optional        pam_mkhomedir.so
+session required        pam_mkhomedir.so skel=/etc/skel
+```
+
+Configuration du fuseau horaire (choix France/Paris)
+
+```bash
+sudo dpkg-reconfigure tzdata
+sudo reboot
+```
+
+Vérification espace de partage disponible
+
+```bash
+sudo vgdisplay \> vgdisplay.txt  
+vim vgdisplay.txt
+```
+
+<img src="./media/image480.png"
+style="width:4.13081in;height:2.74686in" />
+
+Création du partage
+
+<img src="./media/image481.png"
+style="width:4.06307in;height:0.89596in" />
+
+Création du volume logique
+
+```bash
+lvcreate -n partage -L 9.9G samba
+```
+
+Retour de la commande :
+>Rounding up size to full physical extent 9.90 GiB
+>Logical volume "partage" created.
+
+Formatage de la partition
+
+<img src="./media/image483.png"
+style="width:6.27083in;height:2.05208in" />
+
+### Montage du volume logique
+
+Récupération ID du disque
+
+<img src="./media/image484.png"
+style="width:6.27014in;height:1.19792in" />
+
+Nous avons ajouté le fichier /etc/fstab pour un montage automatique
+
+<img src="./media/image485.png"
+style="width:6.27014in;height:0.26389in" />
+
+Montage de toutes les partitions et vérifier le montage
+
+<img src="./media/image486.png"
+style="width:5.07362in;height:1.64606in" />
+
+```{tip}
+Retirer l’espace réservé pour root, inutile de le gardé dans notre cas.
+
+<blockquote>tune2fs -m 0 /dev/mapper/samba-partage</blockquote>
+```
+
+#### Définition des droits d’accès avec les ACL
+
+<img src="./media/image488.png"
+style="width:4.05265in;height:1.06265in" />
+
+Création d’un groupe sur l’Active Directory
+
+En prévision des définitions ACL j’ai créé un groupe nommé **partage**
+sur l’AD
+
+<img src="./media/image489.png"
+style="width:6.27014in;height:4.41944in" />
+
+Puis j’ai ajouté deux membres
+
+<img src="./media/image490.png"
+style="width:3.8311in;height:1.88428in" />
+
+Définition ACL sur la racine du partage
+
+```console
+setfacl -R -m g:"T2SR\smbpartage":rwx /home/partage
+```
+
+```{warning}
+T2SR\\**smbpartage** – partage correspond au nom groupe
+précédemment créé
+```
+
+Définition ACL par défaut du partage
+
+```console
+setfacl -R -m d:g:"T2SR\smbpartage":rwx /home/partage
+```
+
+#### Modification du Samba
+
+```console
+[partage]
+path = /home/partage
+writable = yes
+printable = no
+browseable = yes
+valid users = @smbpartage
+```
+
+Redémarrage le service Samba
+
+```bash
+sudo systemctl restart smbd
+```
+
+#### Test partage avec un client Debian
+
+\+ Autre emplacements
+
+<img src="./media/image494.png"
+style="width:2.82963in;height:2.96936in" />
+
+Nous avons renseigné le dossier partage
+
+<img src="./media/image495.png"
+style="width:6.27014in;height:0.35in" />
+
+Si le fichier /etc/hosts est bien renseigné, on peut se connecter par le
+nom aussi
+
+<img src="./media/image496.png"
+style="width:6.27014in;height:0.23958in" />
+
+<img src="./media/image497.png"
+style="width:3.30857in;height:2.40569in" />
+
+<img src="./media/image498.png"
+style="width:2.70052in;height:1.25457in" />
+
+#### Test partage avec un client Windows
+
+J’ai ajouté un emplacement réseau
+
+<img src="./media/image499.png"
+style="width:5.91749in;height:2.43784in" />
+
+<img src="./media/image500.png"
+style="width:5.69871in;height:1.90652in" />
+
+<img src="./media/image501.png"
+style="width:4.27769in;height:2.12938in" />
+
+### Intégrer Samba dans Active Directory
+
+<img src="./media/image148.png"
+style="width:3.27764in;height:1.64777in" />
+
+NB : le procédé d’intégration est expliqué dans le chapitre [Active Directory](active_directory.md).
+
+## Conclusion
+
+La mise en place d’un serveur de partage est complexe si on souhaite
+synchroniser les accès et droits avec un Active Directory.
