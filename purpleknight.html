@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Serveur WEB (LAMP) &mdash; Documentation Documentation Projet Cluster Proxmox 0.2</title>
+  <title>Purple Knight &mdash; Documentation Documentation Projet Cluster Proxmox 0.2</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
@@ -23,8 +23,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="FreePBX" href="freepbx.html" />
-    <link rel="prev" title="TrueNAS" href="truenas.html" />
+    <link rel="prev" title="PingCastle" href="pingcastle.html" />
 <style>
         .wy-side-nav-search .wy-dropdown > a img.logo, .wy-side-nav-search > a img.logo { width: 50%; height: 50%; }
         .rst-other-versions dl {margin-bottom: 0px;}
@@ -365,28 +364,28 @@
 <li class="toctree-l2"><a class="reference internal" href="truenas.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Serveur WEB (LAMP)</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#un-serveur-lamp-cest-quoi">Un serveur LAMP c’est quoi ?</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fonctionnement-de-larborescence-dapache">Fonctionnement de l’arborescence d’apache</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#elements-a-prendre-en-compte-dans-etc-apache2">Eléments a prendre en compte dans /etc/apache2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lamp.html"><strong>Serveur WEB (LAMP)</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lamp.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#documentation">Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lamp.html#un-serveur-lamp-cest-quoi">Un serveur LAMP c’est quoi ?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lamp.html#fonctionnement-de-larborescence-dapache">Fonctionnement de l’arborescence d’apache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lamp.html#elements-a-prendre-en-compte-dans-etc-apache2">Eléments a prendre en compte dans /etc/apache2</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installation-dapache-2">Installation d’Apache 2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#installation-de-php">Installation de Php</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#installation-de-mariadb-optionnel">Installation de MariaDB (optionnel)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rendre-disponible-une-page-web">Rendre disponible une page web</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#verification-de-lactivation-du-site">Vérification de l’activation du site</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#integrer-le-serveur-web-dans-active-directory">Intégrer le serveur WEB dans Active Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lamp.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#installation-dapache-2">Installation d’Apache 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#installation-de-php">Installation de Php</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#installation-de-mariadb-optionnel">Installation de MariaDB (optionnel)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#rendre-disponible-une-page-web">Rendre disponible une page web</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#verification-de-lactivation-du-site">Vérification de l’activation du site</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lamp.html#integrer-le-serveur-web-dans-active-directory">Intégrer le serveur WEB dans Active Directory</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lamp.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="freepbx.html"><strong>FreePBX</strong></a><ul>
@@ -457,20 +456,20 @@
 <li class="toctree-l2"><a class="reference internal" href="pingcastle.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="purpleknight.html"><strong>Purple Knight</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#objectif-et-environnement">Objectif et environnement</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#objectif">Objectif</a></li>
-<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#environnement">Environnement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#documentation">Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Purple Knight</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#processus">Processus</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#telechargement">Téléchargement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#realisation-dun-audit-ad">Réalisation d’un audit AD</a></li>
-<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#lecture-du-rapport-de-laudit-ad">Lecture du rapport de l’audit AD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#telechargement">Téléchargement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#realisation-dun-audit-ad">Réalisation d’un audit AD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lecture-du-rapport-de-laudit-ad">Lecture du rapport de l’audit AD</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#conclusion">Conclusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -489,9 +488,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li><strong>Serveur WEB (LAMP)</strong></li>
+      <li><strong>Purple Knight</strong></li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/lamp.md.txt" rel="nofollow"> Afficher la source de la page</a>
+            <a href="_sources/purpleknight.md.txt" rel="nofollow"> Afficher la source de la page</a>
       </li>
   </ul>
   <hr/>
@@ -499,13 +498,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="serveur-web-lamp">
-<h1><strong>Serveur WEB (LAMP)</strong><a class="headerlink" href="#serveur-web-lamp" title="Lien permanent vers cette rubrique"></a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="purple-knight">
+<h1><strong>Purple Knight</strong><a class="headerlink" href="#purple-knight" title="Lien permanent vers cette rubrique"></a></h1>
 <section id="objectif-et-environnement">
 <h2>Objectif et environnement<a class="headerlink" href="#objectif-et-environnement" title="Lien permanent vers cette rubrique"></a></h2>
 <section id="objectif">
 <h3>Objectif<a class="headerlink" href="#objectif" title="Lien permanent vers cette rubrique"></a></h3>
-<p>L’installation et configuration d’un serveur LAMP.</p>
+<p>L’utilisation de Purple Knight pour auditer le serveur Active Directory.</p>
 </section>
 <section id="environnement">
 <h3>Environnement<a class="headerlink" href="#environnement" title="Lien permanent vers cette rubrique"></a></h3>
@@ -516,239 +515,115 @@
 <p>Adressage des VMS :</p>
 <ul class="simple">
 <li><p>Réseaux : 172.16.0.0/16</p></li>
-<li><p>Serveur CT-DEB-WEB : 172.28.1.208/16</p></li>
+<li><p>Le logiciel PingCastle est installé directement sur la VM du l’Active
+Directory</p></li>
 </ul>
 </section>
 <section id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Lien permanent vers cette rubrique"></a></h3>
-<section id="un-serveur-lamp-cest-quoi">
-<h4>Un serveur LAMP c’est quoi ?<a class="headerlink" href="#un-serveur-lamp-cest-quoi" title="Lien permanent vers cette rubrique"></a></h4>
-<p><a href="https://doc.ubuntu-fr.org/lamp"><img alt="_images/image549.png" src="_images/image549.png" /></a></p>
-<p>C’est une pile logicielle comprenant le système d’exploitation, un serveur HTTP, un système de gestion de bases de données et un langage de programmation interprété, et qui permet de mettre en place un serveur web.</p>
-</section>
-<section id="fonctionnement-de-larborescence-dapache">
-<h4>Fonctionnement de l’arborescence d’apache<a class="headerlink" href="#fonctionnement-de-larborescence-dapache" title="Lien permanent vers cette rubrique"></a></h4>
-<img alt="_images/image550.png" src="_images/image550.png" />
-<p>Il y a deux arborescences à prendre en compte :</p>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>
-<ul>
-<li><p>/var/www/</p></li>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.it-connect.fr/comment-auditer-lactive-directory-avec-purple-knight/">https://www.it-connect.fr/comment-auditer-lactive-directory-avec-purple-knight/</a></p></li>
+<li><p><a class="reference external" href="https://www.semperis.com/wp-content/uploads/PDFs/purple-knight-getting-started-guide.pdf">https://www.semperis.com/wp-content/uploads/PDFs/purple-knight-getting-started-guide.pdf</a></p></li>
 </ul>
-<blockquote>
-<p>De préférence, il est recommandé de placer les sites internet à cet
-endroit. Celui par défaut d’apache est le dossier html, c’est le fichier
-index.html qui est visé et afficher lorsque je tape l’adresse du
-serveur.</p>
-</blockquote>
-</th>
-<th>
-<ul>
-<li><p>/etc/apache2 :</p></li>
-</ul>
-<blockquote>
-<p>C’est là que ce trouve les fichiers conf qui constitue le service
-web.</p>
-<p>Le fichier chuck-norris.conf est représenté car il est utilisé dans
-le cadre du TP pour montrer la mise en place d’un site (<a
-href="#_Rendre_disponible_une">cf.</a>).</p>
-</blockquote></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition hint">
-<p class="admonition-title">Indication</p>
-<p>Pour le TP j’ai rajouté un second dossier avec les fichiers
-nécessaire pour un site internet.</p>
-</div>
-</section>
-<section id="elements-a-prendre-en-compte-dans-etc-apache2">
-<h4>Eléments a prendre en compte dans /etc/apache2<a class="headerlink" href="#elements-a-prendre-en-compte-dans-etc-apache2" title="Lien permanent vers cette rubrique"></a></h4>
-<img alt="_images/image551.png" src="_images/image551.png" />
-<p>Il y a dans apache une notion de fichier « <strong>disponible</strong> » et
-« <strong>actif</strong> », les fichiers conf dit <em>disponible</em> doivent être activé
-pour être consultable sur le navigateur internet (sans avoir a tapé
-l’URL).</p>
-<p>Par exemple dans le cas du fichier 000-default.conf qui est disponible
-et activé, tout changement édité sur le fichier dans un des deux
-dossiers sera effectué sur son homologue.</p>
-</section>
 </section>
 </section>
 <section id="processus">
 <h2>Processus<a class="headerlink" href="#processus" title="Lien permanent vers cette rubrique"></a></h2>
-<section id="installation-dapache-2">
-<h3>Installation d’Apache 2<a class="headerlink" href="#installation-dapache-2" title="Lien permanent vers cette rubrique"></a></h3>
-<p>J’installe apache avec un module qui permet de gérer PHP.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install apache2 libapache2-mod-php
-</pre></div>
-</div>
-<p>Je vérifier le bon fonctionnement du serveur web qui normalement renvoie
-la page d’accueil de apache2 (version Debian).</p>
-<p><img alt="_images/image552.png" src="_images/image552.png" /></p>
-<p>Je configure le service apache2 pour qu’il démarre automatiquement au
-démarrage du centenaire.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> apache2
-</pre></div>
-</div>
-<p>J’active des modules apaches :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>a2enmod rewrite  
-a2enmod deflate  
-a2enmod headers
-</pre></div>
-</div>
-<p>Puis je recharge la configuration avec la commande suivante :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl reload apache2
-</pre></div>
-</div>
-<p>Cette commande permet de recharger la configuration d’apache sans pour
-autant avoir besoin de relancer entièrement le service.</p>
-<p>Pour voir la liste des modules activé je vais dans /etc/apache2/modes
-enabled</p>
-<img alt="_images/image553.png" src="_images/image553.png" />
-<p>Comme on peut le voir avant et après l’activation de certains modules,
-le contenu du dossier a changé.</p>
+<section id="telechargement">
+<h3>Téléchargement<a class="headerlink" href="#telechargement" title="Lien permanent vers cette rubrique"></a></h3>
+<p>Lien de téléchargement :</p>
+<p><a class="reference external" href="https://www.purple-knight.com/resources/">https://www.purple-knight.com/resources/</a></p>
+<p>J’ai téléchargé l’archive et je l’ai extrait.</p>
+<p><img alt="_images/image705.png" src="_images/image705.png" /></p>
 </section>
-<section id="installation-de-php">
-<h3>Installation de Php<a class="headerlink" href="#installation-de-php" title="Lien permanent vers cette rubrique"></a></h3>
-<p>J’installe les packages de Php ainsi que les modules php les plus
-courants :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install php php-cli  
-apt install php-<span class="o">{</span>curl,gd,intl,memcache,xml,zip,mbstring,json<span class="o">}</span>
-</pre></div>
-</div>
-<p>Pour interagir avec SQL :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install php-mysql
-</pre></div>
-</div>
-<p>Pour tester le bon fonctionnement de Php je crée un fichier test.php</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">echo &quot;\</span><span class="cp">&lt;?php</span> <span class="nb">phpinfo</span><span class="p">();</span> <span class="o">?</span><span class="nx">\</span><span class="o">&gt;</span><span class="s2">&quot; \&gt; /var/www/html/test.php</span>
-</pre></div>
-</div>
-<img alt="_images/image554.png" src="_images/image554.png" />
-<p>Dans la barre de recherche d’un navigateur je tape l’adresse de mon
-serveur web suivant de test.php, soit :</p>
-<p><a class="reference external" href="http://172.28.1.206/test.php">http://172.28.1.206/test.php</a></p>
-<img alt="_images/image555.png" src="_images/image555.png" />
-<p>Il s’agit de la page récapitulant la configuration de php (version
-7.4.30).</p>
-<p>Je peux éditer les options de PHP via le fichier
-<em><strong>/etc/php/7.4/apache2/php.ini</strong></em> ou créer un fichier personnalisé dans
-<em><strong>/etc/php/7.4/apache2/conf.d</strong></em>.</p>
-<p>Mais je n’ai pas l’utilité de changer les options, je laisse donc php en
-configuration par défaut.</p>
+<section id="realisation-dun-audit-ad">
+<h3>Réalisation d’un audit AD<a class="headerlink" href="#realisation-dun-audit-ad" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’exécute l’application <em>Purple Knight.exe</em> situé dans
+<strong>PurpleKnight-Community</strong>&gt;<strong>PurpleKnight</strong></p>
+<p><img alt="_images/image706.png" src="_images/image706.png" /><img alt="_images/image707.png" src="_images/image707.png" /></p>
+<!--inclure pk_include-->
+<div class="admonition warning">
+    
+    <p class="admonition-title">Avertissement</p>
+    
+    <section class="admonition-content">
+        
+        <p>Lors de l'exécution du .exe il se peut que cette erreur survienne. Dans ce cas-là il suffit de faire la ligne de commande indiqué dans la boite de dialogue.</p>
+    
+        <div class="admonition-img">
+            <img src="./_images/image708.png" style="width:4.13013in;height:3.14496in" />
+        </div>
+        
+        <p>J’ai rencontré cette erreur j’ai donc fait la commande suivante dans une invite de commande PowerShell :</p></strong>
+        
+        <div class="highlight-none notranslate">
+            <div class="highlight">
+                <p>dir -Path c:\PurpleKnight-Comunity | Unblock-File</p>
+            </div>
+        </div>
+        
+        <p>J’exécute de nouveau le .exe de l’application.</p>
+    </section>
+</div><p>Purple Knight s’éxécute.</p>
+<p>J’accepte les termes de la licence et j’appuie sur la touche <em>Next</em></p>
+<p><img alt="_images/image709.png" src="_images/image709.png" /></p>
+<p>Je coche « <strong>ACTIVE DIRECTORY</strong> », puis j’appuie sur <em>Select</em>, le
+domaine est automatiquement reconnu car c’est le seul. Je sélectionne la
+forêt appartenant au domaine que j’ai sélectionné (<a class="reference external" href="http://t2sr.io">t2sr.io</a>).</p>
+<p><img alt="_images/image710.png" src="_images/image710.png" /></p>
+<p>Je continue en appuyant sur <em>Next</em></p>
+<p>Je sélectionne tous les tests pour qu’il soit le plus complet possible
+comme il s’agit du test initial.</p>
+<p><img alt="_images/image711.png" src="_images/image711.png" /></p>
+<p>J’appuie sur <em>Run Tests</em> pour exécuter l’audit.</p>
+<p><img alt="_images/image712.png" src="_images/image712.png" /></p>
+<p>L’audit peut varier en durée à s’effectuer, une fois fini Purple Knight
+affiche un récap.</p>
+<p><img alt="_images/image713.png" src="_images/image713.png" /></p>
+<p>Il est possible de sauvegarder le rapport d’audit en PDF.</p>
+<p>Les fichiers de l’audit ont été généré. Dans le dossier Output de
+PurpleKnight</p>
+<p><img alt="_images/image714.png" src="_images/image714.png" /></p>
+<p>Ils sont automatiquement générés en fonction de la date et l’heure, il
+n’y a donc pas de risque qu’un rapport en écrase un autre lors d’un
+nouvel audit.</p>
+<p>De base Purple Knight de génère pas le rapport d’audit en pdf</p>
+<p><img alt="_images/image715.png" src="_images/image715.png" /></p>
 </section>
-<section id="installation-de-mariadb-optionnel">
-<h3>Installation de MariaDB (optionnel)<a class="headerlink" href="#installation-de-mariadb-optionnel" title="Lien permanent vers cette rubrique"></a></h3>
-<p>Je choisis d’installer et utiliser MariaDB pour la base de données du
-serveur LAMP.</p>
-<p>MariaDB étant le fork<sup>1</sup> de mySQL, le fonctionnement de MariaDB
-fonctionnement est similaire a mySQL.</p>
-<blockquote>
-<div><p><sup>1</sup> <sup>Un fork (terme anglais signifiant « fourche », «
-bifurcation », « embranchement ») désigne dans le jargon informatique,
-un nouveau logiciel créé à partir du code source d’un logiciel
-existant.</sup></p>
-</div></blockquote>
-<p>J’installe le package :</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">apt install mariadb-server</span>
-</pre></div>
-</div>
-<p>Je démarre l’installation :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql_secure_installation
-</pre></div>
-</div>
-<blockquote>
-<div><p>Change the root password? [Y/n] Y<br />
-New password: __________<br />
-Re-enter new password: __________<br />
-Password updated successfully!<br />
-Remove anonymous users? [Y/n] Y<br />
-Disallow root login remotely? [Y/n] Y<br />
-Remove test database and access to it? [Y/n] Y<br />
-Reload privilege tables now? [Y/n] Y</p>
-</div></blockquote>
-<p>Pour entrer dans la base de données :</p>
-<img alt="_images/image556.png" src="_images/image556.png" />
-<p>Création d’un utilisateur admin.</p>
-<img alt="_images/image557.png" src="_images/image557.png" />
-<p>J’active mariaDB au démarrage :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> mariadb
-</pre></div>
-</div>
-<p><span id="_Rendre_disponible_une" class="anchor"></span></p>
-</section>
-<section id="rendre-disponible-une-page-web">
-<h3>Rendre disponible une page web<a class="headerlink" href="#rendre-disponible-une-page-web" title="Lien permanent vers cette rubrique"></a></h3>
-<p>Je dois créer un fichier conf contenant le virtualhosts du site
-chuck-norris à mettre en place.</p>
-<p>Exemple avec le fichier 000-default.conf :</p>
-<p><img alt="_images/image559.png" src="_images/image559.png" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/apache2/sites-available/chuck-norris.conf
-</pre></div>
-</div>
-<p>Fichier chuck-norris.conf créer :</p>
-<p><img alt="_images/image560.png" src="_images/image560.png" /></p>
-<p>En suite avec la commande suivante j’active le site :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>a2ensite chuck-norris
-a2dissite pour le désactivé
-</pre></div>
-</div>
-<p>Puis je recharge apache 2 :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl reload apache2
-</pre></div>
-</div>
-</section>
-<section id="verification-de-lactivation-du-site">
-<h3>Vérification de l’activation du site<a class="headerlink" href="#verification-de-lactivation-du-site" title="Lien permanent vers cette rubrique"></a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Apache par défaut cherche automatiquement un fichier index.html à afficher.</p>
-</div>
-<p>Ceci est propre à la configuration du réseau de production sur lequel je
-suis, cependant il faut bien renseigner le DNS pour rendre accessible le
-site sans avoir a tapé l’adresse IP.</p>
-<p><img alt="_images/image561.png" src="_images/image561.png" /></p>
-<p>Le CNAME est <em><strong>www</strong></em> car il est renseigné ainsi dans le virtualhost du
-fichier chuck-norris.conf :</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>ServerName <a class="reference external" href="http://t2sr.io">t2sr.io</a></p></li>
-<li><p>ServerAlias <a class="reference external" href="http://www.t2sr.io">www.t2sr.io</a></p></li>
-</ul>
-</div>
-<p>Je n’aborderai pas dans cette documentation la possibilité du faire du
-multisites sur ce service web.</p>
-<p>Je renseigne l’adresse du site et vérifie sa disponibilité.</p>
-<p><img alt="_images/image563.png" src="_images/image563.png" /></p>
-<p>La page est bien chargée et affichée, il ne s’agit que d’une page html
-basique afin de vérifier le bon fonctionnement du service web délivré
-par serveur LAMP sous conteneur.</p>
-</section>
-<section id="integrer-le-serveur-web-dans-active-directory">
-<h3>Intégrer le serveur WEB dans Active Directory<a class="headerlink" href="#integrer-le-serveur-web-dans-active-directory" title="Lien permanent vers cette rubrique"></a></h3>
-<p><img alt="_images/image148.png" src="_images/image148.png" /></p>
-<p>NB : le procédé d’intégration est expliqué dans le chapitre <a class="reference internal" href="active_directory.html"><span class="doc std std-doc">Active Directory</span></a>.</p>
+<section id="lecture-du-rapport-de-laudit-ad">
+<h3>Lecture du rapport de l’audit AD<a class="headerlink" href="#lecture-du-rapport-de-laudit-ad" title="Lien permanent vers cette rubrique"></a></h3>
+<p>J’ouvre dans un navigateur le fichier <em>html</em> du rapport d’audit</p>
+<p><img alt="_images/image716.png" src="_images/image716.png" /></p>
+<p>Je parcoure le rapport d’audit pour constater les faiblesses de l’AD</p>
+<p>L’AD <a class="reference external" href="http://t2sr.io">t2sr.io</a> a eu une note relativement haute à savoir la lettre A et
+90%, plus le score est élevé mieux c’est.</p>
+<p><img alt="_images/image717.png" src="_images/image717.png" /></p>
+<p>Malgré cette note relativement bonne l’AD n’est pas conforme aux
+recommandations sur 11 règles (IOEs found).</p>
+<p>Juste en dessous de la notation de l’AD se trouver les critical IOEs
+found, qui sont les règles à traiter en priorité.</p>
+<p>Ensuite viennent d’autres règles qui elles ne sont pas d’ordre
+primordial.</p>
+<p><img alt="_images/image718.png" src="_images/image718.png" /><img alt="_images/image719.png" src="_images/image719.png" /></p>
+<p>Toujours un peu plus bas dans le rapport, il y a des score par
+catégorie<img alt="_images/image720.png" src="_images/image720.png" /></p>
+<p>Purple Knight fait le lien entre les points vérifiés et les
+recommandations du MITRE et de l’ANSSI. Chaque élément vérifié a
+notamment un “ANSSI ID”, par exemple :<br />
+“<em>vuln1_permissions_adminsdholder</em>”</p>
+<p><img alt="_images/image721.png" src="_images/image721.png" /></p>
+<p>Répertorier par l’ANSSI dans le guide <a href="https://www.cert.ssi.gouv.fr/uploads/guide-ad.html">“Point de contrôle de l’Active
+Directory”</a>.</p>
+<p>Grâce à Purple Knight on peut voir rapidement si notre Active Directory
+respecte les recommandations de l’ANSSI.</p>
+<p><img alt="_images/image722.png" src="_images/image722.png" /></p>
 </section>
 </section>
 <section id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Le serveur LAMP est installé et configuré. Actuellement le serveur web
-n’utilise pas de base de données, mail elle est installé en mesure
-d’être configuré pour une utilisation ultérieure.</p>
+<p>Purple Knight est un outil intéressant pour auditer l’Active Directory
+avant de sa mise en production et corrigé les règles de sécurité non
+conforme au recommandation.</p>
 
 
 <div class="injected">
@@ -794,8 +669,7 @@ d’être configuré pour une utilisation ultérieure.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="truenas.html" class="btn btn-neutral float-left" title="TrueNAS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
-        <a href="freepbx.html" class="btn btn-neutral float-right" title="FreePBX" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pingcastle.html" class="btn btn-neutral float-left" title="PingCastle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
     </div>
 
   <hr/>

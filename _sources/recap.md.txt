@@ -2,18 +2,33 @@
 
 ## Logiciels
 
-<img src="./media/image1.png"
-style="width:6.27014in;height:2.69444in" />
+```{eval-rst}
+.. raw:: html
+   :file: ./table/software_list.html
+```
+
+<!-- <img src="./media/image1.png"
+style="width:6.27014in;height:2.69444in" /> -->
 
 ## Matériels
 
-<img src="./media/image2.png"
-style="width:6.27014in;height:1.32847in" />
+```{eval-rst}
+.. raw:: html
+   :file: ./table/hardware_list.html
+```
+
+<!-- <img src="./media/image2.png"
+style="width:6.27014in;height:1.32847in" /> -->
 
 ## Adressage IP
 
-<img src="./media/image3.png"
-style="width:6.27014in;height:2.94097in" />
+```{eval-rst}
+.. raw:: html
+   :file: ./table/ip_listing.html
+```
+
+<!-- <img src="./media/image3.png"
+style="width:6.27014in;height:2.94097in" /> -->
 
 ## Schéma du déploiement
 

@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/logo.png"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -456,6 +457,22 @@
 <li class="toctree-l2"><a class="reference internal" href="pingcastle.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="purpleknight.html"><strong>Purple Knight</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#telechargement">Téléchargement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#realisation-dun-audit-ad">Réalisation d’un audit AD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#lecture-du-rapport-de-laudit-ad">Lecture du rapport de l’audit AD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -611,7 +628,48 @@ configuration. Lors d’une migration, la VM bascule avec son snapshot !</p>
 <p><img alt="_images/image38.png" src="_images/image38.png" /></p>
 <p>Ajout des ressources pour effectuer le test</p>
 <p><img alt="_images/image39.png" src="_images/image39.png" /></p>
-<p><img alt="_images/image40.png" src="_images/image40.png" /></p>
+<style>
+    .dark_green{padding:0px;background: #70AD47;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .dark_cell{padding:0px;background: #E2EFDA;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .light_cell{padding:0px;background: #FFFFFF;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+</style>
+
+<table style="border-collapse: collapse;" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="dark_green" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px;">Etapes</td>
+        <td class="dark_green" style="width: 225px; height: 15px; text-align: center; font-size: 11px;">Activité</td>
+        <td class="dark_green" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">L'heure</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">0</td>
+        <td class="dark_cell" style="width: 225px; height: 15px; text-align: left; font-size: 11px;">Lancement du ping vers Google et lancement de la copie d'une ISO</td>
+        <td class="dark_cell" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">10h11</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">1</td>
+        <td class="light_cell" style="width: 225px; height: 15px; text-align: left; font-size: 11px;">Nous avons débranché le câble réseaux vmbr1 sur le pve1 pour simuler une coupure</td>
+        <td class="light_cell" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">10h11</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">2</td>
+        <td class="dark_cell" style="width: 225px; height: 15px; text-align: left; font-size: 11px;">Retour ping sur pfSense</td>
+        <td class="dark_cell" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">10h16</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px;"></td>
+        <td class="light_cell" style="width: 225px; height: 15px; text-align: left; font-size: 11px;">pfSense est opérationnel</td>
+        <td class="light_cell" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">10h18</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px;"></td>
+        <td class="dark_cell" style="width: 225px; height: 15px; text-align: left; font-size: 11px;">Démarrage du AD est complet</td>
+        <td class="dark_cell" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">10h18</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <img src="./media/image40.png"
+style="width:6.27014in;height:1.40903in" /> -->
 <p>Etape1</p>
 <p><img alt="_images/image41.png" src="_images/image41.png" /></p>
 <p><img alt="_images/image42.png" src="_images/image42.png" /></p>
@@ -620,7 +678,53 @@ configuration. Lors d’une migration, la VM bascule avec son snapshot !</p>
 <p><img alt="_images/image44.png" src="_images/image44.png" /></p>
 <p><img alt="_images/image45.png" src="_images/image45.png" /></p>
 <p>Nous avons rejoué la séquence en rebranchent le pve1</p>
-<p><img alt="_images/image46.png" src="_images/image46.png" /></p>
+<style>
+    .dark_green{padding:0px;background: #70AD47;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .dark_cell{padding:0px;background: #E2EFDA;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .light_cell{padding:0px;background: #FFFFFF;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+</style>
+
+<table style="border-collapse: collapse;" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="dark_green" style="width: 47.25px; height: 15px; text-align: center; font-size: 11px;">Etapes</td>
+        <td class="dark_green" style="width: 225px; height: 15px; text-align: center; font-size: 11px;">Activité</td>
+        <td class="dark_green" style="width: 51px; height: 15px; text-align: center; font-size: 11px;">L'heure</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 36px; height: 15px; text-align: center; font-size: 11px; font-weight: bold; vertical-align: bottom;">0</td>
+        <td class="dark_cell" style="width: 247.5px; height: 15px; text-align: left; font-size: 11px;">Lancement du ping vers Google et lancement de la copie d'une ISO</td>
+        <td class="dark_cell" style="width: 40.5px; height: 15px; text-align: center; font-size: 11px;">10h23</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 36px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">1</td>
+        <td class="light_cell" style="width: 247.5px; height: 15px; text-align: left; font-size: 11px;">Nous avons rebranché le câble réseaux vmbr1 sur le pve1</td>
+        <td class="light_cell" style="width: 40.5px; height: 15px; text-align: center; font-size: 11px;">10h23</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 36px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">2</td>
+        <td class="dark_cell" style="width: 247.5px; height: 15px; text-align: left; font-size: 11px;">Début de la migration SRV-W19-AD et FW-PROXY</td>
+        <td class="dark_cell" style="width: 40.5px; height: 15px; text-align: center; font-size: 11px;">10h25</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 36px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">3</td>
+        <td class="light_cell" style="width: 247.5px; height: 15px; text-align: left; font-size: 11px;">Migration complète du FW-PROXY</td>
+        <td class="light_cell" style="width: 40.5px; height: 15px; text-align: center; font-size: 11px;">10h34</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 36px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">4</td>
+        <td class="dark_cell" style="width: 247.5px; height: 15px; text-align: left; font-size: 11px;">Fin de copie du fichier de la VM vers le partage. La migration de l'AD est toujours en cours.</td>
+        <td class="dark_cell" style="width: 40.5px; height: 15px; text-align: center; font-size: 11px;">10h38</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 36px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">5</td>
+        <td class="light_cell" style="width: 247.5px; height: 15px; text-align: left; font-size: 11px;">La bascule de l'AD est effective, sans aucune coupure de services.</td>
+        <td class="light_cell" style="width: 40.5px; height: 15px; text-align: center; font-size: 11px;">10h48</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <img src="./media/image46.png"
+style="width:6.27014in;height:1.89514in" /> -->
 <p><strong>Etape2</strong></p>
 <p>Les VM AD et PROXY sont en état <strong>migrate</strong></p>
 <p><img alt="_images/image47.png" src="_images/image47.png" /></p>
@@ -663,6 +767,8 @@ panne. Dans le premier cas (reprise d’activités), nous n’avons pas
 constaté de coupure de service. La migration est plus lente. Lors de la
 simulation d’une panne la migration est automatique avec des coupures de
 service, néanmoins la migration est plus rapide.</p>
+
+
 <div class="injected">
     <div class="rst-versions rst-badge shift-down" data-toggle="rst-versions">
        <span class="rst-current-version" data-toggle="rst-current-version">
@@ -731,14 +837,12 @@ service, néanmoins la migration est plus rapide.</p>
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>  
-
   <style>
         .wy-nav-content { max-width: none;}
         .rst-content {width: 800px;}
-         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
-         /*.wy-nav-content-wrap { max-width: none;}*/
+         .wy-nav-content { max-width: 100%;margin-left:auto;margin-right: auto;}
+         .wy-nav-content-wrap { max-width: none;}
   </style>
-
 
 
 </body>

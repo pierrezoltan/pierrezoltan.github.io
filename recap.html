@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css\rtd_sphinx_search.min.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/logo.png"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -456,6 +457,22 @@
 <li class="toctree-l2"><a class="reference internal" href="pingcastle.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="purpleknight.html"><strong>Purple Knight</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#objectif-et-environnement">Objectif et environnement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#objectif">Objectif</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#environnement">Environnement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#processus">Processus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#telechargement">Téléchargement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#realisation-dun-audit-ad">Réalisation d’un audit AD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="purpleknight.html#lecture-du-rapport-de-laudit-ad">Lecture du rapport de l’audit AD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="purpleknight.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -486,19 +503,319 @@
 <h1><strong>Récapitulatif des matériels et logiciels</strong><a class="headerlink" href="#recapitulatif-des-materiels-et-logiciels" title="Lien permanent vers cette rubrique"></a></h1>
 <section id="logiciels">
 <h2>Logiciels<a class="headerlink" href="#logiciels" title="Lien permanent vers cette rubrique"></a></h2>
-<p><img alt="_images/image1.png" src="_images/image1.png" /></p>
+<style>
+    .dark_green{padding:0px;background: #70AD47;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .dark_cell{padding:0px;background: #E2EFDA;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .light_cell{padding:0px;background: #FFFFFF;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+</style>
+
+<table style="border-collapse: collapse;" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="dark_green" style="width: 130.5px; height: 15px; text-align: center; font-size: 11px;">Logiciels utilisés</td>
+        <td class="dark_green" style="width: 131.25px; height: 15px; text-align: center; font-size: 11px;">Version</td>
+        <td class="dark_green" style="width: 127.5px; height: 15px; text-align: center; font-size: 11px;">Observation</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">Machine virtuelles</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: center; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">pve-manager</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">7.2-7</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;">OS du serveur Proxmox</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">Windows serveur</td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">2019</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;">Updated aug 2021</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">Ubuntu live server</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">22.04</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;">LTS</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">pfSense</td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">CE 2.6.0</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">Exchange server</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">2019-x64-CU12</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">SNG7</td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">PBX16-64bit-2204</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;">FreePBX</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">Debian</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">11.03-amd64-netinst</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">Zabbix-appliance</td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">6.0.7-netinstall</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">Virtio-win</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">0.1.221</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;">Drivers pour VM Windows</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">TrueNAS</td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">13.0-U1.1</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;">VeeamBackup_Replication</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">11.0.1.1261_20220302</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 130.5px; height: 15px; text-align: left; font-size: 11px; font-weight: bold;"></td>
+        <td class="dark_cell" style="width: 131.25px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">Conteneurs</td>
+        <td class="dark_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;"></td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 130.5px; height: 15px; text-align: center; font-size: 11px; font-weight: bold;">Debian</td>
+        <td class="light_cell" style="width: 131.25px; height: 15px; text-align: left; font-size: 11px;">11.0.-1</td>
+        <td class="light_cell" style="width: 127.5px; height: 15px; text-align: left; font-size: 11px;">Téléchargé via PVE</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <img src="./media/image1.png"
+style="width:6.27014in;height:2.69444in" /> -->
 </section>
 <section id="materiels">
 <h2>Matériels<a class="headerlink" href="#materiels" title="Lien permanent vers cette rubrique"></a></h2>
-<p><img alt="_images/image2.png" src="_images/image2.png" /></p>
+<style>
+    .dark_green{padding:0px;background: #70AD47;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .dark_cell{padding:0px;background: #E2EFDA;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+    .light_cell{padding:0px;background: #FFFFFF;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+</style>
+
+<table style="border-collapse: collapse;" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="dark_green" style="width: 101.25px; height: 15px; text-align: center; font-size: 11px;">Matériels utilisés</td>
+        <td class="dark_green" style="width: 174px; height: 15px; text-align: center; font-size: 11px;">Version</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 101.25px; height: 15px; text-align: left; font-size: 11px;">2 x Switch 3 COM</td>
+        <td class="dark_cell" style="width: 174px; height: 15px; text-align: left; font-size: 11px;">SuperStack3 Switch 4500 26-Port</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 101.25px; height: 30px; text-align: left; font-size: 11px;">3 x Serveur DELL</td>
+        <td class="light_cell" style="width: 174px; height: 30px; text-align: left; font-size: 11px;">PowerEdge R240 1CPU Xeon E-2100 32Go RAM</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 101.25px; height: 15px; text-align: left; font-size: 11px;">10 x Câbles RJ45</td>
+        <td class="dark_cell" style="width: 174px; height: 15px; text-align: left; font-size: 11px;">Cat. 6</td>
+      </tr>
+      <tr>
+        <td class="light_cell" style="width: 101.25px; height: 15px; text-align: left; font-size: 11px;">1 x Borne Wifi</td>
+        <td class="light_cell" style="width: 174px; height: 15px; text-align: left; font-size: 11px;">tp-link TL-WA801ND</td>
+      </tr>
+      <tr>
+        <td class="dark_cell" style="width: 101.25px; height: 30px; text-align: left; font-size: 11px;">2 x Ordinateurs fixes</td>
+        <td class="dark_cell" style="width: 174px; height: 30px; text-align: left; font-size: 11px;">Thinkstation 2 x cœurs 2.7Ghz 16go RAM Windows 10 Pro 21H2</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <img src="./media/image2.png"
+style="width:6.27014in;height:1.32847in" /> -->
 </section>
 <section id="adressage-ip">
 <h2>Adressage IP<a class="headerlink" href="#adressage-ip" title="Lien permanent vers cette rubrique"></a></h2>
-<p><img alt="_images/image3.png" src="_images/image3.png" /></p>
+<style id="ip listing_styles">
+.head_table
+	{padding:0px;color:white;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:bottom;white-space:nowrap;}
+.empty_cell
+	{padding:0px;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:general;vertical-align:bottom;white-space:nowrap;}
+.data_cell
+	{padding:0px;color:black;font-size:11.0pt;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;white-space:nowrap;}
+</style>
+<div id="ip listing">
+<table cellpadding=0; cellspacing=0; width=516pt; style='border-collapse:collapse;table-layout:fixed;width:388pt'>
+ <col width=28> <col width=113> <col width=36> <col width=62> <col width=133> <col width=84> <col width=60>
+ <tr height=20 style='height:15.0pt'>
+  <td class=head_table width=28 style='background: #404040;'>ID</td>
+  <td class=head_table width=113 style='background: #404040;'>NOM</td>
+  <td class=head_table width=36 style='background: #404040;'>TYPE</td>
+  <td class=head_table width=62 style='background: #404040;'>RÔLE</td>
+  <td class=head_table width=133 style='background: #404040;'>TÂCHE</td>
+  <td class=head_table width=84 style='background: #404040;'>IP</td>
+  <td class=head_table width=60 style='background: #404040;'>BRIDGE</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>100</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-W19-AD</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>AD DNS</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.200</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>302</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-UBU-SMB</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>SAMBA</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.202</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>101</td>
+  <td class=data_cell style='background:#EDEDED'>FW-PROXY</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>FIREWALL</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.254</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr0+1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>205</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-UBU-ZBX</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>SUPERVISION</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.210</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>202</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-PBX-VOIP</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#FFF2CC'>SERVICE</td>
+  <td class=data_cell style='background:#EDEDED'>VOIP</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.208</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>303</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-W19-VEEAM</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>SAUVEGARDE</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.204</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>203</td>
+  <td class=data_cell style='background:#EDEDED'>CT-DEB-NAGIOS</td>
+  <td class=data_cell style='background:#F4B084'>CT</td>
+  <td class=data_cell style='background:#FFF2CC'>SERVICE</td>
+  <td class=data_cell style='background:#EDEDED'>SUPERVISION</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.207</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>201</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-W19-EXC</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>MAIL</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.201</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>300</td>
+  <td class=data_cell style='background:#EDEDED'>CLI-DEB-01</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#E2EFDA'>CLIENT</td>
+  <td class=empty_cell style='background:#EDEDED'></td>
+  <td class=data_cell style='background:repeating-linear-gradient(45deg,transparent,transparent 10px,#ccc 10px,#ccc 20px), linear-gradient(to bottom,#eee,#999);'>Dhcp</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>301</td>
+  <td class=data_cell style='background:#EDEDED'>CLI-WIN-01</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#E2EFDA'>CLIENT</td>
+  <td class=empty_cell style='background:#EDEDED'></td>
+  <td class=data_cell style='background:repeating-linear-gradient(45deg,transparent,transparent 10px,#ccc 10px,#ccc 20px), linear-gradient(to bottom,#eee,#999);'>Dhcp</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>102</td>
+  <td class=data_cell style='background:#EDEDED'>CT-DEB-DHCP</td>
+  <td class=data_cell style='background:#F4B084'>CT</td>
+  <td class=data_cell style='background:#FFF2CC'>SERVICE</td>
+  <td class=data_cell style='background:#EDEDED'>DHCP</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.203</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>304</td>
+  <td class=data_cell style='background:#EDEDED'>CT-DEB-WEB</td>
+  <td class=data_cell style='background:#F4B084'>CT</td>
+  <td class=data_cell style='background:#FFF2CC'>SERVICE</td>
+  <td class=data_cell style='background:#EDEDED'>WEB</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.206</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>103</td>
+  <td class=data_cell style='background:#EDEDED'>CT-DEB-GLPI</td>
+  <td class=data_cell style='background:#F4B084'>CT</td>
+  <td class=data_cell style='background:#FFF2CC'>SERVICE</td>
+  <td class=data_cell style='background:#EDEDED'>GLPI</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.205</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>305</td>
+  <td class=data_cell style='background:#EDEDED'>SRV-NAS</td>
+  <td class=data_cell style='background:#8EA9DB'>VM</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>STOCKAGE</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.209</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>105</td>
+  <td class=data_cell style='background:#EDEDED'>CT-DEB-GLPI2</td>
+  <td class=data_cell style='background:#F4B084'>CT</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>GLPI</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.212</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 class=data_cell style='height:15.0pt;background:#EDEDED'>306</td>
+  <td class=data_cell style='background:#EDEDED'>CT-DEB-CUPS</td>
+  <td class=data_cell style='background:#F4B084'>CT</td>
+  <td class=data_cell style='background:#DDEBF7'>SERVEUR</td>
+  <td class=data_cell style='background:#EDEDED'>IMPRESSION</td>
+  <td class=data_cell style='background:#EDEDED'>172.28.1.213</td>
+  <td class=data_cell style='background:#EDEDED'>vmbr1</td>
+ </tr>
+ <!-- <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=28 style='width:21pt'></td>
+  <td width=113 style='width:85pt'></td>
+  <td width=36 style='width:27pt'></td>
+  <td width=62 style='width:47pt'></td>
+  <td width=133 style='width:100pt'></td>
+  <td width=84 style='width:63pt'></td>
+  <td width=60 style='width:45pt'></td>
+ </tr>
+ <![endif]> -->
+</table>
+</div><!-- <img src="./media/image3.png"
+style="width:6.27014in;height:2.94097in" /> -->
 </section>
 <section id="schema-du-deploiement">
 <h2>Schéma du déploiement<a class="headerlink" href="#schema-du-deploiement" title="Lien permanent vers cette rubrique"></a></h2>
 <p><img alt="_images/image4.png" src="_images/image4.png" /></p>
+
+
 <div class="injected">
     <div class="rst-versions rst-badge shift-down" data-toggle="rst-versions">
        <span class="rst-current-version" data-toggle="rst-current-version">
@@ -567,14 +884,12 @@
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>  
-
   <style>
         .wy-nav-content { max-width: none;}
         .rst-content {width: 800px;}
-         /* .wy-nav-content { max-width: 800px;margin-left:auto;margin-right: auto;} */
-         /*.wy-nav-content-wrap { max-width: none;}*/
+         .wy-nav-content { max-width: 100%;margin-left:auto;margin-right: auto;}
+         .wy-nav-content-wrap { max-width: none;}
   </style>
-
 
 
 </body>

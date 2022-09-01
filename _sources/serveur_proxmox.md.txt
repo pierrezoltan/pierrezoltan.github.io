@@ -215,8 +215,13 @@ Ajout des ressources pour effectuer le test
 <img src="./media/image39.png"
 style="width:6.27014in;height:1.54375in" />
 
-<img src="./media/image40.png"
-style="width:6.27014in;height:1.40903in" />
+```{eval-rst}
+.. raw:: html
+   :file: ./table/test_ha_1.html
+```
+
+<!-- <img src="./media/image40.png"
+style="width:6.27014in;height:1.40903in" /> -->
 
 Etape1
 
@@ -239,8 +244,13 @@ style="width:6.27014in;height:3.70486in" />
 
 Nous avons rejoué la séquence en rebranchent le pve1
 
-<img src="./media/image46.png"
-style="width:6.27014in;height:1.89514in" />
+```{eval-rst}
+.. raw:: html
+   :file: ./table/test_ha_2.html
+```
+
+<!-- <img src="./media/image46.png"
+style="width:6.27014in;height:1.89514in" /> -->
 
 **Etape2**
 

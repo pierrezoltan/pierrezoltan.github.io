@@ -1,0 +1,162 @@
+# **Purple Knight**
+
+## Objectif et environnement
+
+### Objectif
+
+L’utilisation de Purple Knight pour auditer le serveur Active Directory.
+
+### Environnement
+
+Matériels :
+
+- Dell PowerEdge r240 avec Proxmox 7.1-7
+
+Adressage des VMS :
+
+- Réseaux : 172.16.0.0/16
+
+- Le logiciel PingCastle est installé directement sur la VM du l’Active
+  Directory
+
+### Documentation
+
+- <https://www.it-connect.fr/comment-auditer-lactive-directory-avec-purple-knight/>
+
+- <https://www.semperis.com/wp-content/uploads/PDFs/purple-knight-getting-started-guide.pdf>
+
+## Processus
+
+### Téléchargement
+
+Lien de téléchargement :
+
+<https://www.purple-knight.com/resources/>
+
+J’ai téléchargé l’archive et je l’ai extrait.
+
+<img src="./media/image705.png"
+style="width:6.24045in;height:4.00056in" />
+
+### Réalisation d’un audit AD
+
+J’exécute l’application *Purple Knight.exe* situé dans
+**PurpleKnight-Community**\>**PurpleKnight**
+
+<img src="./media/image706.png"  style="width:3.39204in;height:2.44227in"/><img src="./media/image707.png" style="width:3.39204in;height:2.44227in" />
+
+<!--inclure pk_include-->
+```{eval-rst}
+.. raw:: html
+   :file: ./table/pk_include.html
+```
+
+Purple Knight s’éxécute.
+
+J’accepte les termes de la licence et j’appuie sur la touche *Next*
+
+<img src="./media/image709.png"
+style="width:4.01544in;height:3.664in" />
+
+Je coche « **ACTIVE DIRECTORY** », puis j’appuie sur *Select*, le
+domaine est automatiquement reconnu car c’est le seul. Je sélectionne la
+forêt appartenant au domaine que j’ai sélectionné (t2sr.io).
+
+<img src="./media/image710.png"
+style="width:3.63829in;height:3.32467in" />
+
+Je continue en appuyant sur *Next*
+
+Je sélectionne tous les tests pour qu’il soit le plus complet possible
+comme il s’agit du test initial.
+
+<img src="./media/image711.png"
+style="width:3.625in;height:3.31253in" />
+
+J’appuie sur *Run Tests* pour exécuter l’audit.
+
+<img src="./media/image712.png"
+style="width:3.93992in;height:1.83403in" />
+
+L’audit peut varier en durée à s’effectuer, une fois fini Purple Knight
+affiche un récap.
+
+<img src="./media/image713.png"
+style="width:3.92408in;height:3.91414in" />
+
+Il est possible de sauvegarder le rapport d’audit en PDF.
+
+Les fichiers de l’audit ont été généré. Dans le dossier Output de
+PurpleKnight
+
+<img src="./media/image714.png"
+style="width:2.98851in;height:2.03478in" />
+
+Ils sont automatiquement générés en fonction de la date et l’heure, il
+n’y a donc pas de risque qu’un rapport en écrase un autre lors d’un
+nouvel audit.
+
+De base Purple Knight de génère pas le rapport d’audit en pdf
+
+<img src="./media/image715.png"
+style="width:6.3in;height:2.875in" />
+
+### Lecture du rapport de l’audit AD
+
+J’ouvre dans un navigateur le fichier *html* du rapport d’audit
+
+<img src="./media/image716.png"
+style="width:6.3in;height:3.93333in" />
+
+Je parcoure le rapport d’audit pour constater les faiblesses de l’AD
+
+L’AD t2sr.io a eu une note relativement haute à savoir la lettre A et
+90%, plus le score est élevé mieux c’est.
+
+<img src="./media/image717.png"
+style="width:2.84192in;height:4.4752in" />
+
+Malgré cette note relativement bonne l’AD n’est pas conforme aux
+recommandations sur 11 règles (IOEs found).
+
+Juste en dessous de la notation de l’AD se trouver les critical IOEs
+found, qui sont les règles à traiter en priorité.
+
+Ensuite viennent d’autres règles qui elles ne sont pas d’ordre
+primordial.
+
+<img src="./media/image718.png"
+style="width:2.21003in;height:2.43792in" /><img src="./media/image719.png"
+style="width:3.14039in;height:2.45637in" />
+
+Toujours un peu plus bas dans le rapport, il y a des score par
+catégorie<img src="./media/image720.png"
+style="width:4.53188in;height:5.94875in" />
+
+Purple Knight fait le lien entre les points vérifiés et les
+recommandations du MITRE et de l'ANSSI. Chaque élément vérifié a
+notamment un "ANSSI ID", par exemple :  
+"*vuln1_permissions_adminsdholder*"
+
+<img src="./media/image721.png"
+style="width:4.92019in;height:2.86957in" />
+
+Répertorier par l’ANSSI dans le guide <a href="https://www.cert.ssi.gouv.fr/uploads/guide-ad.html">"Point de contrôle de l'Active
+Directory"</a>.
+
+Grâce à Purple Knight on peut voir rapidement si notre Active Directory
+respecte les recommandations de l'ANSSI.
+
+<img src="./media/image722.png"
+style="width:4.30318in;height:3.49317in" />
+
+## Conclusion
+
+Purple Knight est un outil intéressant pour auditer l’Active Directory
+avant de sa mise en production et corrigé les règles de sécurité non
+conforme au recommandation.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

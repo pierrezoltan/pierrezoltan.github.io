@@ -32,10 +32,10 @@ Projet Cluster Proxmox's documentation
    freepbx
    ocs
    pingcastle
+   purpleknight
 
 .. raw:: html
    :file: flyout.html
-
 
 .. Indices and tables
 .. ==================
