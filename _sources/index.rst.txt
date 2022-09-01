@@ -33,8 +33,9 @@ Projet Cluster Proxmox's documentation
    ocs
    pingcastle
 
-.. .. raw:: html
-..    :file: flyout.html
+.. raw:: html
+   :file: flyout.html
+
 
 .. Indices and tables
 .. ==================
