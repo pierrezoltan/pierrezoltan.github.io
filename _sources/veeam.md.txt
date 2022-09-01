@@ -590,3 +590,8 @@ VEEAM est un outil complet proposant une multitude de possibilité de
 sauvegarde. Il est très performant même dans sa version Community
 Edition. La restauration d’une VM entier actuellement n’est compatible
 qu’avec VMWare et HYPER-V mais pas des VM Proxmox.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

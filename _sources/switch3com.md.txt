@@ -303,3 +303,8 @@ style="width:2.42742in;height:0.59383in" />
 La configuration des switches est correctement déroulée. Nombreuses
 tâches sont plus aisées à faire en GUI, d’autres en CLI. La
 configuration en CLI est privilégiée.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

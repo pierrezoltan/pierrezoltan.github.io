@@ -214,3 +214,8 @@ the special value *or*.forest do the healthcheck for all domains
 
 PingCastle est un outil très intéressant pour auditer l’Active Directory
 avant de sa mise en production.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

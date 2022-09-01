@@ -241,3 +241,8 @@ NB : le procédé d’intégration est expliqué dans le chapitre [Active Direc
 
 L’installation et la configuration basique du serveur FreePBX s’est bien
 déroulée.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

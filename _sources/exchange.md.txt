@@ -230,3 +230,8 @@ Le serveur de messagerie est fonctionnel, néanmoins Thunderbird ne
 récupère pas automatiquement le carnet d’adresse. Ils existent des
 solutions payantes comme ExQuilla for Microsoft Echange plugin pour
 pallier ce problème.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

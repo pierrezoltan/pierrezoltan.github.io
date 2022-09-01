@@ -506,3 +506,8 @@ style="width:1.42305in;height:1.76168in" />
 La configuration du pfSense s’est bien déroulée. L’utilisation du
 portail captif nécessite d’avoir une carte réseaux supplémentaire afin
 de ne pas interférer avec les VM sur le réseau de production.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

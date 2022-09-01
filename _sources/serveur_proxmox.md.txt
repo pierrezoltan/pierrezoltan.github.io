@@ -304,3 +304,8 @@ panne. Dans le premier cas (reprise d’activités), nous n’avons pas
 constaté de coupure de service. La migration est plus lente. Lors de la
 simulation d’une panne la migration est automatique avec des coupures de
 service, néanmoins la migration est plus rapide.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

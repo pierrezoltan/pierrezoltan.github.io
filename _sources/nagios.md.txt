@@ -256,3 +256,8 @@ Il est aisé d’ajouter des nouveaux hôtes à surveiller avec l’assistant
 de configuration à condition d’avoir un lien SSH. Les services de
 surveillance de base proposés sont ; CPU, mémoire, stockage, trafics
 réseaux.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

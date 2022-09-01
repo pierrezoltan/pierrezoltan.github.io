@@ -358,3 +358,8 @@ style="width:3.22975in;height:2.37447in" />
 
 CUPS est un outil léger pour ajouter une imprimante en réseaux,
 néanmoins l’ajout de pilotes propriétaires peut être fastidieux.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

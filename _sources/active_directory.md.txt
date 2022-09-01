@@ -301,3 +301,8 @@ style="width:3.83871in;height:1.84858in" />
 ## Conclusion
 
 L’installation s’est correctement déroulée. La mise en place de l’Active Directory doit être le premier serveur à configurer.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

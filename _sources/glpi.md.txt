@@ -403,3 +403,8 @@ NB : le procédé d’intégration est expliqué dans le chapitre [Active Direc
 L’installation du serveur GLPI est correctement déroulée sur un
 conteneur Debian 11.3 ainsi que l’intégration du l’agent fusion
 inventory.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

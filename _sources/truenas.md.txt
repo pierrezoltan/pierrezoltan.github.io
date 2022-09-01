@@ -197,3 +197,8 @@ NB : le procédé d’intégration est expliqué dans le chapitre [Active Direc
 ## Conclusion
 
 True NAS est un excellent choix pour créer son propre serveur NAS. Sécurisé et facile à mettre en oeuvre.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

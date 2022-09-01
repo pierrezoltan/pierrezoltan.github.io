@@ -445,3 +445,8 @@ L’importation des ordinateurs ne s’est pas déroulée correctement. J’ai
 créé une issue sur la page GitHub du développeur.
 
 <https://github.com/pluginsGLPI/ocsinventoryng/issues/329>
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

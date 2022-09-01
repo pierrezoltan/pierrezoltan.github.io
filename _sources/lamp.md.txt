@@ -304,3 +304,8 @@ NB : le procédé d’intégration est expliqué dans le chapitre [Active Direc
 Le serveur LAMP est installé et configuré. Actuellement le serveur web
 n’utilise pas de base de données, mail elle est installé en mesure
 d’être configuré pour une utilisation ultérieure.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

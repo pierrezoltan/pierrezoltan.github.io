@@ -158,3 +158,8 @@ NB : le procédé d’intégration est expliqué dans le chapitre [Active Direc
 
 La configuration du serveur Zabbix avec le déploiement des agents est
 terminée.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```

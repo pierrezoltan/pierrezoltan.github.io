@@ -428,3 +428,8 @@ NB : le procédé d’intégration est expliqué dans le chapitre [Active Direc
 
 La mise en place d’un serveur de partage est complexe si on souhaite
 synchroniser les accès et droits avec un Active Directory.
+
+```{eval-rst}
+.. raw:: html
+   :file: flyout.html
+```
